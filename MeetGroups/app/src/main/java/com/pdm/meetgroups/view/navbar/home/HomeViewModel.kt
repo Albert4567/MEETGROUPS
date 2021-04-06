@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.view.ui.home
+package com.pdm.meetgroups.view.navbar.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
