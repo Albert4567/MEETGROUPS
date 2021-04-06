@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.ui.notifications
+package com.pdm.meetgroups.view.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater
