@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "514767821525",
+    "project_id": "meetgroups-8fba0",
+    "storage_bucket": "meetgroups-8fba0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514767821525:android:4f8c619de727de819fa05c",
+        "android_client_info": {
+          "package_name": "com.pdm.meetgroups"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "514767821525-08bal45sveu0gq7m85hdc2q9m3965fe7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyy0ATdDHYqvdjbf6qhje_ZaEzQ235Tno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "514767821525-08bal45sveu0gq7m85hdc2q9m3965fe7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
