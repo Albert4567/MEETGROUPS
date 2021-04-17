@@ -3,9 +3,9 @@ package com.pdm.meetgroups.model
 import android.location.Location
 import android.media.Image
 
-enum class POST_STATUS {
-    PUBLIC,
-    PRIVATE
+enum class POST_STATUS(val value: String) {
+    PUBLIC("public"),
+    PRIVATE("private")
 }
 
 data class Post(

@@ -1,8 +1,8 @@
 package com.pdm.meetgroups.model
 
-enum class JOURNAL_STATUS {
-    IN_PROGRESS,
-    CLOSED
+enum class JOURNAL_STATUS(val value: String) {
+    IN_PROGRESS("inProgress"),
+    CLOSED("closed")
 }
 
 data class Journal(
