@@ -4,10 +4,11 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.pdm.meetgroups.view.SignUpActivity
 
 class AuthentificationController {
-    private val TAG : String = "UserAuthController"
+    private val TAG : String = "AuthentificationController"
     private var mAuth : FirebaseAuth
 
     constructor(auth : FirebaseAuth) {
@@ -48,5 +49,7 @@ class AuthentificationController {
         return outcome
     }
 
-    fun checkIfSignedIn () : Boolean { return mAuth.currentUser != null }
+    fun getCurrentUserUID () : String? = mAuth.currentUser.uid
+
+    fun checkIfSignedIn () : Boolean = mAuth.currentUser != null
 }

@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.pdm.meetgroups.R
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,9 +19,5 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
-    }
-
-    fun gotoSignUp(view : View?) {
-        startActivity(Intent(this, SignUpActivity::class.java))
     }
 }
