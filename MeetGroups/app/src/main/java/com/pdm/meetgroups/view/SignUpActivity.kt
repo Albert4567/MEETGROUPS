@@ -29,9 +29,11 @@ class SignUpActivity : AppCompatActivity() {
 
         Toast.makeText(this, authModelImpl.getCurrentUserUID(),
                 Toast.LENGTH_SHORT).show()
+        
+        firebaseTest()
     }
 
-    fun firebaseTest (v : View?) {
+    private fun firebaseTest () {
         val user = UserContext()
         val concreteUser : UserState = ConcreteUser()
         concreteUser.nickname = "Marco1209"
