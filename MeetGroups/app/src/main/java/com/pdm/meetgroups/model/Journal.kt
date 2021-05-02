@@ -6,8 +6,9 @@ enum class JOURNAL_STATUS(val value: String) {
 }
 
 data class Journal(
-    var title: String,
-    var posts: List<Post>,
-    var status: JOURNAL_STATUS,
-    var users: List<UserContext>
+    var journalID : String,
+    var title : String,
+    var posts : List<Post>,
+    var status : JOURNAL_STATUS,
+    var users : List<UserContext>
 )

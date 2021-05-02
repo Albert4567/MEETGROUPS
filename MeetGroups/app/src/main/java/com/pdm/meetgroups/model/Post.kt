@@ -1,9 +1,7 @@
 package com.pdm.meetgroups.model
 
-import android.location.Location
-import android.media.Image
-import java.sql.Timestamp
-import java.util.*
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.GeoPoint
 
 enum class POST_STATUS(val value: String) {
     PUBLIC("public"),
@@ -11,12 +9,13 @@ enum class POST_STATUS(val value: String) {
 }
 
 data class Post(
+    var postID : String,
     var title: String,
     var description: String?,
     var postStatus: POST_STATUS,
     var creationDate: Timestamp,
     var creatorNickName: String,
-    var spotLocation: Location,
-    var tags: List<String>?, // TODO: Determine if this is the right type
-    var images: List<Image>? // TODO: Determine if this is the right type
+    var spotLocation: GeoPoint,
+    var tags: List<String>?,
+    var images: List<String>?
 )
