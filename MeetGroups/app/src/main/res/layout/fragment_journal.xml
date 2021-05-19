@@ -6,38 +6,62 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.navbar.JournalFragment">
-        <Toolbar
-            android:id="@+id/toolbar_journal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <LinearLayout
+    <Toolbar
+        android:id="@+id/toolbar_journal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_journal_title"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:text="JournalTitle"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_journal_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="JournalTitle"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right">
+            <ImageButton
+                android:id="@+id/btn_journal_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_journal_group_24" />
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/journal_groups_24" />
+            <ImageButton
+                android:id="@+id/btn_journal_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_journal_edit_24" />
+        </LinearLayout>
+    </Toolbar>
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/journal_edit_24" />
-            </LinearLayout>
-        </Toolbar>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_journal_postlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:src="@drawable/outline_add_24" />
+    </FrameLayout>
 </LinearLayout>

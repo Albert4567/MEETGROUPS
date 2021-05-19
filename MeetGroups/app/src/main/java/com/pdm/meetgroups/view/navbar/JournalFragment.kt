@@ -4,23 +4,36 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.pdm.meetgroups.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.pdm.meetgroups.databinding.FragmentJournalBinding
+import com.pdm.meetgroups.view.adapter.PostListAdapter
+import com.pdm.meetgroups.viewmodel.JournalViewModel
+import com.pdm.meetgroups.viewmodel.PostList
 
 
 class JournalFragment : Fragment() {
+    private lateinit var binding: FragmentJournalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_journal, container, false)
+        binding = FragmentJournalBinding.inflate(inflater, container, false)
+        val journalVM: JournalViewModel by viewModels()
+        journalVM.getPosts().observe(viewLifecycleOwner, Observer {
+            binding.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
+            binding.rvJournalPostlist.adapter = PostListAdapter(journalVM)
+        })
+        return binding.root
     }
 }
