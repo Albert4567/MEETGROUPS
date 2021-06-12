@@ -1,23 +1,24 @@
 package com.pdm.meetgroups.model.dbmanager
 
 import android.net.Uri
-import com.pdm.meetgroups.model.*
+import com.pdm.meetgroups.model.entities.*
 
 interface FirestoreModel {
+    fun instantiateUserModel (uid : String)
 
-    //UsersDedicatedMethods
-    /*
-        create a user document on firebase with no journals
-    */
+    //UsersDedicatedMethod
+    //    create a user document on firebase with no journals
     fun createUser (user : UserContext)
 
     fun deleteUser ()
 
     fun updateUserBio (newBio : String)
 
-    fun updateUserAddNewJournalLink (journal: Journal)
+    fun updateUserAddNewJournalLink (user : UserContext, journal: Journal)
 
-    fun updateUserImage (newImageUri : Uri)
+    fun updateUserImage(newImageUri : Uri, uid : String)
+
+    fun changeUserState ()
 
     //JournalsDedicatedMethods
     fun createJournal (journal : Journal)
@@ -30,9 +31,6 @@ interface FirestoreModel {
     fun removeParticipant (journal : Journal, user : UserContext)
 
     fun loadParticipants (journal : Journal)
-
-    //TODO esiste close journal. capire se necessario
-    //fun updateJournalState (journal: Journal)
 
     fun updateJournalTitle (journal: Journal)
 

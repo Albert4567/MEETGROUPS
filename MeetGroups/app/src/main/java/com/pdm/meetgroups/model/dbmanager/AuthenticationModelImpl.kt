@@ -52,9 +52,9 @@ class AuthentificationModelImpl : AuthentificationModel {
         //TODO("checksOnNewPassword")
         //TODO listeners?
         mAuth.currentUser.updatePassword(newPassword)
-                .addOnSuccessListener { //TODO
-                }
-                .addOnFailureListener { //TODO
-                }
+            .addOnSuccessListener { //TODO
+            }
+            .addOnFailureListener { //TODO
+            }
     }
 }
