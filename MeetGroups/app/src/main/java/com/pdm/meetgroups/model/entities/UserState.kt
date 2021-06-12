@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.model
+package com.pdm.meetgroups.model.entities
 
 interface UserState {
     var bio : String

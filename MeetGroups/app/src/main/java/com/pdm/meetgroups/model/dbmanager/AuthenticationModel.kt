@@ -2,7 +2,7 @@ package com.pdm.meetgroups.model.dbmanager
 
 import com.google.android.gms.tasks.Task
 
-interface AuthentificationModel {
+interface AuthenticationModel {
     fun signUpUser (email : String, password : String)
 
     fun signInUser (email : String, password : String)
@@ -17,5 +17,4 @@ interface AuthentificationModel {
 
     fun updateAuthPassword (newPassword : String)
 
-    //TODO(Add authStateListener)
 }

@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.model
+package com.pdm.meetgroups.model.entities
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
@@ -9,13 +9,13 @@ enum class POST_STATUS(val value: String) {
 }
 
 data class Post(
-    var postID : String,
-    var title: String,
-    var description: String?,
-    var postStatus: POST_STATUS,
-    var creationDate: Timestamp,
-    var creatorNickName: String,
-    var spotLocation: GeoPoint,
-    var tags: List<String>?,
-    var images: List<String>?
+        var postID : String,
+        var title: String,
+        var description: String?,
+        var postStatus: POST_STATUS,
+        var creationDate: Timestamp,
+        var creatorNickName: String,
+        var spotLocation: GeoPoint,
+        var tags: List<String>?,
+        var images: List<String>?
 )
