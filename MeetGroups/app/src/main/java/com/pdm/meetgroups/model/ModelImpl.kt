@@ -1,21 +1,17 @@
 package com.pdm.meetgroups.model
 
 import android.net.Uri
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.ktx.firestoreSettings
 import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
 import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import com.pdm.meetgroups.model.dbmanager.StorageModelImpl
-import com.pdm.meetgroups.model.entities.ConcreteAdmin
-import com.pdm.meetgroups.model.entities.Journal
-import com.pdm.meetgroups.model.entities.Post
-import com.pdm.meetgroups.model.entities.UserContext
-import com.pdm.meetgroups.observers.DBObserver
+import com.pdm.meetgroups.model.entities.*
 
-class ModelImpl (dbObserver: DBObserver) : Model {
-    private val authenticationModel = AuthenticationModelImpl(dbObserver)
-    private val firestoreModel = FirestoreModelImpl(dbObserver)
-    private val storageModel = StorageModelImpl(dbObserver)
+//TODO check addSnapshotListener
+//TODO Create Local User Instance
+class ModelImpl () : Model {
+    private val authenticationModel = AuthenticationModelImpl()
+    private val firestoreModel = FirestoreModelImpl()
+    private val storageModel = StorageModelImpl()
 
     init {
         instantiateUserModel()
@@ -26,93 +22,95 @@ class ModelImpl (dbObserver: DBObserver) : Model {
         firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID()!!)
     }
 
-    override fun updateUserImage (newImageUri : Uri) {
-        val uid = authenticationModel.getCurrentUserUID()!!
-        firestoreModel.updateUserImage(newImageUri, uid)
-        storageModel.updateStoredUserImage(newImageUri, uid)
+    override suspend fun createUser(user: UserContext): Boolean {
+        return firestoreModel.createUser(user)
     }
 
-    override fun createUser(user: UserContext) {
+    override suspend fun deleteUser(): Boolean {
+        return if(firestoreModel.deleteUser()) {
+            authenticationModel.deleteAuthUser()
+            true
+        }
+        else
+            false
+    }
+
+    override suspend fun updateUserBio(newBio: String): Boolean {
+        return firestoreModel.updateUserBio(newBio)
+    }
+
+    override suspend fun updateUserAddNewJournalLink(journal: Journal) {
         TODO("Not yet implemented")
     }
 
-    override fun deleteUser () {
-        firestoreModel.deleteUser()
-        authenticationModel.deleteAuthUser()
+    override suspend fun updateUserImage(newImageUri: Uri) : Boolean {
+        val uid = authenticationModel.getCurrentUserUID()
+        return if (uid != null) {
+            if(firestoreModel.updateUserImage(newImageUri, uid))
+                return storageModel.updateStoredUserImage(newImageUri, uid)
+            false
+        }
+        else
+            false
     }
 
-    override fun updateUserBio(newBio: String) {
-        firestoreModel.updateUserBio(newBio)
-    }
-
-    override fun updateUserAddNewJournalLink(journal: Journal) {
-        TODO("Not yet implemented")
-    }
-
-    override fun changeUserState() {
+    override suspend fun changeUserState() {
         firestoreModel.changeUserState()
     }
 
-    override fun createJournal(journal: Journal) {
-        firestoreModel.createJournal(journal)
+    override suspend fun createJournal(journal: Journal): Boolean {
+        return firestoreModel.createJournal(journal)
     }
 
-    override fun closeJournal(journal: Journal) {
-        firestoreModel.closeJournal(journal)
+    override suspend fun closeJournal(journal: Journal): Boolean {
+        return firestoreModel.closeJournal(journal)
     }
 
-    //TODO must be done only if the logged user state is ConcreteAdmin
-    override fun addParticipant(journal: Journal, user: UserContext) {
-        firestoreModel.addParticipant(journal, user)
+    override suspend fun addParticipant(journal: Journal, user: UserContext): Boolean {
+        return firestoreModel.addParticipant(journal, user)
     }
 
-    //TODO must be done only if the logged user state is ConcreteAdmin
-    override fun removeParticipant(journal: Journal, user: UserContext) {
-        firestoreModel.removeParticipant(journal, user)
+    override suspend fun removeParticipant(journal: Journal, user: UserContext): Boolean {
+        return firestoreModel.removeParticipant(journal, user)
     }
 
-    override fun loadParticipants (journal : Journal) {
-        firestoreModel.loadParticipants(journal)
+    override suspend fun loadParticipants(journal: Journal): List<UserContext>? {
+        return firestoreModel.loadParticipants(journal)
     }
 
-    //TODO must be done only if the logged user state is ConcreteAdmin
-    override fun updateJournalTitle(journal: Journal) {
-        firestoreModel.updateJournalTitle(journal)
+    override suspend fun updateJournalTitle(journal: Journal): Boolean {
+        return firestoreModel.updateJournalTitle(journal)
     }
 
-    override fun loadJournalPosts(journal: Journal) {
-        firestoreModel.loadJournalPosts(journal)
+    override suspend fun loadJournalPosts(journal: Journal): List<Post>? {
+        return firestoreModel.loadJournalPosts(journal)
     }
 
-    override fun createPost(journal: Journal, post: Post) {
-        firestoreModel.createPost(journal, post)
+    override suspend fun createPost(journal: Journal, post: Post): Boolean {
+        return firestoreModel.createPost(journal, post)
     }
 
-    override fun deletePost(journal: Journal, post: Post) {
-        firestoreModel.deletePost(journal, post)
+    override suspend fun deletePost(journal: Journal, post: Post): Boolean {
+        return firestoreModel.deletePost(journal, post)
     }
 
-    override fun signUpUser(email: String, password: String) {
-        authenticationModel.signUpUser(email, password)
+    override suspend fun signUpUser(email: String, password: String): Boolean {
+        return authenticationModel.signUpUser(email, password)
     }
 
-    override fun signInUser(email: String, password: String) {
-        authenticationModel.signInUser(email, password)
+    override suspend fun signInUser(email: String, password: String): Boolean {
+        return authenticationModel.signInUser(email, password)
     }
 
     override fun signOutUser() {
         authenticationModel.signOutUser()
     }
 
-    override fun getCurrentUserUID(): String? {
-        return authenticationModel.getCurrentUserUID()
-    }
-
     override fun checkIfSignedIn(): Boolean {
-        return authenticationModel.checkIfSignedIn()
+        return  authenticationModel.checkIfSignedIn()
     }
 
-    override fun updateAuthPassword(newPassword: String) {
-        authenticationModel.updateAuthPassword(newPassword)
+    override suspend fun updateAuthPassword(newPassword: String): Boolean {
+        return authenticationModel.updateAuthPassword(newPassword)
     }
 }

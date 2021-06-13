@@ -11,46 +11,44 @@ interface Model {
     //FirestoreModel interface
     fun instantiateUserModel ()
 
-    fun createUser (user : UserContext)
+    suspend fun createUser (user : UserContext) : Boolean
 
-    fun deleteUser ()
+    suspend fun deleteUser () : Boolean
 
-    fun updateUserBio (newBio : String)
+    suspend fun updateUserBio (newBio : String) : Boolean
 
-    fun updateUserAddNewJournalLink (journal: Journal)
+    suspend fun updateUserAddNewJournalLink (journal: Journal)
 
-    fun updateUserImage(newImageUri : Uri)
+    suspend fun updateUserImage(newImageUri : Uri) : Boolean
 
-    fun createJournal (journal : Journal)
+    suspend fun changeUserState ()
 
-    fun closeJournal (journal : Journal)
+    suspend fun createJournal (journal : Journal) : Boolean
 
-    fun addParticipant (journal : Journal, user : UserContext)
+    suspend fun closeJournal (journal : Journal) : Boolean
 
-    fun removeParticipant (journal : Journal, user : UserContext)
+    suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean
 
-    fun loadParticipants (journal : Journal)
+    suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
 
-    fun updateJournalTitle (journal: Journal)
+    suspend fun loadParticipants (journal : Journal) : List<UserContext>?
 
-    fun loadJournalPosts (journal: Journal)
+    suspend fun updateJournalTitle (journal: Journal) : Boolean
 
-    fun createPost (journal : Journal, post : Post)
+    suspend fun loadJournalPosts (journal: Journal) : List<Post>?
 
-    fun deletePost (journal : Journal, post : Post)
+    suspend fun createPost (journal : Journal, post : Post) : Boolean
 
-    fun changeUserState ()
+    suspend fun deletePost (journal : Journal, post : Post) : Boolean
 
     //AuthentificationModel interface
-    fun signUpUser (email : String, password : String)
+    suspend fun signUpUser (email : String, password : String) : Boolean
 
-    fun signInUser (email : String, password : String)
+    suspend fun signInUser (email : String, password : String) : Boolean
 
     fun signOutUser ()
 
-    fun getCurrentUserUID () : String?
-
     fun checkIfSignedIn () : Boolean
 
-    fun updateAuthPassword (newPassword : String)
+    suspend fun updateAuthPassword (newPassword : String) : Boolean
 }

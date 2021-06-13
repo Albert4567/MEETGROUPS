@@ -5,15 +5,15 @@ import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 
 interface UserFirestoreModel {
-    fun createUser (user : UserContext)
+    suspend fun createUser (user : UserContext) : Boolean
 
-    fun deleteUser ()
+    suspend fun deleteUser () : Boolean
 
-    fun updateUserBio (newBio : String)
+    suspend fun updateUserBio (newBio : String) : Boolean
 
-    fun updateUserAddNewJournalLink (user : UserContext, journal: Journal)
+    suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 
-    fun updateUserImage (newImageUri : Uri, uid : String)
+    suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
 
-    fun changeUserState ()
+    suspend fun changeUserState () : Boolean
 }

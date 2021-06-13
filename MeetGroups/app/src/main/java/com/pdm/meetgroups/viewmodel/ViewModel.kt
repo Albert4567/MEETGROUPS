@@ -5,9 +5,7 @@ import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
 
 interface ViewModel {
-    fun requestCreateJournal(journal: Journal)
-
-    fun responseCreateJournal(journal : Journal)
+    fun createJournal(journal: Journal)
 
     fun closeJournal(journal: Journal)
 

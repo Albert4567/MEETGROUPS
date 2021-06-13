@@ -1,21 +1,22 @@
 package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
 import com.pdm.meetgroups.model.entities.Journal
+import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
 
 interface JournalFirestoreModel {
-    fun createJournal (journal : Journal)
+    suspend fun createJournal (journal : Journal) : Boolean
 
-    fun closeJournal (journal : Journal)
+    suspend fun closeJournal (journal : Journal) : Boolean
 
     //TODO checks to use this methods only if admin
-    fun addParticipant (journal : Journal, user : UserContext)
+    suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean
 
-    fun removeParticipant (journal : Journal, user : UserContext)
+    suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
 
-    fun loadParticipants (journal : Journal)
+    suspend fun loadParticipants (journal : Journal) : List<UserContext>?
 
-    fun updateJournalTitle (journal: Journal)
+    suspend fun updateJournalTitle (journal: Journal) : Boolean
 
-    fun loadJournalPosts (journal: Journal)
+    suspend fun loadJournalPosts (journal: Journal) : List<Post>?
 }

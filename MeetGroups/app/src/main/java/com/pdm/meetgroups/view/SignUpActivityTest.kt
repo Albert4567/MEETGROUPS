@@ -8,39 +8,46 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Toast
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.*
-import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
-import com.pdm.meetgroups.model.dbmanager.FirestoreModel
-import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import com.pdm.meetgroups.model.entities.*
-import com.pdm.meetgroups.viewmodel.DBObserverHandler
 import com.pdm.meetgroups.viewmodel.ViewModelImpl
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class SignUpActivityTest : AppCompatActivity() {
-    private lateinit var authModelImpl : AuthenticationModelImpl
+    private val viewModel = ViewModelImpl()
     private lateinit var filepath : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        authModelImpl = AuthenticationModelImpl(DBObserverHandler(ViewModelImpl()))
+        viewModel.context = applicationContext
     }
 
     fun signUp(view : View?) {
-        authModelImpl.signUpUser(editTextEmail.text.toString().trim(),
-            editTextPassword.text.toString().trim())
+        viewModel.testCoroutinesSignUp(
+            editTextEmail.text.toString().trim(),
+            editTextPassword.text.toString().trim()
+        )
 
-        authModelImpl.signInUser(editTextEmail.text.toString().trim(),
-                editTextPassword.text.toString().trim())
+        val user = UserContext()
+        val concreteUser: UserState = ConcreteUser()
+        concreteUser.nickname = "Marco1209"
+        concreteUser.bio = "bella Bro"
+        concreteUser.email = editTextEmail.text.toString()
+        user.changeState(concreteUser)
 
-        Toast.makeText(this, authModelImpl.getCurrentUserUID(),
-                Toast.LENGTH_SHORT).show()
+        val journal: Journal = Journal(
+            "1233",
+            "Cucciolo",
+            mutableListOf<Post>(),
+            JOURNAL_STATUS.IN_PROGRESS,
+            mutableListOf(user)
+        )
+
+        viewModel.createJournal(journal)
+        viewModel.closeJournal(journal)
     }
 
     private fun startFileChooser() {
@@ -57,39 +64,41 @@ class SignUpActivityTest : AppCompatActivity() {
             var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
             //imageView.setImageBitmap(bitmap)
 
-            val model = ModelImpl(DBObserverHandler(ViewModelImpl()))
+            val model = ModelImpl()
             model.instantiateUserModel()
-            model.updateUserImage(filepath)
+            //model.updateUserImage(filepath)
         }
     }
 
-    private fun firebaseTest () {
-        val user = UserContext()
-        val concreteUser : UserState = ConcreteUser()
-        concreteUser.nickname = "Marco1209"
-        concreteUser.bio = "bella Bro"
-        concreteUser.email = editTextEmail.text.toString()
-        user.changeState(concreteUser)
+    /*private fun firebaseTest () = runBlocking {
+        launch {
+            val user = UserContext()
+            val concreteUser: UserState = ConcreteUser()
+            concreteUser.nickname = "Marco1209"
+            concreteUser.bio = "bella Bro"
+            concreteUser.email = editTextEmail.text.toString()
+            user.changeState(concreteUser)
 
 
-        val firestore : FirestoreModel =  FirestoreModelImpl(DBObserverHandler(ViewModelImpl()))
-        firestore.instantiateUserModel(authModelImpl.getCurrentUserUID()!!)
-        firestore.createUser(user)
-        /*
-        firestore.updateUserBio("minchia fraf")
+            val firestore: FirestoreModel = FirestoreModelImpl()
+            firestore.instantiateUserModel(authModelImpl.getCurrentUserUID()!!)
+            firestore.createUser(user)
 
-        val journal : Journal = Journal(
+
+            firestore.updateUserBio("minchia fraf")
+
+            val journal: Journal = Journal(
                 "111",
                 "Pippo",
                 mutableListOf<Post>(),
                 JOURNAL_STATUS.IN_PROGRESS,
                 mutableListOf(user)
-        )
+            )
 
-        firestore.createJournal(journal)
-        journal.title = "Franco"
-        firestore.updateJournalTitle(journal)
-        val post : Post = Post(
+            firestore.createJournal(journal)
+            journal.title = "Franco"
+            firestore.updateJournalTitle(journal)
+            val post: Post = Post(
                 "112",
                 "vacanzona",
                 "si spacca fraaf",
@@ -99,10 +108,10 @@ class SignUpActivityTest : AppCompatActivity() {
                 GeoPoint(0.00, 0.00),
                 mutableListOf("#pizza", "#coca", "#mare"),
                 null
-        )
-        firestore.createPost(journal, post)
+            )
+            firestore.createPost(journal, post)
 
-        val toRemovePost : Post = Post(
+            val toRemovePost: Post = Post(
                 "113",
                 ".....",
                 ".....",
@@ -112,14 +121,14 @@ class SignUpActivityTest : AppCompatActivity() {
                 GeoPoint(0.00, 0.00),
                 null,
                 null
-        )
-        firestore.createPost(journal, toRemovePost)
-        firestore.loadJournalPosts(journal)
-        firestore.deletePost(journal, toRemovePost)
-        firestore.closeJournal(journal)
-        firestore.updateUserAddNewJournalLink(journal)
-        firestore.loadParticipants(journal)
-        */
+            )
+            firestore.createPost(journal, toRemovePost)
+            firestore.loadJournalPosts(journal)
+            firestore.deletePost(journal, toRemovePost)
+            firestore.closeJournal(journal)
+            firestore.updateUserAddNewJournalLink(user, journal)
+            firestore.loadParticipants(journal)
+        }
 
         //firestore.deleteUser()
     }
@@ -130,5 +139,5 @@ class SignUpActivityTest : AppCompatActivity() {
 
         firebaseTest()
         startFileChooser()
-    }
+    }*/
 }

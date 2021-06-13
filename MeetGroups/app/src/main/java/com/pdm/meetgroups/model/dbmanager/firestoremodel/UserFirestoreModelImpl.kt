@@ -2,19 +2,23 @@ package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
 import android.net.Uri
 import android.util.Log
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.model.entities.Journal
-import com.pdm.meetgroups.observers.DBObserver
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 import kotlin.collections.HashMap
 
-class UserFirestoreModelImpl (userRef : DocumentReference, observer: DBObserver) : UserFirestoreModel {
-    private val TAG = "UserFirestoreModelImpl"
-    private val userDocRef = userRef
-    private val dbObserver = observer
+class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : CollectionReference)
+    : UserFirestoreModel {
 
-    //TODO check if user alredy exist and stop because it overwrites
-    override fun createUser (user : UserContext) {
+    private val TAG = "UserFirestoreModelImpl"
+    private val usersDocsRef = usersRef
+    private val userDocRef = userDocRef
+
+    //TODO TEST
+    override suspend fun createUser (user : UserContext) : Boolean {
         val mUser = user.getState()
         val userData = hashMapOf (
                 "nickname" to mUser?.nickname,
@@ -23,104 +27,113 @@ class UserFirestoreModelImpl (userRef : DocumentReference, observer: DBObserver)
                 "journalsID" to hashMapOf<String, String>(),
                 "state" to "user"
         )
-        userDocRef.set(userData)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Create Profile success!")
-                    dbObserver.notifyCreateUser(true)
-                }
-                .addOnFailureListener { e ->
-                    Log.e(TAG, "Create Profile failure!", e)
-                    dbObserver.notifyCreateUser(true)
-                }
+
+        return try {
+            if (userDocRef.get().await() != null) {
+                Log.w(TAG, "Create Profile failure!, it already exists")
+                false
+            }
+            userDocRef.set(userData)
+                .await()
+            Log.w(TAG, "Create Profile success!")
+            true
+        } catch (e : Exception) {
+            Log.e(TAG, "Create Profile failure!", e)
+            false
+        }
     }
 
-    override fun deleteUser () {
-        userDocRef.delete()
-                .addOnSuccessListener {
-                    Log.d(TAG, "Delete profile transaction success!")
-                    dbObserver.notifyDeleteUser(true)
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Delete profile transaction failure.", e)
-                    dbObserver.notifyDeleteUser(false)
-                }
+    override suspend fun deleteUser () : Boolean {
+        return try {
+            userDocRef.delete().await()
+            Log.w(TAG, "Delete profile transaction success!")
+            true
+        } catch (e : Exception) {
+            Log.e(TAG, "Delete profile transaction failure.", e)
+            false
+        }
     }
 
-    override fun updateUserBio (newBio : String) {
+    override suspend fun updateUserBio (newBio : String) : Boolean {
         //TODO update for emojis https://stackoverflow.com/questions/40519352/put-emoji-code-in-a-string/40520115
         if (newBio.length in 0..256) {
-            userDocRef.update("bio", newBio)
-                    .addOnSuccessListener {
-                        Log.d(TAG, "Update user bio transaction success!")
-                        //TODO send callback to update local user variable
-                        dbObserver.notifyUpdateUserBio(true)
-                    }
-                    .addOnFailureListener { e ->
-                        Log.w(TAG, "Update user bio transaction failure.", e)
-                        dbObserver.notifyUpdateUserBio(false)
-                    }
+            return try {
+                userDocRef.update("bio", newBio)
+                    .await()
+                Log.w(TAG, "Update user bio transaction success!")
+                //TODO send callback to update local user variable
+                true
+            } catch (e : Exception) {
+                Log.e(TAG, "create post failed with ", e)
+                false
+            }
         }
-        else
-            dbObserver.notifyUpdateUserBio(false)
-
+        else {
+            Log.w(TAG, "Update user bio failure.")
+            return false
+        }
     }
 
-    //TODO come fare ad aggiungere il link di altri utenti se non conosco lo uid?
-    //  query per nickname? ma e' univoco?
-    //  campo uid nella classe user?
-    override fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) {
-        userDocRef.get()
-                .addOnSuccessListener { document ->
-                    val journals  = document.data?.getValue("journalsID") as HashMap<String, String>
-                    journals[journal.journalID] = journal.title
-                    userDocRef.update("journalsID", journals)
-                            .addOnSuccessListener {
-                                Log.d(TAG, "Update user journal links success!")
-                                dbObserver.notifyUpdateUserAddNewJournalLink(true)
-                            }
-                            .addOnFailureListener { e ->
-                                Log.d(TAG, "update journal failed with ", e)
-                                dbObserver.notifyUpdateUserAddNewJournalLink(false)
-                            }
-                }
-                .addOnFailureListener { e ->
-                    Log.d(TAG, "get user doc failed with ", e)
-                    dbObserver.notifyUpdateUserAddNewJournalLink(false)
-                }
+    override suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean {
+        return try {
+            val userDoc = usersDocsRef
+                .whereEqualTo("nickname", user.getState()!!.nickname)
+                .limit(1)
+                .get()
+                .await()
+            val journals  = userDoc.documents[0].data?.getValue("journalsID") as HashMap<String, String>
+            journals[journal.journalID] = journal.title
+            try {
+                userDoc.documents[0].reference
+                    .update("journalsID", journals)
+                    .await()
+                Log.w(TAG, "Update user journal links success!")
+                true
+            } catch (e : Exception) {
+                Log.e(TAG, "Update user journal links failed with ", e)
+                false
+            }
+        } catch (e : Exception) {
+            Log.e(TAG, "Get user doc failed with ", e)
+            false
+        }
     }
 
-    override fun updateUserImage (newImageUri : Uri, uid : String) {
-        userDocRef.update("imageUri", "userProfileImages/$uid/userImage")
-                .addOnSuccessListener {
-                    Log.d(TAG, "Update Profile picture uri success!")
-                    dbObserver.notifyUpdateUserImage(true)
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Update profile picture uri failure.", e)
-                    dbObserver.notifyUpdateUserImage(false)
-                }
+    override suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean {
+        return try {
+            userDocRef
+                .update("imageUri", "userProfileImages/$uid/userImage")
+                .await()
+            Log.w(TAG, "Update Profile picture uri success!")
+            true
+        } catch (e : Exception) {
+            Log.e(TAG, "Update profile picture uri failure.", e)
+            false
+        }
     }
 
-    override fun changeUserState () {
-        userDocRef.get()
-            .addOnSuccessListener { document ->
-                val newState = if (document.data?.getValue("state") as String == "user")
-                                    "admin"
-                                else
-                                    "user"
+    override suspend fun changeUserState () : Boolean {
+        return try {
+            val userDoc = userDocRef.get()
+                .await()
+            val newState =
+                if (userDoc.data?.getValue("state") as String == "user")
+                    "admin"
+                else
+                    "user"
+
+            try {
                 userDocRef.update("state", newState)
-                    .addOnSuccessListener {
-                        Log.d(TAG, "Change user state success!")
-                        dbObserver.notifyChangeUserState(true)
-                    }
-                    .addOnFailureListener { e ->
-                        Log.d(TAG, "Change user state failed with ", e)
-                        dbObserver.notifyChangeUserState(false)
-                    }
+                    .await()
+                Log.w(TAG, "Change user state success!")
+                true
+            } catch (e : Exception) {
+                Log.e(TAG, "Change user state failed with ", e)
+                false
             }
-            .addOnFailureListener { e ->
-                Log.d(TAG, "get user doc failed with ", e)
-                dbObserver.notifyChangeUserState(false)
-            }
+        } catch (e : Exception) {
+            Log.e(TAG, "get user doc failed with ", e)
+            false
+        }
     }
 }

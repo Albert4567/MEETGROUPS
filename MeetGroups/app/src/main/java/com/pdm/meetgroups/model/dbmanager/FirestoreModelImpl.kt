@@ -9,88 +9,90 @@ import com.pdm.meetgroups.model.dbmanager.firestoremodel.PostFirestoreModelImpl
 import com.pdm.meetgroups.model.dbmanager.firestoremodel.UserFirestoreModel
 import com.pdm.meetgroups.model.dbmanager.firestoremodel.UserFirestoreModelImpl
 import com.pdm.meetgroups.model.entities.*
-import com.pdm.meetgroups.observers.DBObserver
 
-class FirestoreModelImpl (observer : DBObserver) : FirestoreModel {
-    private val dbObserver = observer
+class FirestoreModelImpl () : FirestoreModel {
 
     private val TAG : String = "FirestoreModelImpl"
     private val firestoreRef : FirebaseFirestore = Firebase.firestore
 
     private val journalFirestoreModel =
             JournalFirestoreModelImpl(firestoreRef.collection("journals"),
-                                      firestoreRef.collection("users"), dbObserver)
+                                      firestoreRef.collection("users"))
 
     private val postFirestoreModel =
-            PostFirestoreModelImpl(firestoreRef.collection("journals"), dbObserver)
+            PostFirestoreModelImpl(firestoreRef.collection("journals"))
 
     //TODO ogni volta che l'utente cambia va distrutto e ricreato
     private lateinit var userFirestoreModel : UserFirestoreModel
 
     override fun instantiateUserModel (uid : String) {
-        userFirestoreModel = UserFirestoreModelImpl(firestoreRef.collection("users")
-                                                                .document(uid), dbObserver)
+        userFirestoreModel = UserFirestoreModelImpl(
+            firestoreRef.collection("users").document(uid),
+            firestoreRef.collection("users")
+        )
     }
 
-    override fun createUser(user: UserContext) {
-        userFirestoreModel.createUser(user)
+    override suspend fun createUser(user: UserContext) : Boolean {
+        return userFirestoreModel.createUser(user)
     }
 
-    override fun deleteUser() {
-        userFirestoreModel.deleteUser()
+    override suspend fun deleteUser() : Boolean {
+        return userFirestoreModel.deleteUser()
     }
 
-    override fun updateUserBio(newBio: String) {
-        userFirestoreModel.updateUserBio(newBio)
+    override suspend fun updateUserBio(newBio: String) : Boolean {
+        return userFirestoreModel.updateUserBio(newBio)
     }
 
-    override fun updateUserAddNewJournalLink(user : UserContext, journal: Journal) {
-        userFirestoreModel.updateUserAddNewJournalLink(user, journal)
+    override suspend fun updateUserAddNewJournalLink(user : UserContext, journal: Journal) : Boolean {
+        return userFirestoreModel.updateUserAddNewJournalLink(user, journal)
     }
 
-    override fun updateUserImage(newImageUri : Uri, uid : String) {
-        userFirestoreModel.updateUserImage(newImageUri, uid)
+    override suspend fun updateUserImage(newImageUri : Uri, uid : String) : Boolean {
+        return userFirestoreModel.updateUserImage(newImageUri, uid)
     }
 
-    override fun createJournal(journal: Journal) {
-        journalFirestoreModel.createJournal(journal)
+    override suspend fun changeUserState() : Boolean {
+        return userFirestoreModel.changeUserState()
     }
 
-    override fun closeJournal(journal: Journal) {
-        journalFirestoreModel.closeJournal(journal)
-        for (user in journal.users)
-            userFirestoreModel.updateUserAddNewJournalLink(user, journal)
+    override suspend fun createJournal(journal: Journal) : Boolean {
+        return journalFirestoreModel.createJournal(journal)
     }
 
-    override fun addParticipant(journal: Journal, user: UserContext) {
-        journalFirestoreModel.addParticipant(journal, user)
+    override suspend fun closeJournal(journal: Journal) : Boolean {
+        val result = journalFirestoreModel.closeJournal(journal)
+        if (result)
+            for (user in journal.users)
+                updateUserAddNewJournalLink(user, journal)
+        return result
     }
 
-    override fun removeParticipant(journal: Journal, user: UserContext) {
-        journalFirestoreModel.removeParticipant(journal, user)
+    override suspend fun addParticipant(journal: Journal, user: UserContext) : Boolean {
+        return journalFirestoreModel.addParticipant(journal, user)
     }
 
-    override fun loadParticipants(journal: Journal) {
-        journalFirestoreModel.loadParticipants(journal)
+    override suspend fun removeParticipant(journal: Journal, user: UserContext) : Boolean {
+        return journalFirestoreModel.removeParticipant(journal, user)
     }
 
-    override fun updateJournalTitle(journal: Journal) {
-        journalFirestoreModel.updateJournalTitle(journal)
+    override suspend fun loadParticipants(journal: Journal) : List<UserContext>? {
+        return journalFirestoreModel.loadParticipants(journal)
     }
 
-    override fun loadJournalPosts(journal: Journal) {
-        journalFirestoreModel.loadJournalPosts(journal)
+    override suspend fun updateJournalTitle(journal: Journal) : Boolean {
+        return journalFirestoreModel.updateJournalTitle(journal)
     }
 
-    override fun createPost(journal: Journal, post: Post) {
-        postFirestoreModel.createPost(journal, post)
+    override suspend fun loadJournalPosts(journal: Journal) : List<Post>? {
+        return journalFirestoreModel.loadJournalPosts(journal)
     }
 
-    override fun deletePost(journal: Journal, post: Post) {
-        postFirestoreModel.deletePost(journal, post)
+    override suspend fun createPost(journal: Journal, post: Post) : Boolean {
+        return postFirestoreModel.createPost(journal, post)
     }
 
-    override fun changeUserState() {
-        userFirestoreModel.changeUserState()
+    override suspend fun deletePost(journal: Journal, post: Post) : Boolean {
+        return postFirestoreModel.deletePost(journal, post)
     }
 }

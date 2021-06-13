@@ -8,36 +8,36 @@ interface FirestoreModel {
 
     //UsersDedicatedMethod
     //    create a user document on firebase with no journals
-    fun createUser (user : UserContext)
+    suspend fun createUser (user : UserContext) : Boolean
 
-    fun deleteUser ()
+    suspend fun deleteUser () : Boolean
 
-    fun updateUserBio (newBio : String)
+    suspend fun updateUserBio (newBio : String) : Boolean
 
-    fun updateUserAddNewJournalLink (user : UserContext, journal: Journal)
+    suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 
-    fun updateUserImage(newImageUri : Uri, uid : String)
+    suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
 
-    fun changeUserState ()
+    suspend fun changeUserState () : Boolean
 
     //JournalsDedicatedMethods
-    fun createJournal (journal : Journal)
+    suspend fun createJournal (journal : Journal) : Boolean
 
-    fun closeJournal (journal : Journal)
+    suspend fun closeJournal (journal : Journal) : Boolean
 
     //TODO checks to use this methods only if admin
-    fun addParticipant (journal : Journal, user : UserContext)
+    suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean
 
-    fun removeParticipant (journal : Journal, user : UserContext)
+    suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
 
-    fun loadParticipants (journal : Journal)
+    suspend fun loadParticipants (journal : Journal) : List<UserContext>?
 
-    fun updateJournalTitle (journal: Journal)
+    suspend fun updateJournalTitle (journal: Journal) : Boolean
 
-    fun loadJournalPosts (journal: Journal)
+    suspend fun loadJournalPosts (journal: Journal) : List<Post>?
 
     //PostsDedicatedMethods
-    fun createPost (journal : Journal, post : Post)
+    suspend fun createPost (journal : Journal, post : Post) : Boolean
 
-    fun deletePost (journal : Journal, post : Post)
+    suspend fun deletePost (journal : Journal, post : Post) : Boolean
 }

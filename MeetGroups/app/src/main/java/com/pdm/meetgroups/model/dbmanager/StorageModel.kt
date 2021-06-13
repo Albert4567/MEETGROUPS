@@ -3,5 +3,5 @@ package com.pdm.meetgroups.model.dbmanager
 import android.net.Uri
 
 interface StorageModel {
-    fun updateStoredUserImage (newImageUri : Uri, uid : String)
+    suspend fun updateStoredUserImage (newImageUri : Uri, uid : String) : Boolean
 }
