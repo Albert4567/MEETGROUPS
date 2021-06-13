@@ -2,6 +2,7 @@ package com.pdm.meetgroups.model
 
 import android.net.Uri
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.ktx.firestoreSettings
 import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
 import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import com.pdm.meetgroups.model.dbmanager.StorageModelImpl
@@ -41,7 +42,7 @@ class ModelImpl (dbObserver: DBObserver) : Model {
     }
 
     override fun updateUserBio(newBio: String) {
-        TODO("Not yet implemented")
+        firestoreModel.updateUserBio(newBio)
     }
 
     override fun updateUserAddNewJournalLink(journal: Journal) {

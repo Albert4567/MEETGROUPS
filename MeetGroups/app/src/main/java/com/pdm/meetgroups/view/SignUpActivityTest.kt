@@ -18,17 +18,18 @@ import com.pdm.meetgroups.model.dbmanager.FirestoreModel
 import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.viewmodel.DBObserverHandler
+import com.pdm.meetgroups.viewmodel.ViewModelImpl
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivityTest : AppCompatActivity() {
     private lateinit var authModelImpl : AuthenticationModelImpl
     private lateinit var filepath : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
-        authModelImpl = AuthenticationModelImpl()
+        authModelImpl = AuthenticationModelImpl(DBObserverHandler(ViewModelImpl()))
     }
 
     fun signUp(view : View?) {
@@ -54,9 +55,9 @@ class SignUpActivity : AppCompatActivity() {
         if (requestCode == 111 && resultCode == Activity.RESULT_OK && data != null) {
             filepath = data.data!!
             var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filepath)
-            imageView.setImageBitmap(bitmap)
+            //imageView.setImageBitmap(bitmap)
 
-            val model = ModelImpl(DBObserverHandler())
+            val model = ModelImpl(DBObserverHandler(ViewModelImpl()))
             model.instantiateUserModel()
             model.updateUserImage(filepath)
         }
@@ -71,7 +72,7 @@ class SignUpActivity : AppCompatActivity() {
         user.changeState(concreteUser)
 
 
-        val firestore : FirestoreModel =  FirestoreModelImpl()
+        val firestore : FirestoreModel =  FirestoreModelImpl(DBObserverHandler(ViewModelImpl()))
         firestore.instantiateUserModel(authModelImpl.getCurrentUserUID()!!)
         firestore.createUser(user)
         /*

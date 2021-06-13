@@ -5,6 +5,8 @@ import com.google.firebase.firestore.CollectionReference
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.observers.DBObserver
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
 class PostFirestoreModelImpl (journalsRef : CollectionReference,
     observer : DBObserver) : PostFirestoreModel {
@@ -13,7 +15,7 @@ class PostFirestoreModelImpl (journalsRef : CollectionReference,
     private val journalsCollectionRef : CollectionReference = journalsRef
     private val dbObserver = observer
 
-    override fun createPost (journal : Journal, post : Post) {
+    override suspend fun createPost (journal : Journal, post : Post) : Boolean {
         var dataPost = hashMapOf (
                 "postID" to post.postID,
                 "title" to post.title,
@@ -25,17 +27,28 @@ class PostFirestoreModelImpl (journalsRef : CollectionReference,
                 "tags" to post.tags,
                 "images" to post.images
         )
-        journalsCollectionRef.document(journal.journalID).collection("posts")
+
+        return try {
+            journalsCollectionRef.document(journal.journalID).collection("posts")
                 .document(post.postID)
-                .set(dataPost)
-                .addOnSuccessListener {
-                    Log.d(TAG, "create post success!")
-                    dbObserver.notifyCreatePost(true)
-                }
-                .addOnFailureListener { e ->
-                    Log.d(TAG, "create post failed with ", e)
-                    dbObserver.notifyCreatePost(false)
-                }
+                .set(dataPost).await()
+            Log.d(TAG, "create post success!")
+            true
+        } catch (e : Exception) {
+            Log.d(TAG, "create post failed with ", e)
+            false
+        }
+        /*journalsCollectionRef.document(journal.journalID).collection("posts")
+                .document(post.postID)
+                .set(dataPost).await()
+        .addOnSuccessListener {
+            Log.d(TAG, "create post success!")
+            dbObserver.notifyCreatePost(true)
+        }
+        .addOnFailureListener { e ->
+            Log.d(TAG, "create post failed with ", e)
+            dbObserver.notifyCreatePost(false)
+        }*/
     }
 
     override fun deletePost (journal : Journal, post : Post) {

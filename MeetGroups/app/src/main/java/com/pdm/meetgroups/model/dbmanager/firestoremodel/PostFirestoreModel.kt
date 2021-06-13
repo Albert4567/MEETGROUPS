@@ -5,7 +5,7 @@ import com.pdm.meetgroups.model.entities.Post
 
 interface PostFirestoreModel {
     //PostsDedicatedMethods
-    fun createPost (journal : Journal, post : Post)
+    suspend fun createPost (journal : Journal, post : Post) : Boolean
 
     fun deletePost (journal : Journal, post : Post)
 }
