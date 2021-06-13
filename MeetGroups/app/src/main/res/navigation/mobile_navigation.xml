@@ -21,5 +21,15 @@
         android:id="@+id/navigation_journal"
         android:name="com.pdm.meetgroups.view.navbar.JournalFragment"
         android:label="@string/title_journal"
-        tools:layout="@layout/fragment_journal" />
+        tools:layout="@layout/fragment_journal" >
+        <action
+            android:id="@+id/action_navigation_journal_to_navigation_post_creation"
+            app:destination="@id/navigation_post_creation" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_post_creation"
+        android:name="com.pdm.meetgroups.view.PostCreationFragment"
+        android:label="@string/title_journal"
+        tools:layout="@layout/fragment_post_creation" />
 </navigation>
