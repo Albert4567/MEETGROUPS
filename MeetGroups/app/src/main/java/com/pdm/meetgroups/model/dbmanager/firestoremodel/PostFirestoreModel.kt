@@ -7,5 +7,5 @@ interface PostFirestoreModel {
     //PostsDedicatedMethods
     suspend fun createPost (journal : Journal, post : Post) : Boolean
 
-    fun deletePost (journal : Journal, post : Post)
+    suspend fun deletePost (journal : Journal, post : Post) : Boolean
 }

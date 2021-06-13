@@ -1,49 +1,83 @@
 package com.pdm.meetgroups.viewmodel
 
+import android.content.Context
+import android.widget.Toast
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
-import com.pdm.meetgroups.observers.ViewModelObserver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-//TODO finire di implementare l'observer
-class ViewModelImpl(vObserver : ViewModelObserver) : ViewModel {
-    private val dbObserver = DBObserverHandler(this)
-    private val viewObserver = vObserver
-    private val model = ModelImpl(dbObserver)
-
+class ViewModelImpl : ViewModel(), com.pdm.meetgroups.viewmodel.ViewModel {
+    val model = ModelImpl()
     private val journalViewModel = JournalViewModel(model)
 
+    //da togliere solo per test
+
+    lateinit var context : Context
+
+    //da togliere solo per test
+    fun testCoroutinesSignUp (email : String, password : String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            //model.deleteUser()
+            //model.signUpUser(email, password)
+            //model.signInUser(email, password)
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, model.checkIfSignedIn().toString(), Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
     override fun createJournal(journal: Journal) {
-        model.createJournal(journal)
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = model.createJournal(journal)
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, result.toString(), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     override fun closeJournal(journal: Journal) {
-        model.closeJournal(journal)
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = model.closeJournal(journal)
+
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, result.toString(), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     override fun addParticipant(journal: Journal, user: UserContext) {
-        model.addParticipant(journal, user)
+        TODO("Not yet implemented")
     }
 
     override fun removeParticipant(journal: Journal, user: UserContext) {
-        model.removeParticipant(journal, user)
+        TODO("Not yet implemented")
     }
 
     override fun loadParticipants(journal: Journal) {
-        model.loadParticipants(journal)
+        TODO("Not yet implemented")
     }
 
     fun loadParticipants () {
-        viewObserver.notifyLoadParticipantS()
+        TODO("Not yet implemented")
     }
 
     override fun updateJournalTitle(journal: Journal) {
-        model.updateJournalTitle(journal)
+        TODO("Not yet implemented")
     }
 
     override fun loadJournalPosts(journal: Journal) {
-        model.loadJournalPosts(journal)
+        TODO("Not yet implemented")
     }
 
     override fun createPost(journal: Journal, post: Post) {
@@ -53,5 +87,4 @@ class ViewModelImpl(vObserver : ViewModelObserver) : ViewModel {
     override fun deletePost(journal: Journal, post: Post) {
         TODO("Not yet implemented")
     }
-
 }

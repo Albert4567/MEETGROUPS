@@ -1,11 +1,9 @@
 package com.pdm.meetgroups.model.dbmanager
 
-import com.google.android.gms.tasks.Task
-
 interface AuthenticationModel {
-    fun signUpUser (email : String, password : String)
+    suspend fun signUpUser (email : String, password : String) : Boolean
 
-    fun signInUser (email : String, password : String)
+    suspend fun signInUser (email : String, password : String) : Boolean
 
     fun signOutUser ()
 
@@ -13,8 +11,8 @@ interface AuthenticationModel {
 
     fun checkIfSignedIn () : Boolean
 
-    fun deleteAuthUser () : Task<Void>
+    suspend fun deleteAuthUser () : Boolean
 
-    fun updateAuthPassword (newPassword : String)
+    suspend fun updateAuthPassword (newPassword : String) : Boolean
 
 }
