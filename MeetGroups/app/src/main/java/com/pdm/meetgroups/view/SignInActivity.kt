@@ -14,22 +14,27 @@ import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
-class SignUpActivity : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
     private lateinit var authModelImpl : AuthentificationModelImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_sign_in)
         authModelImpl = AuthentificationModelImpl()
     }
 
-    fun signUp(view : View?) {
-        authModelImpl.signUpUser(editTextEmail.text.toString().trim(),
+    fun signIn(view : View?) {
+        authModelImpl.signInUser(editTextEmail.text.toString().trim(),
             editTextPassword.text.toString().trim())
 
         Toast.makeText(this, authModelImpl.getCurrentUserUID(),
                 Toast.LENGTH_SHORT).show()
     }
+    fun signUp(view : View?) {
+        authModelImpl.signUpUser(editTextEmail.text.toString().trim(),
+            editTextPassword.text.toString().trim())
 
-
+        Toast.makeText(this, authModelImpl.getCurrentUserUID(),
+            Toast.LENGTH_SHORT).show()
+    }
 }
