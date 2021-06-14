@@ -23,15 +23,15 @@ class ViewModelImpl : ViewModel(), com.pdm.meetgroups.viewmodel.ViewModel {
     //da togliere solo per test
     fun testCoroutinesSignUp (email : String, password : String) {
         viewModelScope.launch(Dispatchers.IO) {
-            //model.deleteUser()
-            //model.signUpUser(email, password)
-            //model.signInUser(email, password)
+            model.deleteUser()
+            model.signUpUser(email, password)
+            model.signInUser(email, password)
 
             withContext(Dispatchers.Main) {
                 Toast.makeText(context, model.checkIfSignedIn().toString(), Toast.LENGTH_SHORT)
                     .show()
             }
-        }
+        }.invokeOnCompletion { /*updateUI()*/ }
     }
 
     override fun createJournal(journal: Journal) {
