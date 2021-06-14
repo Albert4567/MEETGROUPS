@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.lifecycle.ViewModel
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.model.POST_STATUS
+import com.pdm.meetgroups.model.entities.POST_STATUS
 
 class PostCreationViewModel : ViewModel() {
     lateinit var title: String

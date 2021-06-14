@@ -54,6 +54,20 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
         }
     }
 
+    //TODO FINISH DOWNLOAD AND INSTANTIATE LOCAL USER
+    override suspend fun downloadUserInfo(): UserContext? {
+        return try {
+            /*val doc = userDocRef
+                .get()
+                .await()
+
+            val userC*/
+            null
+        } catch (e : Exception) {
+            null
+        }
+    }
+
     override suspend fun updateUserBio (newBio : String) : Boolean {
         //TODO update for emojis https://stackoverflow.com/questions/40519352/put-emoji-code-in-a-string/40520115
         if (newBio.length in 0..256) {

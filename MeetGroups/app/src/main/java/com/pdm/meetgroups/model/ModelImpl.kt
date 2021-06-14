@@ -13,13 +13,20 @@ class ModelImpl () : Model {
     private val firestoreModel = FirestoreModelImpl()
     private val storageModel = StorageModelImpl()
 
+    private lateinit var localUser : UserContext
+
     init {
         instantiateUserModel()
+        instantiateLocalUser()
     }
 
     //TODO check if should be in init
     override fun instantiateUserModel () {
         firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID()!!)
+    }
+
+    override fun instantiateLocalUser() {
+
     }
 
     override suspend fun createUser(user: UserContext): Boolean {

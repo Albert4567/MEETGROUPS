@@ -9,6 +9,8 @@ interface UserFirestoreModel {
 
     suspend fun deleteUser () : Boolean
 
+    suspend fun downloadUserInfo () : UserContext?
+
     suspend fun updateUserBio (newBio : String) : Boolean
 
     suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean

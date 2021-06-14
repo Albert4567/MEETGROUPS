@@ -11,6 +11,8 @@ interface Model {
     //FirestoreModel interface
     fun instantiateUserModel ()
 
+    fun instantiateLocalUser ()
+
     suspend fun createUser (user : UserContext) : Boolean
 
     suspend fun deleteUser () : Boolean
