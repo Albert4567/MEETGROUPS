@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class ViewModelImpl : ViewModel(), com.pdm.meetgroups.viewmodel.ViewModel {
     val model = ModelImpl()
-    private val journalViewModel = JournalViewModel(model)
+    private val journalViewModel = JournalViewModelImpl(model)
 
     //da togliere solo per test
 

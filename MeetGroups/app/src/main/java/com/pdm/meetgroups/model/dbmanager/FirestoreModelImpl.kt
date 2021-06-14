@@ -76,7 +76,7 @@ class FirestoreModelImpl () : FirestoreModel {
         return journalFirestoreModel.removeParticipant(journal, user)
     }
 
-    override suspend fun loadParticipants(journal: Journal) : List<UserContext>? {
+    override suspend fun loadParticipants(journal: Journal) : ArrayList<String>? {
         return journalFirestoreModel.loadParticipants(journal)
     }
 
@@ -84,7 +84,7 @@ class FirestoreModelImpl () : FirestoreModel {
         return journalFirestoreModel.updateJournalTitle(journal)
     }
 
-    override suspend fun loadJournalPosts(journal: Journal) : List<Post>? {
+    override suspend fun loadJournalPosts(journal: Journal) : ArrayList<Post>? {
         return journalFirestoreModel.loadJournalPosts(journal)
     }
 

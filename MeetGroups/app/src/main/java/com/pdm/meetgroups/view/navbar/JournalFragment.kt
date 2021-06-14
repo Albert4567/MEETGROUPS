@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.view.adapter.PostListAdapter
-import com.pdm.meetgroups.viewmodel.JournalViewModel
+import com.pdm.meetgroups.viewmodel.JournalViewModelImpl
 
 
 class JournalFragment : Fragment() {
-    private val journalVM: JournalViewModel by viewModels()
+    private val journalVMImpl: JournalViewModelImpl by viewModels()
     private lateinit var binding: FragmentJournalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,21 +29,21 @@ class JournalFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentJournalBinding.inflate(inflater, container, false)
 
-        journalVM.getPosts().observe(viewLifecycleOwner, Observer {
+        journalVMImpl.getPosts().observe(viewLifecycleOwner, Observer {
             binding.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
-            binding.rvJournalPostlist.adapter = PostListAdapter(journalVM)
+            binding.rvJournalPostlist.adapter = PostListAdapter(journalVMImpl)
         })
 
         binding.btnJournalEdit.setOnClickListener {
-            journalVM.showEditJournalFragment(requireActivity())
+            journalVMImpl.showEditJournalFragment(requireActivity())
         }
 
         binding.btnJournalGroup.setOnClickListener {
-            journalVM.showGroupPartecipants(it)
+            journalVMImpl.showGroupPartecipants(it)
         }
 
         binding.btnJournalAddPost.setOnClickListener {
-            journalVM.showPostCreationFragment(requireActivity())
+            journalVMImpl.showPostCreationFragment(requireActivity())
         }
 
         return binding.root

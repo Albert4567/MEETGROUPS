@@ -97,7 +97,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         }
     }
 
-    override suspend fun loadParticipants (journal : Journal) : List<UserContext>? {
+    override suspend fun loadParticipants (journal : Journal) : ArrayList<String>? {
         return try {
             val doc = journalsCollectionRef.document(journal.journalID)
                 .get()
@@ -110,10 +110,10 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                     .get()
                     .await()
                 var participants = usersDocs.map { userDoc ->
-                    loadUserFromDoc(userDoc)
+                    loadUserFromDoc(userDoc).getState()!!.nickname
                 }
                 Log.w(TAG, "Load Participants from journal success!")
-                return participants
+                return ArrayList(participants)
             } catch (e : Exception) {
                 Log.e(TAG, "Load Participants from journal with ", e)
                 null
@@ -155,7 +155,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         }
     }
 
-    override suspend fun loadJournalPosts (journal: Journal) : List<Post>? {
+    override suspend fun loadJournalPosts (journal: Journal) : ArrayList<Post>? {
         return try {
             val docs = journalsCollectionRef.document(journal.journalID)
                 .collection("posts")
@@ -177,7 +177,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 ))
             }
             Log.w(TAG, "Load Journal Posts success!")
-            return posts
+            return ArrayList(posts)
         } catch (e : Exception) {
             Log.e(TAG, "Get journal doc failed with ", e)
             null

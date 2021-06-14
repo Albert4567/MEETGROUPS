@@ -3,13 +3,11 @@ package com.pdm.meetgroups.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.viewmodel.JournalViewModel
+import com.pdm.meetgroups.viewmodel.JournalViewModelImpl
 
-class PostListAdapter(val journalVM: JournalViewModel) : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
+class PostListAdapter(val journalVMImpl: JournalViewModelImpl) : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -35,6 +33,6 @@ class PostListAdapter(val journalVM: JournalViewModel) : RecyclerView.Adapter<Po
     }
 
     override fun getItemCount(): Int {
-        return journalVM.getPosts().value!!.size
+        return journalVMImpl.getPosts().value!!.size
     }
 }

@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.pdm.meetgroups.databinding.FragmentPostCreationBinding
-import com.pdm.meetgroups.viewmodel.PostCreationViewModel
+import com.pdm.meetgroups.viewmodel.PostCreationViewModelImpl
 
 class PostCreationFragment : Fragment() {
-    private val postCreationVM: PostCreationViewModel by viewModels()
+    private val postCreationVMImpl: PostCreationViewModelImpl by viewModels()
     private lateinit var binding: FragmentPostCreationBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +24,6 @@ class PostCreationFragment : Fragment() {
     }
 
     fun onRadioButtonClicked(view: View) {
-        postCreationVM.setPostVisibility(view)
+        postCreationVMImpl.setPostVisibility(view)
     }
 }

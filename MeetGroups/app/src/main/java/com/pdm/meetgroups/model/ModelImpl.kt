@@ -7,25 +7,39 @@ import com.pdm.meetgroups.model.dbmanager.StorageModelImpl
 import com.pdm.meetgroups.model.entities.*
 
 //TODO check addSnapshotListener
-//TODO Create Local User Instance
 class ModelImpl () : Model {
     private val authenticationModel = AuthenticationModelImpl()
     private val firestoreModel = FirestoreModelImpl()
     private val storageModel = StorageModelImpl()
 
     private lateinit var localUser : UserContext
+    private var localJournal : Journal? = null
 
     init {
         instantiateUserModel()
         instantiateLocalUser()
+        //instantiateLocalJournal()//localUser.getState().openJournal
     }
 
-    //TODO check if should be in init
+    //chiamato:
+    //  all'avvio
+    //  signin dell'utente
     override fun instantiateUserModel () {
         firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID()!!)
     }
 
+    //chiamato:
+    //  all'avvio
+    //  signin dell'utente
     override fun instantiateLocalUser() {
+
+    }
+
+    //chiamato:
+    //  all'avvio
+    //  alla creazione di un altro journal
+    //  signin dell'utente
+    override fun instantiateLocalJournal(journalName: String?) {
 
     }
 
@@ -66,12 +80,20 @@ class ModelImpl () : Model {
     }
 
     override suspend fun createJournal(journal: Journal): Boolean {
-        return firestoreModel.createJournal(journal)
+        return if (firestoreModel.createJournal(journal)) {
+            //instantiateLocalJournal(journal.title)
+            true
+        } else
+            false
+
     }
 
     override suspend fun closeJournal(journal: Journal): Boolean {
+        localJournal = null
         return firestoreModel.closeJournal(journal)
     }
+
+    override fun getJournal () : Journal? { return localJournal }
 
     override suspend fun addParticipant(journal: Journal, user: UserContext): Boolean {
         return firestoreModel.addParticipant(journal, user)
@@ -81,7 +103,7 @@ class ModelImpl () : Model {
         return firestoreModel.removeParticipant(journal, user)
     }
 
-    override suspend fun loadParticipants(journal: Journal): List<UserContext>? {
+    override suspend fun loadParticipants(journal: Journal): ArrayList<String>? {
         return firestoreModel.loadParticipants(journal)
     }
 
@@ -89,7 +111,7 @@ class ModelImpl () : Model {
         return firestoreModel.updateJournalTitle(journal)
     }
 
-    override suspend fun loadJournalPosts(journal: Journal): List<Post>? {
+    override suspend fun loadJournalPosts(journal: Journal): ArrayList<Post>? {
         return firestoreModel.loadJournalPosts(journal)
     }
 
