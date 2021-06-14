@@ -8,12 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
+import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.Model
 import com.pdm.meetgroups.model.entities.*
 
 typealias PostList = ArrayList<Post>
 
-// TODO(AB): Insert firestore repository and set it up
 class JournalViewModel(model : Model) : ViewModel() {
     private val posts: MutableLiveData<PostList> = MutableLiveData() // (AB): Temporary code
 

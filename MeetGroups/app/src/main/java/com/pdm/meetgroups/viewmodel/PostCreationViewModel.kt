@@ -4,17 +4,13 @@ import android.view.View
 import android.widget.RadioButton
 import androidx.lifecycle.ViewModel
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.model.POST_STATUS
+import com.pdm.meetgroups.model.entities.*
 
 class PostCreationViewModel : ViewModel() {
     lateinit var title: String
     lateinit var tags: ArrayList<String> // TODO(AB): Define default tags
     lateinit var visibility: POST_STATUS
     lateinit var images: ArrayList<String>
-
-    init {
-
-    }
 
     fun setPostVisibility(view: View) {
         if (view is RadioButton) {
