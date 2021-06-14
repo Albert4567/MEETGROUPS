@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.view.adapter.PostListAdapter
-import com.pdm.meetgroups.viewmodel.JournalViewModelImpl
+import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
 
 class JournalFragment : Fragment() {

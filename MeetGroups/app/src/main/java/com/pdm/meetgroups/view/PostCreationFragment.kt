@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.pdm.meetgroups.databinding.FragmentPostCreationBinding
-import com.pdm.meetgroups.viewmodel.PostCreationViewModelImpl
+import com.pdm.meetgroups.viewmodel.postcreation.PostCreationViewModelImpl
 
 class PostCreationFragment : Fragment() {
     private val postCreationVMImpl: PostCreationViewModelImpl by viewModels()

@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.viewmodel
+package com.pdm.meetgroups.viewmodel.postcreation
 
 import android.view.View
 import android.widget.RadioButton

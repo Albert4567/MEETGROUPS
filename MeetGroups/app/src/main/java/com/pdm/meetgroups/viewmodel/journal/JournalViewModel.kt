@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.viewmodel
+package com.pdm.meetgroups.viewmodel.journal
 
 import com.pdm.meetgroups.model.entities.Journal
 

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.viewmodel.JournalViewModelImpl
+import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
 class PostListAdapter(val journalVMImpl: JournalViewModelImpl) : RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 

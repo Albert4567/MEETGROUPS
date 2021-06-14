@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.viewmodel
+package com.pdm.meetgroups.viewmodel.journal
 
 import android.view.View
 import androidx.fragment.app.FragmentActivity
@@ -14,7 +14,6 @@ import com.pdm.meetgroups.model.Model
 import com.pdm.meetgroups.model.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 typealias PostList = ArrayList<Post>
 typealias ParticipantList = ArrayList<String>
