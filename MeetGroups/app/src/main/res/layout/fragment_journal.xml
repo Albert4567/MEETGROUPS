@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/journal_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingTop="15dp"
     tools:context=".view.navbar.JournalFragment">
-
     <Toolbar
         android:id="@+id/toolbar_journal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rl_journal"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <TextView
                 android:id="@+id/tv_journal_title"
                 android:layout_width="wrap_content"
@@ -23,44 +23,48 @@
                 android:text="JournalTitle"
                 android:textSize="30sp"
                 android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="right">
 
             <ImageButton
                 android:id="@+id/btn_journal_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/btn_journal_edit"
+                android:backgroundTintMode="add"
                 android:src="@drawable/ic_journal_group_24" />
 
             <ImageButton
                 android:id="@+id/btn_journal_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:backgroundTintMode="add"
                 android:src="@drawable/ic_journal_edit_24" />
-        </LinearLayout>
+        </RelativeLayout>
     </Toolbar>
 
     <FrameLayout
+        android:id="@+id/child_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/fl_journal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp">
-
+        android:layout_marginBottom="50dp"
+        android:paddingTop="20dp">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_journal_postlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
+            android:layout_height="match_parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_journal_add_post"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="25dp"
             android:clickable="true"
             android:src="@drawable/outline_add_24" />
     </FrameLayout>

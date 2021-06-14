@@ -8,14 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.view.adapter.PostListAdapter
 import com.pdm.meetgroups.viewmodel.JournalViewModel
-import com.pdm.meetgroups.viewmodel.PostList
 
 
 class JournalFragment : Fragment() {
+    private val journalVM: JournalViewModel by viewModels()
     private lateinit var binding: FragmentJournalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +25,27 @@ class JournalFragment : Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentJournalBinding.inflate(inflater, container, false)
-        val journalVM: JournalViewModel by viewModels()
+
         journalVM.getPosts().observe(viewLifecycleOwner, Observer {
             binding.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
             binding.rvJournalPostlist.adapter = PostListAdapter(journalVM)
         })
+
+        binding.btnJournalEdit.setOnClickListener {
+            journalVM.showEditJournalFragment(requireActivity())
+        }
+
+        binding.btnJournalGroup.setOnClickListener {
+            journalVM.showGroupPartecipants(it)
+        }
+
+        binding.btnJournalAddPost.setOnClickListener {
+            journalVM.showPostCreationFragment(requireActivity())
+        }
+
         return binding.root
     }
 }
