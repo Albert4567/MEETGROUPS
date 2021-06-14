@@ -1,20 +1,13 @@
 package com.pdm.meetgroups.model
 
 import android.net.Uri
-import com.google.android.gms.tasks.Task
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
 
-//TODO Add and override al the usable methods
+//TODO CHECK THE PARAMETERS NEEDED NOW THAT WE HAVE LOCAL INSTANCES
 interface Model {
     //FirestoreModel interface
-    fun instantiateUserModel ()
-
-    fun instantiateLocalUser ()
-
-    fun instantiateLocalJournal (journalName : String?)
-
     suspend fun createUser (user : UserContext) : Boolean
 
     suspend fun deleteUser () : Boolean

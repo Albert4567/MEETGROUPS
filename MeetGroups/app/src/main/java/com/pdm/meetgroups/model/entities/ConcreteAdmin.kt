@@ -8,6 +8,7 @@ data class ConcreteAdmin(
         override var email: String = "",
         override var list: List<Journal> = emptyList(),
         override var visibilityOnMap: Boolean = false,
+        override var openJournalID: String? = null,
         var currentPosition: GeoPoint? = null
 ): UserState {
     override fun stateHandle() {

@@ -6,6 +6,7 @@ interface UserState {
     var email : String
     var list : List<Journal>
     var visibilityOnMap : Boolean
+    var openJournalID : String?
 
     fun stateHandle()
 }

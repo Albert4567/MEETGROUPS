@@ -6,6 +6,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.model.entities.Journal
+import com.pdm.meetgroups.utility.SnapshotUtilities
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 import kotlin.collections.HashMap
@@ -25,7 +26,8 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
                 "bio" to mUser?.bio,
                 "email" to mUser?.email,
                 "journalsID" to hashMapOf<String, String>(),
-                "state" to "user"
+                "state" to "user",
+                "openJournal" to mUser?.openJournalID
         )
 
         return try {
@@ -54,16 +56,15 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
         }
     }
 
-    //TODO FINISH DOWNLOAD AND INSTANTIATE LOCAL USER
     override suspend fun downloadUserInfo(): UserContext? {
         return try {
-            /*val doc = userDocRef
+            val doc = userDocRef
                 .get()
                 .await()
-
-            val userC*/
-            null
+            Log.w(TAG, "Download User Info Success!")
+            return SnapshotUtilities().loadUserFromDoc(doc)
         } catch (e : Exception) {
+            Log.e(TAG, "Download User Info failed with, ", e)
             null
         }
     }
@@ -122,6 +123,32 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
             true
         } catch (e : Exception) {
             Log.e(TAG, "Update profile picture uri failure.", e)
+            false
+        }
+    }
+
+    override suspend fun updateOpenJournal(user : UserContext, name: String): Boolean {
+        return try {
+            val userDoc = usersDocsRef
+                .whereEqualTo("nickname", user.getState()!!.nickname)
+                .limit(1)
+                .get()
+                .await()
+
+            try {
+                userDoc.documents[0].reference
+                    .update("openJournal", name)
+                    .await()
+                Log.w(TAG, "Update Open journal success!")
+                true
+            } catch (e : Exception) {
+                Log.e(TAG, "Update Open journal failed with ", e)
+                false
+            }
+            Log.w(TAG, "Get user doc success!")
+            true
+        } catch (e : Exception) {
+            Log.e(TAG, "Get user doc failed with", e)
             false
         }
     }

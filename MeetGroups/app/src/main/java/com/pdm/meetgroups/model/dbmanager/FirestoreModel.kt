@@ -14,16 +14,22 @@ interface FirestoreModel {
 
     suspend fun updateUserBio (newBio : String) : Boolean
 
+    suspend fun updateOpenJournal (user : UserContext, name : String) : Boolean
+
     suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 
     suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
 
     suspend fun changeUserState () : Boolean
 
+    suspend fun downloadUserInfo () : UserContext?
+
     //JournalsDedicatedMethods
     suspend fun createJournal (journal : Journal) : Boolean
 
     suspend fun closeJournal (journal : Journal) : Boolean
+
+    suspend fun downloadJournalInfo (journalID : String) : Journal?
 
     //TODO checks to use this methods only if admin
     suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean

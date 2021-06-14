@@ -22,7 +22,6 @@ class FirestoreModelImpl () : FirestoreModel {
     private val postFirestoreModel =
             PostFirestoreModelImpl(firestoreRef.collection("journals"))
 
-    //TODO ogni volta che l'utente cambia va distrutto e ricreato
     private lateinit var userFirestoreModel : UserFirestoreModel
 
     override fun instantiateUserModel (uid : String) {
@@ -44,6 +43,10 @@ class FirestoreModelImpl () : FirestoreModel {
         return userFirestoreModel.updateUserBio(newBio)
     }
 
+    override suspend fun updateOpenJournal(user: UserContext, name: String): Boolean {
+        return userFirestoreModel.updateOpenJournal(user, name)
+    }
+
     override suspend fun updateUserAddNewJournalLink(user : UserContext, journal: Journal) : Boolean {
         return userFirestoreModel.updateUserAddNewJournalLink(user, journal)
     }
@@ -56,8 +59,16 @@ class FirestoreModelImpl () : FirestoreModel {
         return userFirestoreModel.changeUserState()
     }
 
+    override suspend fun downloadUserInfo(): UserContext? {
+        return userFirestoreModel.downloadUserInfo()
+    }
+
     override suspend fun createJournal(journal: Journal) : Boolean {
-        return journalFirestoreModel.createJournal(journal)
+        val result = journalFirestoreModel.createJournal(journal)
+        if (result)
+            for (user in journal.users)
+                userFirestoreModel.updateOpenJournal(user, journal.title)
+        return result
     }
 
     override suspend fun closeJournal(journal: Journal) : Boolean {
@@ -66,6 +77,10 @@ class FirestoreModelImpl () : FirestoreModel {
             for (user in journal.users)
                 updateUserAddNewJournalLink(user, journal)
         return result
+    }
+
+    override suspend fun downloadJournalInfo(journalID: String): Journal? {
+        return journalFirestoreModel.downloadJournalInfo(journalID)
     }
 
     override suspend fun addParticipant(journal: Journal, user: UserContext) : Boolean {

@@ -6,6 +6,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.pdm.meetgroups.model.entities.*
+import com.pdm.meetgroups.utility.SnapshotUtilities
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
@@ -25,8 +26,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         )
 
         return try {
-            journalsCollectionRef.document(journal.journalID)
-                .set(journalData)
+            journalsCollectionRef.add(journalData)
                 .await()
             Log.w(TAG, "Create Journal success!")
             true
@@ -46,6 +46,27 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         } catch (e : Exception) {
             Log.e(TAG, "Close Journal failure.", e)
             false
+        }
+    }
+
+    override suspend fun downloadJournalInfo (journalTitle: String) : Journal? {
+        return try {
+            val doc = journalsCollectionRef.document("journalID")
+                .get()
+                .await()
+            val posts = journalsCollectionRef.document("journalID")
+                .collection("posts")
+                .get()
+                .await()
+            val users = usersCollectionRef.whereIn("nickname",
+                                                    doc["usersID"] as List<UserContext>)
+                .get()
+                .await()
+            Log.w(TAG, "Download Journal Info success!")
+            return SnapshotUtilities().loadJournalFromDoc(doc, posts, users.documents)
+        } catch (e : Exception) {
+            Log.e(TAG, "Download Journal Info  failure.", e)
+            null
         }
     }
 
@@ -110,7 +131,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                     .get()
                     .await()
                 var participants = usersDocs.map { userDoc ->
-                    loadUserFromDoc(userDoc).getState()!!.nickname
+                    SnapshotUtilities().loadUserFromDoc(userDoc).getState()!!.nickname
                 }
                 Log.w(TAG, "Load Participants from journal success!")
                 return ArrayList(participants)
@@ -122,24 +143,6 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
             Log.e(TAG, "Get journal doc failed with ", e)
             null
         }
-    }
-
-    private fun loadUserFromDoc(doc : QueryDocumentSnapshot?) : UserContext {
-        var user = UserContext()
-        var concrete : UserState = if ((doc!!.data.getValue("state") as String) == "user")
-            fillUserData(ConcreteUser(), doc!!)
-        else
-            fillUserData(ConcreteAdmin(), doc!!)
-        user.changeState(concrete)
-        return user
-    }
-
-    private fun fillUserData (user : UserState, doc : QueryDocumentSnapshot) : UserState {
-        user.nickname = doc!!.data.getValue("nickname") as String
-        user.bio = doc!!.data.getValue("bio") as String
-        user.email = doc!!.data.getValue("email") as String
-
-        return user
     }
 
     override suspend fun updateJournalTitle (journal: Journal) : Boolean {
@@ -162,20 +165,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 .get()
                 .await()
 
-            var posts : MutableList<Post> = mutableListOf()
-            docs.forEach { doc ->
-                posts.add( Post(
-                    doc.data.getValue("postID") as String,
-                    doc.data.getValue("title") as String,
-                    doc.data.getValue("description") as String,
-                    POST_STATUS.valueOf(doc.data.getValue("status") as String),
-                    doc.data.getValue("creationDate") as Timestamp,
-                    doc.data.getValue("creatorNickname") as String,
-                    doc.data.getValue("spotLocation") as GeoPoint,
-                    (doc.data.getValue("tags") as List<String>?),
-                    (doc.data.getValue("images") as List<String>?)
-                ))
-            }
+            var posts : List<Post>? = SnapshotUtilities().loadPostsFromCollection(docs)
             Log.w(TAG, "Load Journal Posts success!")
             return ArrayList(posts)
         } catch (e : Exception) {
