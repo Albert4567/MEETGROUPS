@@ -6,14 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.pdm.meetgroups.R
+import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
 
 class MainActivity : AppCompatActivity() {
-    var authControl = AuthenticationModelImpl()
-
+    var model = ModelImpl()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(!authControl.checkIfSignedIn()) {
+        if(!model.checkIfSignedIn()) {
             setContentView(R.layout.activity_sign_up)
         } else {
             setContentView(R.layout.activity_main)

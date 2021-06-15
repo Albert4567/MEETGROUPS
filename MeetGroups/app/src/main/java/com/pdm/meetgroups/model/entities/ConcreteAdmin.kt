@@ -7,11 +7,11 @@ data class ConcreteAdmin(
         override var nickname: String = "",
         override var email: String = "",
         override var list: List<Journal> = emptyList(),
-        override var visibilityOnMap: Boolean = false,
         override var openJournalID: String? = null,
+        override var visibilityOnMap: Boolean = false,
         var currentPosition: GeoPoint? = null
 ): UserState {
-    override fun stateHandle() {
-        TODO("Not yet implemented, change state when journal is closed")
+    override fun stateHandle() : UserState {
+        return ConcreteUser(bio, nickname, email, list, openJournalID, visibilityOnMap)
     }
 }

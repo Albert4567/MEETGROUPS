@@ -9,13 +9,17 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 //TODO check addSnapshotListener
-class ModelImpl () : Model {
+class ModelImpl : Model {
     private val authenticationModel = AuthenticationModelImpl()
     private val firestoreModel = FirestoreModelImpl()
     private val storageModel = StorageModelImpl()
 
     private var localUser : UserContext? = null
     private var localJournal : Journal? = null
+
+    companion object {
+        var modelRef = ModelImpl()
+    }
 
     init {
         instantiateUserModel()
@@ -67,7 +71,13 @@ class ModelImpl () : Model {
     }
 
     override suspend fun updateUserBio(newBio: String): Boolean {
-        return firestoreModel.updateUserBio(newBio)
+        var result = firestoreModel.updateUserBio(newBio)
+        return if (result) {
+            localUser?.getState()?.bio = newBio
+            true
+        }
+        else
+            false
     }
 
     override suspend fun updateUserAddNewJournalLink(journal: Journal) {
@@ -89,6 +99,7 @@ class ModelImpl () : Model {
 
     override suspend fun changeUserState() {
         firestoreModel.changeUserState()
+        localUser?.changeState()
     }
 
     override suspend fun createJournal(journal: Journal): Boolean {

@@ -5,13 +5,13 @@ import android.widget.RadioButton
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.model.Model
+import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PostCreationViewModelImpl(modelRef : Model) : ViewModel(), PostCreationViewModel {
-    private val model = modelRef
+class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
+    private val model = ModelImpl.modelRef
 
     lateinit var title: String
     lateinit var tags: ArrayList<String> // TODO(AB): Define default tags

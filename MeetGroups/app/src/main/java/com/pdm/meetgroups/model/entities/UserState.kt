@@ -8,5 +8,5 @@ interface UserState {
     var visibilityOnMap : Boolean
     var openJournalID : String?
 
-    fun stateHandle()
+    fun stateHandle() : UserState
 }
