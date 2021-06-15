@@ -9,22 +9,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.pdm.meetgroups.viewmodel.ProfileViewModel
 import com.pdm.meetgroups.R
+import com.pdm.meetgroups.databinding.FragmentJournalBinding
+import com.pdm.meetgroups.databinding.FragmentPostCreationBinding
+import com.pdm.meetgroups.databinding.ProfileFragmentBinding
 import com.pdm.meetgroups.viewmodel.PostCreationViewModelImpl
 
 class ProfileFragment : Fragment() {
     private val profileVMImpl: ProfileViewModel by viewModels()
-    private lateinit var binding: Fra
+    private lateinit var binding: ProfileFragmentBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.profile_fragment, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        binding = ProfileFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
