@@ -7,16 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.pdm.meetgroups.viewmodel.ProfileViewModel
-import com.pdm.meetgroups.databinding.ProfileFragmentBinding
+import com.pdm.meetgroups.databinding.FragmentProfileBinding
 
 
 class ProfileFragment : Fragment() {
     private val profileVMImpl: ProfileViewModel by viewModels()
-    private lateinit var binding: ProfileFragmentBinding
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = ProfileFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
