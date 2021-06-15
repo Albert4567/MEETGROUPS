@@ -26,7 +26,7 @@ class ModelImpl () : Model {
     //  all'avvio
     //  signin dell'utente
     private fun instantiateUserModel () {
-        firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID())
+        firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID()!!)
     }
 
     //chiamato:

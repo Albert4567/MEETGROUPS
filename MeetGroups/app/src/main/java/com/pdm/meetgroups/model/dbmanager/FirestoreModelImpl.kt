@@ -24,13 +24,11 @@ class FirestoreModelImpl () : FirestoreModel {
 
     private lateinit var userFirestoreModel : UserFirestoreModel
 
-    override fun instantiateUserModel (uid : String?) {
-        if (uid != null) {
-            userFirestoreModel = UserFirestoreModelImpl(
-                firestoreRef.collection("users").document(uid),
-                firestoreRef.collection("users")
-            )
-        }
+    override fun instantiateUserModel (uid : String) {
+        userFirestoreModel = UserFirestoreModelImpl(
+            firestoreRef.collection("users").document(uid),
+            firestoreRef.collection("users")
+        )
     }
 
     override suspend fun createUser(user: UserContext) : Boolean {
