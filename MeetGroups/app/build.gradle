@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -33,7 +34,10 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -64,5 +68,9 @@ dependencies {
 
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation "androidx.cardview:cardview:1.0.0"
+    kapt "com.android.databinding:compiler:$android_plugin_version"
+}
 
+kapt {
+    generateStubs = true
 }
