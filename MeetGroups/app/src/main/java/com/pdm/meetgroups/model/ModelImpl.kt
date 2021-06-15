@@ -37,9 +37,11 @@ class ModelImpl : Model {
     //  all'avvio
     //  signin dell'utente
     private fun instantiateLocalUser() {
-         GlobalScope.launch {
-            localUser = firestoreModel.downloadUserInfo()
-            instantiateLocalJournal(localUser?.getState()?.openJournalID)
+        if (authenticationModel.getCurrentUserUID() != null) {
+            GlobalScope.launch {
+                localUser = firestoreModel.downloadUserInfo()
+                instantiateLocalJournal(localUser?.getState()?.openJournalID)
+            }
         }
     }
 
