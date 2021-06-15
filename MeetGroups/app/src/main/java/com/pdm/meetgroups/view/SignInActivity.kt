@@ -4,23 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.model.*
-import com.pdm.meetgroups.model.dbmanager.AuthentificationModelImpl
-import com.pdm.meetgroups.model.dbmanager.FirestoreModel
-import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
+import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 
 class SignInActivity : AppCompatActivity() {
-    private lateinit var authModelImpl : AuthentificationModelImpl
+    private lateinit var authModelImpl : AuthenticationModelImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        authModelImpl = AuthentificationModelImpl()
+        authModelImpl = AuthenticationModelImpl()
     }
 
     fun signIn(view : View?) {
