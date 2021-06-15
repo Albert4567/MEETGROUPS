@@ -2,12 +2,14 @@ package com.pdm.meetgroups.viewmodel
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
+import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

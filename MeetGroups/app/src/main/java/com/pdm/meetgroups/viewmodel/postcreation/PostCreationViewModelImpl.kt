@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.Model
 import com.pdm.meetgroups.model.entities.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PostCreationViewModelImpl(modelRef : Model) : ViewModel(), PostCreationViewModel {
@@ -37,7 +38,7 @@ class PostCreationViewModelImpl(modelRef : Model) : ViewModel(), PostCreationVie
     }
 
     override fun createPost(): Boolean {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             //model.createPost()
         }
         return true
