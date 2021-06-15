@@ -18,16 +18,4 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
         // = AuthentificationController(Firebase.auth)
     }
-
-    /*fun signUp(view : View?) {
-        val outcome = authController.signUpUser(editTextEmail.text.toString().trim(),
-            editTextPassword.text.toString().trim())
-        if (outcome) {
-            //TODO("changeActivity")
-        }
-        else {
-            //TODO("changeActivity")
-        }
-        Toast.makeText(this, outcome.toString(), Toast.LENGTH_SHORT).show()
-    }*/
 }
