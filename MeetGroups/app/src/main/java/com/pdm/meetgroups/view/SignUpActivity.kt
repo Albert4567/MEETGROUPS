@@ -7,9 +7,10 @@ import androidx.activity.viewModels
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.ActivitySignUpBinding
 import com.pdm.meetgroups.viewmodel.login.LoginViewModel
+import com.pdm.meetgroups.viewmodel.login.LoginViewModelImpl
 
 class SignUpActivity : AppCompatActivity() {
-    private val loginVMImpl : LoginViewModel by viewModels()
+    private val loginVMImpl : LoginViewModelImpl by viewModels()
     private lateinit var binding: ActivitySignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
