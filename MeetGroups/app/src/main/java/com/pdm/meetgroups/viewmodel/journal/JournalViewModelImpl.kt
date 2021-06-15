@@ -15,10 +15,11 @@ import com.pdm.meetgroups.model.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+// TODO(AB): agganciare viewModel con firebase
 class JournalViewModelImpl : ViewModel(), JournalViewModel {
+    private val model = ModelImpl.modelRef
     private val posts: MutableLiveData<PostList> = MutableLiveData()
     private val participants: MutableLiveData<ParticipantList> = MutableLiveData()
-    private val model = ModelImpl.modelRef
 
     init {
         // (AB): Temporary code
@@ -47,7 +48,8 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
     }
 
     override fun showEditJournalFragment(activity: FragmentActivity) {
-
+        val navController = activity.let { Navigation.findNavController(it, R.id.nav_host_fragment) }
+        navController.navigate(R.id.action_navigation_journal_to_navigation_edit_journal)
     }
 
     override fun showGroupPartecipants(view: View) {

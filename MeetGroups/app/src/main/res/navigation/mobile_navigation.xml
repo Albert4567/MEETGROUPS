@@ -20,16 +20,25 @@
     <fragment
         android:id="@+id/navigation_journal"
         android:name="com.pdm.meetgroups.view.navbar.JournalFragment"
-        android:label="@string/title_journal"
+        android:label="Journal"
         tools:layout="@layout/fragment_journal" >
         <action
             android:id="@+id/action_navigation_journal_to_navigation_post_creation"
             app:destination="@id/navigation_post_creation" />
+        <action
+            android:id="@+id/action_navigation_journal_to_navigation_edit_journal"
+            app:destination="@id/navigation_edit_journal" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_post_creation"
         android:name="com.pdm.meetgroups.view.PostCreationFragment"
-        android:label="@string/title_journal"
+        android:label="PostCreation"
         tools:layout="@layout/fragment_post_creation" />
+
+    <fragment
+        android:id="@+id/navigation_edit_journal"
+        android:name="com.pdm.meetgroups.view.EditJournalFragment"
+        android:label="EditJournal"
+        tools:layout="@layout/fragment_edit_journal" />
 </navigation>
