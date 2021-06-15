@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.view.SignUpActivity
-import com.pdm.meetgroups.view.SignUpActivityTest
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -29,11 +28,6 @@ class HomeFragment : Fragment() {
         })
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
-        val gotoSignUpButton = view.findViewById<Button>(R.id.signUpButton)
-        gotoSignUpButton.setOnClickListener {
-            startActivity(Intent(activity?.applicationContext, SignUpActivityTest::class.java))
-        }
 
         return view
     }

@@ -1,6 +1,7 @@
 package com.pdm.meetgroups.viewmodel.journal
 
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,9 +15,7 @@ import com.pdm.meetgroups.model.Model
 import com.pdm.meetgroups.model.entities.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
-typealias PostList = ArrayList<Post>
-typealias ParticipantList = ArrayList<String>
+import kotlinx.coroutines.withContext
 
 class JournalViewModelImpl(modelRef : Model) : ViewModel(), JournalViewModel {
     private val posts: MutableLiveData<PostList> = MutableLiveData()
@@ -42,18 +41,18 @@ class JournalViewModelImpl(modelRef : Model) : ViewModel(), JournalViewModel {
         posts.postValue(postList)
     }
 
-    fun getPosts(): LiveData<PostList> = posts
+    override fun getPosts(): LiveData<PostList> = posts
 
-    fun showPostCreationFragment(activity: FragmentActivity) {
+    override fun showPostCreationFragment(activity: FragmentActivity) {
         val navController = activity.let { Navigation.findNavController(it, R.id.nav_host_fragment) }
         navController.navigate(R.id.action_navigation_journal_to_navigation_post_creation)
     }
 
-    fun showEditJournalFragment(activity: FragmentActivity) {
+    override fun showEditJournalFragment(activity: FragmentActivity) {
 
     }
 
-    fun showGroupPartecipants(view: View) {
+    override fun showGroupPartecipants(view: View) {
 
     }
 
@@ -66,6 +65,25 @@ class JournalViewModelImpl(modelRef : Model) : ViewModel(), JournalViewModel {
     override fun loadParticipants(journal: Journal) {
         viewModelScope.launch(Dispatchers.IO) {
             participants.postValue(model.loadParticipants(journal))
+        }
+    }
+
+    override fun createJournal(journal: Journal) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = model.createJournal(journal)
+
+            /*withContext(Dispatchers.Main) {
+                if (result)
+                    //updateUI(model.getJournal())
+                else
+                    //alertError()
+            }*/
+        }
+    }
+
+    override fun closeJournal(journal: Journal) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = model.closeJournal(journal)
         }
     }
 }

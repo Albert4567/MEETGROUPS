@@ -23,7 +23,7 @@ class PostCreationFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    fun onRadioButtonClicked(view: View) {
-        postCreationVMImpl.setPostVisibility(view)
+    fun onRadioButtonClicked(view: View?) {
+        postCreationVMImpl.setPostVisibility(requireView())
     }
 }
