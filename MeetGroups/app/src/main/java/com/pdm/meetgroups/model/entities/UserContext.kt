@@ -12,8 +12,8 @@ class UserContext {
         state = user
     }
 
-    fun changeState() {
-        state = state.stateHandle()
+    fun changeState(newState : UserState) {
+        state = state.stateHandle(newState)
     }
 
     fun getState () = state

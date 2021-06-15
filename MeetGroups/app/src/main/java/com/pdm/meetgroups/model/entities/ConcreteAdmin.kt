@@ -11,7 +11,13 @@ data class ConcreteAdmin(
         override var visibilityOnMap: Boolean = false,
         var currentPosition: GeoPoint? = null
 ): UserState {
-    override fun stateHandle() : UserState {
-        return ConcreteUser(bio, nickname, email, list, openJournalID, visibilityOnMap)
+    override fun stateHandle(newState : UserState) : UserState {
+        return ConcreteUser(
+            newState.bio,
+            newState.nickname,
+            newState.email,
+            newState.list,
+            newState.openJournalID,
+            newState.visibilityOnMap)
     }
 }

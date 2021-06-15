@@ -99,7 +99,6 @@ class ModelImpl : Model {
 
     override suspend fun changeUserState() {
         firestoreModel.changeUserState()
-        localUser?.changeState()
     }
 
     override suspend fun createJournal(journal: Journal): Boolean {

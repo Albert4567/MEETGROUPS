@@ -63,7 +63,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 .get()
                 .await()
             Log.w(TAG, "Download Journal Info success!")
-            return SnapshotUtilities().loadJournalFromDoc(doc, posts, users.documents)
+            return SnapshotUtilities.loadJournalFromDoc(doc, posts, users.documents)
         } catch (e : Exception) {
             Log.e(TAG, "Download Journal Info  failure.", e)
             null
@@ -131,7 +131,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                     .get()
                     .await()
                 var participants = usersDocs.map { userDoc ->
-                    SnapshotUtilities().loadUserFromDoc(userDoc).getState()!!.nickname
+                    SnapshotUtilities.loadUserFromDoc(userDoc).getState()!!.nickname
                 }
                 Log.w(TAG, "Load Participants from journal success!")
                 return ArrayList(participants)
@@ -165,7 +165,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 .get()
                 .await()
 
-            var posts : List<Post>? = SnapshotUtilities().loadPostsFromCollection(docs)
+            var posts : List<Post>? = SnapshotUtilities.loadPostsFromCollection(docs)
             Log.w(TAG, "Load Journal Posts success!")
             return ArrayList(posts)
         } catch (e : Exception) {

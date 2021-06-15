@@ -62,7 +62,7 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
                 .get()
                 .await()
             Log.w(TAG, "Download User Info Success!")
-            return SnapshotUtilities().loadUserFromDoc(doc)
+            return SnapshotUtilities.loadUserFromDoc(doc)
         } catch (e : Exception) {
             Log.e(TAG, "Download User Info failed with, ", e)
             null
