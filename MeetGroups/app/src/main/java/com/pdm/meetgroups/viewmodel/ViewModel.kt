@@ -7,4 +7,6 @@ interface ViewModel {
     fun getJournalViewModel() : JournalViewModel
 
     fun getPostCreationViewModel() : PostCreationViewModel
+
+    fun checkIfSignIn() : Boolean
 }

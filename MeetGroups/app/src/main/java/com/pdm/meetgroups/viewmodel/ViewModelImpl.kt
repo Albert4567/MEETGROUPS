@@ -21,5 +21,7 @@ class ViewModelImpl : ViewModel(), com.pdm.meetgroups.viewmodel.ViewModel {
         return postCreationViewModel
     }
 
-
+    override fun checkIfSignIn(): Boolean {
+        return model.checkIfSignedIn()
+    }
 }
