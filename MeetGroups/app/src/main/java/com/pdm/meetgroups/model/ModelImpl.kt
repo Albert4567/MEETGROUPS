@@ -26,7 +26,7 @@ class ModelImpl () : Model {
     //  all'avvio
     //  signin dell'utente
     private fun instantiateUserModel () {
-        firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID()!!)
+        firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID())
     }
 
     //chiamato:
@@ -52,8 +52,10 @@ class ModelImpl () : Model {
     }
 
     override suspend fun createUser(user: UserContext): Boolean {
+        instantiateUserModel()
         return firestoreModel.createUser(user)
     }
+
 
     override suspend fun deleteUser(): Boolean {
         return if(firestoreModel.deleteUser()) {

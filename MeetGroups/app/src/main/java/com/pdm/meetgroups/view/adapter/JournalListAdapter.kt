@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.viewmodel.JournalViewModelImpl
 import com.pdm.meetgroups.viewmodel.ProfileViewModel
 
 class JournalListAdapter(val profileVM: ProfileViewModel) : RecyclerView.Adapter<JournalListAdapter.ViewHolder>() {
