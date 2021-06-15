@@ -39,7 +39,7 @@ class JournalFragment : Fragment() {
         }
 
         binding.btnJournalGroup.setOnClickListener {
-            journalVMImpl.showGroupPartecipants(it)
+            journalVMImpl.showGroupParticipants(it)
         }
 
         binding.btnJournalAddPost.setOnClickListener {

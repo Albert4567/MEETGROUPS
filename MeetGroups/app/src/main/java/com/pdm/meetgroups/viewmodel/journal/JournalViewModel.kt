@@ -22,7 +22,7 @@ interface JournalViewModel {
 
     fun showEditJournalFragment(activity: FragmentActivity)
 
-    fun showGroupPartecipants(view: View)
+    fun showGroupParticipants(view: View)
 
     fun showPostCreationFragment(activity: FragmentActivity)
 }
