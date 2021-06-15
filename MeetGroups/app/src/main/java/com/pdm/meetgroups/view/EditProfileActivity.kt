@@ -1,8 +1,9 @@
-package com.pdm.meetgroups
+package com.pdm.meetgroups.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import com.pdm.meetgroups.R
 
 class EditProfileActivity : AppCompatActivity() {
 
