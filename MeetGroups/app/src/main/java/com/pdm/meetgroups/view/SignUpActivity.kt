@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 
-
 class SignUpActivity : AppCompatActivity() {
     private var model = ModelImpl()
 
