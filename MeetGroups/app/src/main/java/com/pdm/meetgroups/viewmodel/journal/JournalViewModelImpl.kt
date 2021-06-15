@@ -22,7 +22,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
 
     init {
         // (AB): Temporary code
-        var postList: PostList = ArrayList<Post>()
+        val postList: PostList = ArrayList<Post>()
         for (i in 0..5) {
             val post = Post(
                     "",
@@ -50,7 +50,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
 
     }
 
-    override fun showGroupPartecipants(view: View) {
+    override fun showGroupParticipants(view: View) {
 
     }
 

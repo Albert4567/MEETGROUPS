@@ -11,23 +11,22 @@ import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 import kotlin.collections.HashMap
 
-class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : CollectionReference)
+class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRef : CollectionReference)
     : UserFirestoreModel {
 
     private val TAG = "UserFirestoreModelImpl"
     private val usersDocsRef = usersRef
-    private val userDocRef = userDocRef
 
     //TODO TEST
     override suspend fun createUser (user : UserContext) : Boolean {
         val mUser = user.getState()
         val userData = hashMapOf (
-                "nickname" to mUser?.nickname,
-                "bio" to mUser?.bio,
-                "email" to mUser?.email,
+                "nickname" to mUser.nickname,
+                "bio" to mUser.bio,
+                "email" to mUser.email,
                 "journalsID" to hashMapOf<String, String>(),
                 "state" to "user",
-                "openJournal" to mUser?.openJournalID
+                "openJournal" to mUser.openJournalID
         )
 
         return try {
@@ -92,7 +91,7 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
     override suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean {
         return try {
             val userDoc = usersDocsRef
-                .whereEqualTo("nickname", user.getState()!!.nickname)
+                .whereEqualTo("nickname", user.getState().nickname)
                 .limit(1)
                 .get()
                 .await()
@@ -130,7 +129,7 @@ class UserFirestoreModelImpl (userDocRef : DocumentReference, usersRef : Collect
     override suspend fun updateOpenJournal(user : UserContext, name: String): Boolean {
         return try {
             val userDoc = usersDocsRef
-                .whereEqualTo("nickname", user.getState()!!.nickname)
+                .whereEqualTo("nickname", user.getState().nickname)
                 .limit(1)
                 .get()
                 .await()
