@@ -6,16 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.pdm.meetgroups.viewmodel.ProfileViewModel
 import com.pdm.meetgroups.R
+import com.pdm.meetgroups.viewmodel.PostCreationViewModelImpl
 
 class ProfileFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
-
-    private lateinit var viewModel: ProfileViewModel
+    private val profileVMImpl: ProfileViewModel by viewModels()
+    private lateinit var binding: Fra
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -13,9 +13,7 @@
         android:layout_margin="5dp"
         android:layout_weight="0.26"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="250dp"
-        app:civ_border_color="#00000000"
-        app:civ_border_width="2dp">
+        app:cardCornerRadius="250dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
