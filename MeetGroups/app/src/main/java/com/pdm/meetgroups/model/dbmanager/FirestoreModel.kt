@@ -1,7 +1,10 @@
 package com.pdm.meetgroups.model.dbmanager
 
+import android.location.Location
 import android.net.Uri
 import com.pdm.meetgroups.model.entities.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface FirestoreModel {
     fun instantiateUserModel (uid : String?)
@@ -19,6 +22,8 @@ interface FirestoreModel {
     suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 
     suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
+
+    suspend fun updateUserLocation (location : Location) : Boolean
 
     suspend fun changeUserState () : Boolean
 
@@ -41,6 +46,8 @@ interface FirestoreModel {
     suspend fun updateJournalTitle (journal: Journal) : Boolean
 
     suspend fun loadJournalPosts (journal: Journal) : ArrayList<Post>?
+
+    suspend fun getNearJournalsAndLocations (location: Location) : Hashtable<Location, Journal>?
 
     //PostsDedicatedMethods
     suspend fun createPost (journal : Journal, post : Post) : Boolean

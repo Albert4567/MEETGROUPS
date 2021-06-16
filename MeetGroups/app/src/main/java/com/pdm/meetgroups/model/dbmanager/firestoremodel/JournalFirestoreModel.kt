@@ -1,8 +1,11 @@
 package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
+import android.location.Location
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface JournalFirestoreModel {
     suspend fun createJournal (journal : Journal) : Boolean
@@ -21,4 +24,6 @@ interface JournalFirestoreModel {
     suspend fun updateJournalTitle (journal: Journal) : Boolean
 
     suspend fun loadJournalPosts (journal: Journal) : ArrayList<Post>?
+
+    suspend fun getNearJournalsAndLocations (location: Location) : Hashtable<Location, Journal>?
 }

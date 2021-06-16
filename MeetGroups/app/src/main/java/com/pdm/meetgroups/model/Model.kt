@@ -1,9 +1,13 @@
 package com.pdm.meetgroups.model
 
+import android.location.Location
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.model.entities.UserContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 //TODO CHECK THE PARAMETERS NEEDED NOW THAT WE HAVE LOCAL INSTANCES
 interface Model {
@@ -20,6 +24,12 @@ interface Model {
 
     suspend fun changeUserState ()
 
+    suspend fun updateUserLocation (location : Location) : Boolean
+
+    fun getUser () : UserContext?
+
+    fun isAdmin () : Boolean?
+
     suspend fun createJournal (journal : Journal) : Boolean
 
     suspend fun closeJournal (journal : Journal) : Boolean
@@ -35,6 +45,8 @@ interface Model {
     suspend fun updateJournalTitle (journal: Journal) : Boolean
 
     suspend fun loadJournalPosts (journal: Journal) : ArrayList<Post>?
+
+    suspend fun getNearJournalsAndLocations (location: Location) : Hashtable<Location, Journal>?
 
     suspend fun createPost (journal : Journal, post : Post) : Boolean
 

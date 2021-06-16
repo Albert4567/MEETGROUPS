@@ -1,9 +1,11 @@
 package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
+import android.location.Location
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.utility.SnapshotUtilities
@@ -148,6 +150,19 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
             true
         } catch (e : Exception) {
             Log.e(TAG, "Get user doc failed with", e)
+            false
+        }
+    }
+
+    override suspend fun updateUserLocation(location: Location): Boolean {
+        return try {
+            userDocRef
+                .update("location", GeoPoint(location.latitude, location.longitude))
+                .await()
+            Log.w(TAG, "Update User Location success!")
+            true
+        } catch (e : Exception) {
+            Log.e(TAG, "Update User Location failed with,", e)
             false
         }
     }

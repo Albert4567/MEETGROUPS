@@ -20,7 +20,7 @@ class SnapshotUtilities {
             user.nickname = doc["nickname"] as String
             user.bio = doc["bio"] as String
             user.email = doc["email"] as String
-            user.openJournalID = doc["openJournal"] as String
+            user.openJournalID = doc["openJournal"] as String?
 
             return user
         }
@@ -35,7 +35,7 @@ class SnapshotUtilities {
                     doc["journalID"] as String,
                     doc["title"] as String,
                     loadPostsFromCollection(postsCollection),
-                    JOURNAL_STATUS.valueOf(doc[""] as String),
+                    JOURNAL_STATUS.valueOf(doc["status"] as String),
                     usersCollection.map { doc -> loadUserFromDoc(doc) }
                 )
             } else

@@ -32,4 +32,10 @@
         android:name="com.pdm.meetgroups.view.PostCreationFragment"
         android:label="@string/title_journal"
         tools:layout="@layout/fragment_post_creation" />
+
+    <fragment
+        android:id="@+id/navigation_maps"
+        android:name="com.pdm.meetgroups.view.navbar.MapsFragment"
+        android:label="@string/title_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

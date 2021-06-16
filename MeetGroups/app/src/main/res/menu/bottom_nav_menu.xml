@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_journal_book_24"
         android:title="@string/title_journal" />
 
+    <item
+        android:id="@+id/navigation_maps"
+        android:icon="@drawable/ic_maps_location_black_24"
+        android:title="@string/title_maps" />
+
 </menu>

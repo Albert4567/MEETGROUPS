@@ -11,4 +11,8 @@ data class Journal(
         var posts : List<Post>?,
         var status : JOURNAL_STATUS,
         var users : List<UserContext>
-)
+) {
+    fun getAdmin() : UserContext {
+        return users.first { user -> user.isAdmin() }
+    }
+}

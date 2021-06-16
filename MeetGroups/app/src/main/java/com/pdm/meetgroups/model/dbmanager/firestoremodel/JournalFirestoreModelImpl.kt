@@ -1,19 +1,24 @@
 package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
+import android.location.Location
+import android.location.LocationManager
 import android.util.Log
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.ktx.toObject
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.utility.SnapshotUtilities
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 class JournalFirestoreModelImpl (journalsRef : CollectionReference,
     usersRef : CollectionReference) : JournalFirestoreModel {
 
     private val TAG = "JournalFirestoreModelImpl"
+    private val RANGE_DIAMETER : Double = 5.0
+
     private val journalsCollectionRef = journalsRef
     private val usersCollectionRef = usersRef
 
@@ -22,7 +27,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 "journalID" to journal.journalID,
                 "title" to journal.title,
                 "status" to journal.status,
-                "usersID" to journal.users.map {user -> user.getState()?.nickname}
+                "usersID" to journal.users.map {user -> user.getState().nickname }
         )
 
         return try {
@@ -51,10 +56,10 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
 
     override suspend fun downloadJournalInfo (journalTitle: String) : Journal? {
         return try {
-            val doc = journalsCollectionRef.document("journalID")
+            val doc = journalsCollectionRef.document(journalTitle)
                 .get()
                 .await()
-            val posts = journalsCollectionRef.document("journalID")
+            val posts = journalsCollectionRef.document(journalTitle)
                 .collection("posts")
                 .get()
                 .await()
@@ -170,6 +175,77 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
             return ArrayList(posts)
         } catch (e : Exception) {
             Log.e(TAG, "Get journal doc failed with ", e)
+            null
+        }
+    }
+
+    override suspend fun getNearJournalsAndLocations(location: Location): Hashtable<Location, Journal>? {
+        // ~1 mile of lat and lon in degrees
+        val lat = 0.0144927536231884
+        val lon = 0.0181818181818182
+
+        val lowerLat = location.latitude - (lat * RANGE_DIAMETER)
+        val lowerLon = location.longitude - (lon * RANGE_DIAMETER)
+
+        val greaterLat = location.latitude + (lat * RANGE_DIAMETER)
+        val greaterLon = location.longitude + (lon * RANGE_DIAMETER)
+
+        val lesserGeopoint = GeoPoint(lowerLat, lowerLon)
+        val greaterGeopoint = GeoPoint(greaterLat, greaterLon)
+
+        return try {
+            val usersDoc = usersCollectionRef
+                .whereEqualTo("state", "admin")
+                .whereGreaterThan("location", lesserGeopoint)
+                .whereLessThan("location", greaterGeopoint)
+                .get()
+                .await()
+
+            try {
+                val journalsIDs = usersDoc.documents.map { doc -> doc["openJournal"] as String }
+                val journalsDoc = journalsCollectionRef
+                    .whereIn("journalID", journalsIDs)
+                    .get()
+                    .await()
+
+                val hashtable = Hashtable<Location, Journal>()
+                usersDoc.documents.forEach { doc ->
+                    val geoPoint = doc["location"] as GeoPoint
+                    val userLocation = Location(LocationManager.GPS_PROVIDER)
+                    userLocation.latitude = geoPoint.latitude
+                    userLocation.longitude = geoPoint.longitude
+
+                    var posts = journalsCollectionRef.document(
+                        journalsDoc.documents[usersDoc.indexOf(doc)]["journalID"] as String)
+                        .collection("posts")
+                        .get()
+                        .await()
+
+                    var users = usersCollectionRef.whereIn("nickname",
+                        journalsDoc.documents[usersDoc.indexOf(doc)]["usersID"] as List<String>)
+                        .get()
+                        .await()
+
+                    with(hashtable) {
+                        put(
+                            userLocation,
+                            SnapshotUtilities.loadJournalFromDoc(
+                                journalsDoc.documents[usersDoc.indexOf(doc)],
+                                posts,
+                                users.documents
+                            )
+                        )
+                    }
+                }
+
+                Log.w(TAG, "Get Near Journals And Locations success!")
+                return hashtable
+            } catch (e : Exception) {
+                Log.e(TAG, "Get Journals docs failed with, ", e)
+                return null
+            }
+        } catch (e : Exception) {
+            Log.e(TAG, "Get users docs filed with, ", e)
             null
         }
     }
