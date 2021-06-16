@@ -1,6 +1,8 @@
 package com.pdm.meetgroups.model
 
+import android.location.Location
 import android.net.Uri
+import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
 import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import com.pdm.meetgroups.model.dbmanager.StorageModelImpl
@@ -68,8 +70,7 @@ class ModelImpl : Model {
             authenticationModel.deleteAuthUser()
             true
         }
-        else
-            false
+        else false
     }
 
     override suspend fun updateUserBio(newBio: String): Boolean {
@@ -78,8 +79,7 @@ class ModelImpl : Model {
             localUser?.getState()?.bio = newBio
             true
         }
-        else
-            false
+        else false
     }
 
     override suspend fun updateUserAddNewJournalLink(journal: Journal) {
@@ -95,20 +95,35 @@ class ModelImpl : Model {
                 return storageModel.updateStoredUserImage(newImageUri, uid)
             false
         }
-        else
-            false
+        else false
     }
 
     override suspend fun changeUserState() {
         firestoreModel.changeUserState()
     }
 
+    override suspend fun updateUserLocation(location: Location) : Boolean {
+        return if (localUser?.getState() is ConcreteAdmin) {
+            (localUser?.getState() as ConcreteAdmin).currentPosition =
+                GeoPoint(location.latitude, location.longitude)
+            return firestoreModel.updateUserLocation(location)
+        }
+        else false
+    }
+
+    override fun getUser(): UserContext? {
+        return localUser
+    }
+
+    override fun isAdmin(): Boolean? {
+        return localUser?.isAdmin()
+    }
+
     override suspend fun createJournal(journal: Journal): Boolean {
         return if (firestoreModel.createJournal(journal)) {
             instantiateLocalJournal(journal.journalID)
             true
-        } else
-            false
+        } else false
     }
 
     override suspend fun closeJournal(journal: Journal): Boolean {

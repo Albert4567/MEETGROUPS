@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.model
 
+import android.location.Location
 import android.net.Uri
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
@@ -19,6 +20,12 @@ interface Model {
     suspend fun updateUserImage(newImageUri : Uri) : Boolean
 
     suspend fun changeUserState ()
+
+    suspend fun updateUserLocation (location : Location) : Boolean
+
+    fun getUser () : UserContext?
+
+    fun isAdmin () : Boolean?
 
     suspend fun createJournal (journal : Journal) : Boolean
 

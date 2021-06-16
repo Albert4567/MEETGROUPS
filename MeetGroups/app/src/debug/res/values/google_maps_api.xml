@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=A6:2F:C0:DE:52:F9:A2:66:2F:02:F4:24:8A:C8:E8:EA:C0:04:B1:22%3Bcom.pdm.meetgroups.view.navbar
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.pdm.meetgroups.view
+
+    SHA-1 certificate fingerprint:
+    A6:2F:C0:DE:52:F9:A2:66:2F:02:F4:24:8A:C8:E8:EA:C0:04:B1:22
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key"
+        templateMergeStrategy="preserve"
+        translatable="false">AIzaSyBn3X9SRXC5UgZNB9e7Y3PUz2G9xgsNkG0</string>
+</resources>

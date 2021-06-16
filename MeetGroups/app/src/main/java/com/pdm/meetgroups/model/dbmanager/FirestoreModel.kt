@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.model.dbmanager
 
+import android.location.Location
 import android.net.Uri
 import com.pdm.meetgroups.model.entities.*
 
@@ -19,6 +20,8 @@ interface FirestoreModel {
     suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 
     suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
+
+    suspend fun updateUserLocation (location : Location) : Boolean
 
     suspend fun changeUserState () : Boolean
 

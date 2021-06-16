@@ -13,14 +13,14 @@ class MainActivity : AppCompatActivity() {
     var model = ModelImpl()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(!model.checkIfSignedIn()) {
+        /*if(!model.checkIfSignedIn()) {
             setContentView(R.layout.activity_sign_up)
-        } else {
+        } else {*/
             setContentView(R.layout.activity_main)
 
             val navView: BottomNavigationView = findViewById(R.id.nav_view)
             val navController = findNavController(R.id.nav_host_fragment)
             navView.setupWithNavController(navController)
-        }
+        //}
     }
 }

@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.view.adapter.PostListAdapter
-import com.pdm.meetgroups.viewmodel.journal.JournalViewModel
+import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
 
 class JournalFragment : Fragment() {
-    private val journalVMImpl: JournalViewModel by viewModels()
+    private val journalVMImpl: JournalViewModelImpl by viewModels()
     private lateinit var binding: FragmentJournalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

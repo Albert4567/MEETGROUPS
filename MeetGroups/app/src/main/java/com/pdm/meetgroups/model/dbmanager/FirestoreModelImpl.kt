@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.model.dbmanager
 
+import android.location.Location
 import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -55,6 +56,10 @@ class FirestoreModelImpl () : FirestoreModel {
 
     override suspend fun updateUserImage(newImageUri : Uri, uid : String) : Boolean {
         return userFirestoreModel.updateUserImage(newImageUri, uid)
+    }
+
+    override suspend fun updateUserLocation(location: Location): Boolean {
+        return userFirestoreModel.updateUserLocation(location)
     }
 
     override suspend fun changeUserState() : Boolean {
