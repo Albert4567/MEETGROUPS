@@ -27,10 +27,7 @@ class MapsViewModelImpl : ViewModel(), MapsViewModel {
         }
     }
 
-    override fun getNearJournalsAndLocations(location: Location): MutableLiveData<Hashtable<Location, Journal>?> {
-        var hash : MutableLiveData<Hashtable<Location, Journal>?>
-        viewModelScope.launch(Dispatchers.IO) {
-            hash = model.getNearJournalsAndLocations(location)
-        }
+    override suspend fun getNearJournalsAndLocations(location: Location): Hashtable<Location, Journal>? {
+         return model.getNearJournalsAndLocations(location)
     }
 }

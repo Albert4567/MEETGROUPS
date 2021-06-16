@@ -20,7 +20,7 @@ class SnapshotUtilities {
             user.nickname = doc["nickname"] as String
             user.bio = doc["bio"] as String
             user.email = doc["email"] as String
-            user.openJournalID = doc["openJournal"] as String
+            user.openJournalID = doc["openJournal"] as String?
 
             return user
         }

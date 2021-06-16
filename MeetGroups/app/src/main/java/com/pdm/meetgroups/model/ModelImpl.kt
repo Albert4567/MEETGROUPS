@@ -9,8 +9,9 @@ import com.pdm.meetgroups.model.dbmanager.StorageModelImpl
 import com.pdm.meetgroups.model.entities.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
-//TODO check addSnapshotListener
 class ModelImpl : Model {
     private val authenticationModel = AuthenticationModelImpl()
     private val firestoreModel = FirestoreModelImpl()
@@ -151,6 +152,10 @@ class ModelImpl : Model {
 
     override suspend fun loadJournalPosts(journal: Journal): ArrayList<Post>? {
         return firestoreModel.loadJournalPosts(journal)
+    }
+
+    override suspend fun getNearJournalsAndLocations(location: Location): Hashtable<Location, Journal>? {
+        return firestoreModel.getNearJournalsAndLocations(location)
     }
 
     override suspend fun createPost(journal: Journal, post: Post): Boolean {

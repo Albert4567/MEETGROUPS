@@ -10,8 +10,10 @@ import com.pdm.meetgroups.model.dbmanager.firestoremodel.PostFirestoreModelImpl
 import com.pdm.meetgroups.model.dbmanager.firestoremodel.UserFirestoreModel
 import com.pdm.meetgroups.model.dbmanager.firestoremodel.UserFirestoreModelImpl
 import com.pdm.meetgroups.model.entities.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class FirestoreModelImpl () : FirestoreModel {
+class FirestoreModelImpl : FirestoreModel {
 
     private val TAG : String = "FirestoreModelImpl"
     private val firestoreRef : FirebaseFirestore = Firebase.firestore
@@ -108,6 +110,10 @@ class FirestoreModelImpl () : FirestoreModel {
 
     override suspend fun loadJournalPosts(journal: Journal) : ArrayList<Post>? {
         return journalFirestoreModel.loadJournalPosts(journal)
+    }
+
+    override suspend fun getNearJournalsAndLocations(location: Location): Hashtable<Location, Journal>? {
+        return journalFirestoreModel.getNearJournalsAndLocations(location)
     }
 
     override suspend fun createPost(journal: Journal, post: Post) : Boolean {

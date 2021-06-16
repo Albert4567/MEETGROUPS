@@ -12,5 +12,5 @@ interface MapsViewModel {
 
     fun updateUserLocation (location : Location)
 
-    fun getNearJournalsAndLocations (location: Location) :  MutableLiveData<Hashtable<Location, Journal>?>
+    suspend fun getNearJournalsAndLocations (location: Location) : Hashtable<Location, Journal>?
 }

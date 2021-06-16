@@ -3,7 +3,6 @@ package com.pdm.meetgroups.view.navbar
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import android.location.LocationManager
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -23,8 +22,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.FragmentMapsBinding
 import com.pdm.meetgroups.model.entities.Journal
-import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.viewmodel.maps.MapsViewModelImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
@@ -41,6 +42,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
         map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.
         map.setOnMarkerClickListener(this)
         setupMap()
     }
@@ -61,9 +63,11 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
                 if (mapsVMImpl.isAdmin()) {
                     mapsVMImpl.updateUserLocation(location)
                     val currentLatLng = LatLng(location.latitude, location.longitude)
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17f))
                 }
-                nearJournalsHash = mapsVMImpl.getNearJournalsAndLocations(location)
+                CoroutineScope(Dispatchers.IO).launch {
+                    nearJournalsHash.postValue(mapsVMImpl.getNearJournalsAndLocations(location))
+                }
             }
         }
     }
@@ -81,6 +85,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentMapsBinding.inflate(inflater, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
         nearJournalsHash.observe(viewLifecycleOwner, { hash ->
