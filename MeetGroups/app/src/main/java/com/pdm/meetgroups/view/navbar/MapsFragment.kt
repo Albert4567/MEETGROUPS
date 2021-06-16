@@ -42,7 +42,6 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
         map.uiSettings.isZoomControlsEnabled = true
-        map.uiSettings.
         map.setOnMarkerClickListener(this)
         setupMap()
     }

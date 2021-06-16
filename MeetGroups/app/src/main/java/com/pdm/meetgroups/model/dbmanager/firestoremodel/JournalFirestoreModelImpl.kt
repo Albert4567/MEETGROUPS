@@ -1,9 +1,11 @@
 package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
 import android.location.Location
+import android.location.LocationManager
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.ktx.toObject
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.utility.SnapshotUtilities
 import kotlinx.coroutines.tasks.await
@@ -54,10 +56,10 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
 
     override suspend fun downloadJournalInfo (journalTitle: String) : Journal? {
         return try {
-            val doc = journalsCollectionRef.document("journalID")
+            val doc = journalsCollectionRef.document(journalTitle)
                 .get()
                 .await()
-            val posts = journalsCollectionRef.document("journalID")
+            val posts = journalsCollectionRef.document(journalTitle)
                 .collection("posts")
                 .get()
                 .await()
@@ -200,17 +202,38 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 .await()
 
             try {
+                val journalsIDs = usersDoc.documents.map { doc -> doc["openJournal"] as String }
                 val journalsDoc = journalsCollectionRef
-                    .whereIn("journalsID", usersDoc.documents.map { doc -> doc["openJournal"] })
+                    .whereIn("journalID", journalsIDs)
                     .get()
                     .await()
 
                 val hashtable = Hashtable<Location, Journal>()
                 usersDoc.documents.forEach { doc ->
+                    val geoPoint = doc["location"] as GeoPoint
+                    val userLocation = Location(LocationManager.GPS_PROVIDER)
+                    userLocation.latitude = geoPoint.latitude
+                    userLocation.longitude = geoPoint.longitude
+
+                    var posts = journalsCollectionRef.document(
+                        journalsDoc.documents[usersDoc.indexOf(doc)]["journalID"] as String)
+                        .collection("posts")
+                        .get()
+                        .await()
+
+                    var users = usersCollectionRef.whereIn("nickname",
+                        journalsDoc.documents[usersDoc.indexOf(doc)]["usersID"] as List<String>)
+                        .get()
+                        .await()
+
                     with(hashtable) {
                         put(
-                            doc["location"] as Location,
-                            journalsDoc.documents[usersDoc.indexOf(doc)] as Journal
+                            userLocation,
+                            SnapshotUtilities.loadJournalFromDoc(
+                                journalsDoc.documents[usersDoc.indexOf(doc)],
+                                posts,
+                                users.documents
+                            )
                         )
                     }
                 }
