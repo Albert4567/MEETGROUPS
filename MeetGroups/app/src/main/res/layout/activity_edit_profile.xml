@@ -13,11 +13,11 @@
         android:foregroundTint="#000000"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="250dp"
+        app:layout_constraintBottom_toTopOf="@id/editTextName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1"
-        app:layout_constraintBottom_toTopOf="@id/editTextName">
+        app:layout_constraintVertical_weight="1">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -33,11 +33,12 @@
                 app:tint="#B4FFFFFF" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textViewEditImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:text="Edit Image"
+                android:text="Modifica Immagine"
+                android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
@@ -50,12 +51,12 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
+        android:text="Nickname"
         app:layout_constraintBottom_toTopOf="@id/editTextPassword"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/roundImageView"
-        app:layout_constraintVertical_weight="1"/>
+        app:layout_constraintEnd_toStartOf="@id/buttonEditName"
+        app:layout_constraintVertical_weight="1" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -65,10 +66,10 @@
         android:inputType="textPassword"
         android:text="Edit password"
         app:layout_constraintBottom_toTopOf="@id/editTextBio"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonEditPassword"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextName"
-        app:layout_constraintVertical_weight="1"/>
+        app:layout_constraintVertical_weight="1" />
 
     <EditText
         android:id="@+id/editTextBio"
@@ -80,33 +81,55 @@
         android:inputType="textPersonName"
         android:minHeight="100dp"
         android:padding="10dp"
+        android:saveEnabled="false"
         android:text="Scrivi qui la tua bio..."
+        app:layout_constraintBottom_toTopOf="@id/buttonLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
-        app:layout_constraintBottom_toTopOf="@id/buttonLogout"
         app:layout_constraintVertical_weight="1" />
 
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="LOGOUT"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonDeleteProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editTextBio"
-        app:layout_constraintVertical_weight="1"/>
+        app:layout_constraintVertical_weight="1" />
 
     <Button
         android:id="@+id/buttonDeleteProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="ELIMINA PROFILO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/buttonLogout"
         app:layout_constraintTop_toBottomOf="@id/editTextBio"
-        app:layout_constraintVertical_weight="1"/>
+        app:layout_constraintVertical_weight="1" />
+
+    <Button
+        android:id="@+id/buttonEditName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editTextName"
+        app:layout_constraintBottom_toTopOf="@id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/roundImageView"
+        tools:layout_editor_absoluteY="235dp" />
+
+    <Button
+        android:id="@+id/buttonEditPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="edit"
+        app:layout_constraintBottom_toTopOf="@id/editTextBio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editTextPassword"
+        app:layout_constraintTop_toBottomOf="@+id/buttonEditName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
