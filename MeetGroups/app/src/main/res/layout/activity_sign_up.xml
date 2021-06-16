@@ -75,7 +75,7 @@
         app:layout_constraintBottom_toTopOf="@id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextPasswordConfirm"/>
+        app:layout_constraintTop_toBottomOf="@id/editTextPasswordConfirm" />
     <Button
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
