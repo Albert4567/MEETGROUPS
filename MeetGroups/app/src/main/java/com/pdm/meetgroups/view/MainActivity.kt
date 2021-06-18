@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.view
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,9 +20,10 @@ class MainActivity : AppCompatActivity() {
     var model = ModelImpl()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /*if(!model.checkIfSignedIn()) {
-            setContentView(R.layout.activity_sign_up)
-        } else {*/
+        if(!model.checkIfSignedIn()) {
+            val intent = Intent(applicationContext,SignUpActivity::class.java)
+            startActivity(intent)
+        } else {
             setContentView(R.layout.activity_main)
 
             val navView: BottomNavigationView = findViewById(R.id.nav_view)
