@@ -32,31 +32,30 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-    fun onSignUpClick() {
-        Toast.makeText(this,"teste di cazzo",Toast.LENGTH_SHORT).show()
-            var notEmpty = true
-            if (TextUtils.isEmpty(editTextNickname.text.toString())) {
-                editTextNickname.error = "inserisci un nickname"
-                notEmpty = false
-            }
-            if (TextUtils.isEmpty(editTextEmail.text.toString())) {
-                editTextEmail.error = "inserisci un email"
-                notEmpty = false
-            }
-            if (TextUtils.isEmpty(editTextPassword.text.toString())) {
-                editTextPassword.error = "inserisci una password"
-                notEmpty = false
-            }
-            if (TextUtils.isEmpty(editTextPasswordConfirm.text.toString())) {
-                editTextPasswordConfirm.error = "conferma la tua password"
-                notEmpty = false
-            }
+    private fun onSignUpClick() {
+        var notEmpty = true
+        if (TextUtils.isEmpty(editTextNickname.text.toString())) {
+            editTextNickname.error = "inserisci un nickname"
+            notEmpty = false
+        }
+        if (TextUtils.isEmpty(editTextEmail.text.toString())) {
+            editTextEmail.error = "inserisci un email"
+            notEmpty = false
+        }
+        if (TextUtils.isEmpty(editTextPassword.text.toString())) {
+            editTextPassword.error = "inserisci una password"
+            notEmpty = false
+        }
+        if (TextUtils.isEmpty(editTextPasswordConfirm.text.toString())) {
+            editTextPasswordConfirm.error = "conferma la tua password"
+            notEmpty = false
+        }
 
-            if (notEmpty) {
-                loginVMImpl.signUpUser(
-                    binding.editTextEmail.toString(),
-                    binding.editTextPassword.toString()
-                )
-            }
+        if (notEmpty) {
+            loginVMImpl.signUpUser(
+                binding.editTextEmail.toString(),
+                binding.editTextPassword.toString()
+            )
+        }
     }
 }
