@@ -46,11 +46,13 @@
                 android:layout_height="wrap_content"
                 android:hint="Title"
                 android:layout_weight="4"/>
-            <Button
+            <ImageButton
                 android:id="@+id/btn_edit_journal_confirm_title_change"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OK" />
+                android:backgroundTintMode="add"
+                android:src="@drawable/ic_done_24" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -20,8 +20,10 @@ class EditJournalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditJournalBinding.inflate(layoutInflater)
 
+        binding.etEditJournalTitle.setText(editJournalVM.getJournalTitle())
+
         binding.btnEditJournalConfirmTitleChange.setOnClickListener {
-            editJournalVM.updateJournalTitle(binding)
+            editJournalVM.updateJournalTitle(this)
         }
 
         editJournalVM.getParticipants().observe(this, Observer {
