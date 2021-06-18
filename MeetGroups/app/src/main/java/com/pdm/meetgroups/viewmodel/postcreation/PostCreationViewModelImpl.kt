@@ -33,7 +33,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         return images[position]
     }
 
-    fun setPostVisibility(view: View) {
+    override fun setPostVisibility(view: View) {
         if (view is RadioButton) {
             val checked = view.isChecked
 
@@ -48,7 +48,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         }
     }
 
-    fun startFileChooser(activity: PostCreationActivity) {
+    override fun startFileChooser(activity: PostCreationActivity) {
         var intent = Intent()
         intent.setType("image/*")
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -74,7 +74,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         images.postValue(imagesToDisplay)
     }
 
-    fun addChosenImages(data: Intent?) {
+    override fun addChosenImages(data: Intent?) {
         if(data!!.clipData != null) {
             pickMultipleImages(data.clipData!!)
         } else {
@@ -82,14 +82,14 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         }
     }
 
-    fun publishPost() {
-
-    }
-
-    override fun createPost(): Boolean {
+    fun createPost(): Boolean {
         viewModelScope.launch(Dispatchers.IO) {
             //model.createPost()
         }
         return true
+    }
+
+    fun publishPost() {
+        
     }
 }
