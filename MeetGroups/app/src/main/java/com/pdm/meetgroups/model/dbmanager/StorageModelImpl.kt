@@ -5,7 +5,7 @@ import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
-class StorageModelImpl () : StorageModel {
+class StorageModelImpl : StorageModel {
 
     private val TAG : String = "StorageModelImpl"
     private val storage = FirebaseStorage.getInstance().reference
