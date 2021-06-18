@@ -19,39 +19,44 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.pdm.meetgroups.R.layout.activity_sign_up)
         loginVMImpl.loadView(this)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         binding.signUpButton.setOnClickListener {
-            Toast.makeText(this,"teste di cazzo",Toast.LENGTH_SHORT).show()
-            when {
-                TextUtils.isEmpty(editTextNickname.text.toString()) -> {
-                    editTextNickname.error = "inserisci un nickname"
-                    return@setOnClickListener
-                }
-                TextUtils.isEmpty(editTextEmail.text.toString()) -> {
-                    editTextEmail.error = "inserisci un email"
-                    return@setOnClickListener
-                }
-                TextUtils.isEmpty(editTextPassword.text.toString()) -> {
-                    editTextPassword.error = "inserisci una password"
-                    return@setOnClickListener
-                }
-                TextUtils.isEmpty(editTextPasswordConfirm.text.toString()) -> {
-                    editTextPasswordConfirm.error = "conferma la tua password"
-                    return@setOnClickListener
-                }
-                else -> loginVMImpl.signUpUser(
-                    binding.editTextEmail.toString(),
-                    binding.editTextPassword.toString()
-                )
-            }
+            onSignUpClick()
         }
+
+        return setContentView(binding.root)
     }
 
     fun signIn(view : View?) {
 
     }
 
-    //fun startMainActivity
+    fun onSignUpClick() {
+        Toast.makeText(this,"teste di cazzo",Toast.LENGTH_SHORT).show()
+            var notEmpty = true
+            if (TextUtils.isEmpty(editTextNickname.text.toString())) {
+                editTextNickname.error = "inserisci un nickname"
+                notEmpty = false
+            }
+            if (TextUtils.isEmpty(editTextEmail.text.toString())) {
+                editTextEmail.error = "inserisci un email"
+                notEmpty = false
+            }
+            if (TextUtils.isEmpty(editTextPassword.text.toString())) {
+                editTextPassword.error = "inserisci una password"
+                notEmpty = false
+            }
+            if (TextUtils.isEmpty(editTextPasswordConfirm.text.toString())) {
+                editTextPasswordConfirm.error = "conferma la tua password"
+                notEmpty = false
+            }
+
+            if (notEmpty) {
+                loginVMImpl.signUpUser(
+                    binding.editTextEmail.toString(),
+                    binding.editTextPassword.toString()
+                )
+            }
+    }
 }
