@@ -26,8 +26,6 @@ interface Model {
 
     suspend fun updateUserLocation (location : Location) : Boolean
 
-    fun getUser () : UserContext?
-
     fun isAdmin () : Boolean?
 
     suspend fun createJournal (journal : Journal) : Boolean

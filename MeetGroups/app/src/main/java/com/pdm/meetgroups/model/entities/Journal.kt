@@ -15,9 +15,7 @@ data class Journal(
         var users : List<UserContext>
 ) {
     var journalImage : Bitmap? = null
-}
 
-) {
     fun getAdmin() : UserContext {
         return users.first { user -> user.isAdmin() }
     }

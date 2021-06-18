@@ -132,10 +132,6 @@ class ModelImpl : Model {
         else false
     }
 
-    override fun getUser(): UserContext? {
-        return localUser
-    }
-
     override fun isAdmin(): Boolean? {
         return localUser?.isAdmin()
     }
@@ -199,8 +195,8 @@ class ModelImpl : Model {
     }
 
     override suspend fun signUpUser(email: String, password: String, user: UserContext): Boolean {
-            createUser(user)
         return if (authenticationModel.signUpUser(email, password)) {
+            createUser(user)
         } else false
     }
 

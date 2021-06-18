@@ -34,7 +34,9 @@ class ProfileFragment : Fragment() {
 
         binding.LinkImageView.setImageBitmap(profileVMImpl.getUserImage())
 
-        binding.bioTextView.text = profileVMImpl.getUserBio()
+        binding.bioTextView.text = if (profileVMImpl.getUserBio() != "")
+                                        profileVMImpl.getUserBio()
+                                   else binding.bioTextView.text
 
         binding.nameTextView.text = profileVMImpl.getUserNickname()
 

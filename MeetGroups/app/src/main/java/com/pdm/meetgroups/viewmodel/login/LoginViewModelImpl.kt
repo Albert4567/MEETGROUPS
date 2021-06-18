@@ -9,7 +9,6 @@ import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.ConcreteUser
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.MainActivity
-import com.pdm.meetgroups.view.SignUpActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
