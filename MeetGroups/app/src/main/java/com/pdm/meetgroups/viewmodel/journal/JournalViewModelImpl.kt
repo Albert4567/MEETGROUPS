@@ -19,7 +19,6 @@ import com.pdm.meetgroups.view.EditJournalActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// TODO(AB): agganciare viewModel con firebase
 class JournalViewModelImpl : ViewModel(), JournalViewModel {
     private val model = ModelImpl.modelRef
     private val posts: MutableLiveData<PostList> = MutableLiveData()

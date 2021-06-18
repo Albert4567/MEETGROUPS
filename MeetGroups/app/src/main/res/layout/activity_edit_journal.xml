@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.EditJournalFragment">
+    tools:context=".view.EditJournalActivity"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,12 +34,24 @@
                     app:srcCompat="@android:drawable/sym_def_app_icon" />
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
-        <EditText
-            android:id="@+id/et_edit_journal_title"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:hint="Title"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp">
+            <EditText
+                android:id="@+id/et_edit_journal_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Title"
+                android:layout_weight="4"/>
+            <Button
+                android:id="@+id/btn_edit_journal_confirm_title_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OK" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_edit_journal_participants"
@@ -48,9 +61,9 @@
 
         <Button
             android:id="@+id/btn_edit_journal_add_participant"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity=""
+            android:layout_gravity="center"
             android:text="Add Participant"/>
 
         <Button
