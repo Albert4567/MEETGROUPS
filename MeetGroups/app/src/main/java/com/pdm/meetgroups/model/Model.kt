@@ -36,6 +36,10 @@ interface Model {
 
     fun getJournal () : Journal?
 
+    fun getUser () : UserContext?
+
+    fun getUserClosedJournals () : ArrayList<Journal>?
+
     suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean
 
     suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
@@ -51,6 +55,8 @@ interface Model {
     suspend fun createPost (journal : Journal, post : Post) : Boolean
 
     suspend fun deletePost (journal : Journal, post : Post) : Boolean
+
+    suspend fun updateJournalImage (newImageUri : Uri) : Boolean
 
     //AuthentificationModel interface
     suspend fun signUpUser (email : String, password : String, user: UserContext) : Boolean

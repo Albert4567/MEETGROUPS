@@ -72,6 +72,10 @@ class FirestoreModelImpl : FirestoreModel {
         return userFirestoreModel.downloadUserInfo()
     }
 
+    override suspend fun getUserClosedJournals(user : UserContext): ArrayList<Journal>? {
+        return journalFirestoreModel.getUserClosedJournals(user)
+    }
+
     override suspend fun createJournal(journal: Journal) : Boolean {
         val result = journalFirestoreModel.createJournal(journal)
         if (result)

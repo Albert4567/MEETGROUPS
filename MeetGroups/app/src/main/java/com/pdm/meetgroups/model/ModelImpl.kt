@@ -1,6 +1,7 @@
 package com.pdm.meetgroups.model
 
 import android.location.Location
+import android.graphics.Bitmap
 import android.net.Uri
 import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
@@ -42,10 +43,19 @@ class ModelImpl : Model {
     private fun instantiateLocalUser() {
         if (authenticationModel.getCurrentUserUID() != null) {
             GlobalScope.launch {
-                localUser = firestoreModel.downloadUserInfo()
-                instantiateLocalJournal(localUser?.getState()?.openJournalID)
+             localUser = firestoreModel.downloadUserInfo()
+             localUser?.getState()?.list = firestoreModel.getUserClosedJournals(localUser!!)?.toList() ?: emptyList()
+             localUser?.getState()?.userImage = getUserImage()
+             instantiateLocalJournal(localUser?.getState()?.openJournalID)
             }
         }
+    }
+
+     private suspend fun getUserImage(): Bitmap? {
+         return if (localUser != null)
+             storageModel.getUserImage(localUser!!.getState()!!.nickname)
+         else
+             null
     }
 
     //chiamato:
@@ -56,8 +66,16 @@ class ModelImpl : Model {
         if (journalID != null) {
             GlobalScope.launch {
                 localJournal = firestoreModel.downloadJournalInfo(journalID)
+                localJournal?.journalImage = getJournalImage()
             }
         }
+    }
+
+    private suspend fun getJournalImage(): Bitmap? {
+        return if (localJournal != null)
+            storageModel.getJournalImage(localJournal!!.journalID)
+        else
+            null
     }
 
     override suspend fun createUser(user: UserContext): Boolean {
@@ -93,10 +111,9 @@ class ModelImpl : Model {
     }
 
     override suspend fun updateUserImage(newImageUri: Uri) : Boolean {
-        val uid = authenticationModel.getCurrentUserUID()
-        return if (uid != null) {
-            if(firestoreModel.updateUserImage(newImageUri, uid))
-                return storageModel.updateStoredUserImage(newImageUri, uid)
+        return if (localUser != null) {
+            if(firestoreModel.updateUserImage(newImageUri, localUser!!.getState().nickname))
+                return storageModel.updateStoredUserImage(newImageUri, localUser!!.getState().nickname)
             false
         }
         else false
@@ -137,6 +154,12 @@ class ModelImpl : Model {
 
     override fun getJournal () : Journal? { return localJournal }
 
+    override fun getUser(): UserContext? { return  localUser }
+
+    override fun getUserClosedJournals(): ArrayList<Journal>? {
+        return ArrayList(localUser?.getState()?.list)
+    }
+
     override suspend fun addParticipant(journal: Journal, user: UserContext): Boolean {
         return firestoreModel.addParticipant(journal, user)
     }
@@ -169,9 +192,15 @@ class ModelImpl : Model {
         return firestoreModel.deletePost(journal, post)
     }
 
+    override suspend fun updateJournalImage(newImageUri: Uri): Boolean {
+        return if (localJournal != null) {
+            storageModel.updateStoredJournalImage(newImageUri, localJournal!!.journalID)
+        } else false
+    }
+
     override suspend fun signUpUser(email: String, password: String, user: UserContext): Boolean {
-        return if (authenticationModel.signUpUser(email, password)) {
             createUser(user)
+        return if (authenticationModel.signUpUser(email, password)) {
         } else false
     }
 

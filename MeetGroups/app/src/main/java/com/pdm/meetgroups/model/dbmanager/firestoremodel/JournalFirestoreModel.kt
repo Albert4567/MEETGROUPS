@@ -26,4 +26,6 @@ interface JournalFirestoreModel {
     suspend fun loadJournalPosts (journal: Journal) : ArrayList<Post>?
 
     suspend fun getNearJournalsAndLocations (location: Location) : Hashtable<Location, Journal>?
+
+    suspend fun getUserClosedJournals (user : UserContext) : ArrayList<Journal>?
 }

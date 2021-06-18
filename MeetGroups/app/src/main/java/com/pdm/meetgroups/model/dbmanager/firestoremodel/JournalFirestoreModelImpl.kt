@@ -249,4 +249,35 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
             null
         }
     }
+
+    override suspend fun getUserClosedJournals(user : UserContext): ArrayList<Journal>? {
+        return try {
+            val userDoc = usersCollectionRef
+                .whereEqualTo("nickname", user.getState().nickname)
+                .get()
+                .await()
+            val userJournalsIDs = userDoc.documents[0]["journalsID"] as Map<String, String>
+
+            try {
+                val userJournals = journalsCollectionRef
+                    .whereIn("journalID", userJournalsIDs.keys.toMutableList())
+                    .get()
+                    .await()
+
+                val journals = ArrayList<Journal>()
+                for (journal in userJournals) {
+                    journals.add(SnapshotUtilities.loadJournalFromDoc(journal, null, userDoc.documents)!!)
+                }
+
+                Log.w(TAG, "Get user Journals Success!")
+                return journals
+            } catch (e : Exception) {
+                Log.e(TAG, "get user journals failed with ", e)
+                null
+            }
+        } catch (e : Exception) {
+            Log.e(TAG, "get user doc failed with ", e)
+            null
+        }
+    }
 }
