@@ -35,11 +35,11 @@ class SignInActivity : AppCompatActivity() {
     private fun onSignInClick() {
         var notEmpty = true
         if (TextUtils.isEmpty(editTextEmail.text.toString())) {
-            editTextNickname.error = "inserisci un nickname"
+            editTextEmail.error = "inserisci un nickname"
             notEmpty = false
         }
         if (TextUtils.isEmpty(editTextPassword.text.toString())) {
-            editTextEmail.error = "inserisci un email"
+            editTextPassword.error = "inserisci un email"
             notEmpty = false
         }
 
