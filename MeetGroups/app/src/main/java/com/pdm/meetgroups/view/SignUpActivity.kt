@@ -20,8 +20,10 @@ class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.pdm.meetgroups.R.layout.activity_sign_up)
+        loginVMImpl.loadView(this)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         binding.signUpButton.setOnClickListener {
+            Toast.makeText(this,"teste di cazzo",Toast.LENGTH_SHORT).show()
             when {
                 TextUtils.isEmpty(editTextNickname.text.toString()) -> {
                     editTextNickname.error = "inserisci un nickname"
@@ -51,7 +53,5 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 
-    //fun signUp(view : View?) {
-
-    //}
+    //fun startMainActivity
 }
