@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -24,14 +25,20 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUpButton.setOnClickListener {
             onSignUpClick()
         }
+        binding.signInButton.setOnClickListener {
+            onSignInClick()
+        }
 
         return setContentView(binding.root)
     }
 
-    fun signIn(view : View?) {
-
+    private fun onSignInClick() {
+        val intent = Intent(applicationContext, SignInActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
+    //TODO finish check for confirm password
     private fun onSignUpClick() {
         var notEmpty = true
         if (TextUtils.isEmpty(editTextNickname.text.toString())) {
@@ -53,8 +60,9 @@ class SignUpActivity : AppCompatActivity() {
 
         if (notEmpty) {
             loginVMImpl.signUpUser(
-                binding.editTextEmail.toString(),
-                binding.editTextPassword.toString()
+                binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString(),
+                binding.editTextNickname.text.toString()
             )
         }
     }

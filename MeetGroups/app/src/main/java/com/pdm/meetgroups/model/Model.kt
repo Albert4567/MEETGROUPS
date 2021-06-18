@@ -53,7 +53,7 @@ interface Model {
     suspend fun deletePost (journal : Journal, post : Post) : Boolean
 
     //AuthentificationModel interface
-    suspend fun signUpUser (email : String, password : String) : Boolean
+    suspend fun signUpUser (email : String, password : String, user: UserContext) : Boolean
 
     suspend fun signInUser (email : String, password : String) : Boolean
 

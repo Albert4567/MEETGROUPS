@@ -1,32 +1,52 @@
 package com.pdm.meetgroups.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.text.TextUtils
 import androidx.activity.viewModels
-import com.pdm.meetgroups.R
-import com.pdm.meetgroups.databinding.ActivitySignUpBinding
-import com.pdm.meetgroups.viewmodel.login.LoginViewModel
+import com.pdm.meetgroups.databinding.ActivitySignInBinding
 import com.pdm.meetgroups.viewmodel.login.LoginViewModelImpl
+import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignInActivity : AppCompatActivity() {
     private val loginVMImpl : LoginViewModelImpl by viewModels()
-    private lateinit var binding: ActivitySignUpBinding
+    private lateinit var binding: ActivitySignInBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
-
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        loginVMImpl.loadView(this)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        binding.signInButton.setOnClickListener {
+            onSignInClick()
+        }
+        binding.signUpButton.setOnClickListener {
+            onSignUpClick()
+        }
+        return setContentView(binding.root)
     }
 
-    fun signIn(view : View?) {
-        loginVMImpl.signUpUser(binding.editTextEmail.toString(),
-            binding.editTextPasswordConfirm.toString())
+    private fun onSignInClick() {
+        var notEmpty = true
+        if (TextUtils.isEmpty(editTextEmail.text.toString())) {
+            editTextNickname.error = "inserisci un nickname"
+            notEmpty = false
+        }
+        if (TextUtils.isEmpty(editTextPassword.text.toString())) {
+            editTextEmail.error = "inserisci un email"
+            notEmpty = false
+        }
+
+        if (notEmpty) {
+            loginVMImpl.signInUser(binding.editTextEmail.text.toString(),
+                binding.editTextPassword.text.toString())
+        }
     }
 
-    fun signUp(view : View?) {
-        //change activity to sign up
+    private fun onSignUpClick() {
+        val intent = Intent(applicationContext, SignUpActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

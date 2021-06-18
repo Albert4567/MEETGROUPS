@@ -6,8 +6,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class AuthenticationModelImpl () : AuthenticationModel {
 
@@ -79,11 +77,8 @@ class AuthenticationModelImpl () : AuthenticationModel {
 
     //PASSWORD_PATTERN : almeno 8 Char di cui ,almeno 1 numero,
     // almeno 1 lettera Uppercase, almeno 1 special Char
-    private fun isValidPassword(password: String?) : Boolean {
-        val pattern : Pattern
-        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$"
-        pattern = Pattern.compile(PASSWORD_PATTERN)
-        val matcher : Matcher = pattern.matcher(password)
-        return matcher.matches()
+    private fun isValidPassword(password: String) : Boolean {
+        val PASSWORD_REGEX = """^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!\-_?&])(?=\S+$).{8,}""".toRegex()
+        return PASSWORD_REGEX.matches(password)
     }
 }

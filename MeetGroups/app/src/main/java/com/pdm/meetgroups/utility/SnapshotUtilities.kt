@@ -7,7 +7,7 @@ import com.pdm.meetgroups.model.entities.*
 class SnapshotUtilities {
     companion object {
         fun loadUserFromDoc(doc: DocumentSnapshot): UserContext {
-            var user = UserContext()
+            val user = UserContext()
             var concrete: UserState = if ((doc["state"] as String) == "user")
                 fillUserData(ConcreteUser(), doc)
             else

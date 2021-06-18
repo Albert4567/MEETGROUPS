@@ -61,8 +61,11 @@ class ModelImpl : Model {
     }
 
     override suspend fun createUser(user: UserContext): Boolean {
-        instantiateUserModel()
-        return firestoreModel.createUser(user)
+        firestoreModel.instantiateUserModel(authenticationModel.getCurrentUserUID())
+        return if (firestoreModel.createUser(user)) {
+            instantiateUserModel()
+            true
+        } else false
     }
 
 
@@ -75,7 +78,7 @@ class ModelImpl : Model {
     }
 
     override suspend fun updateUserBio(newBio: String): Boolean {
-        var result = firestoreModel.updateUserBio(newBio)
+        val result = firestoreModel.updateUserBio(newBio)
         return if (result) {
             localUser?.getState()?.bio = newBio
             true
@@ -166,8 +169,10 @@ class ModelImpl : Model {
         return firestoreModel.deletePost(journal, post)
     }
 
-    override suspend fun signUpUser(email: String, password: String): Boolean {
-        return authenticationModel.signUpUser(email, password)
+    override suspend fun signUpUser(email: String, password: String, user: UserContext): Boolean {
+        return if (authenticationModel.signUpUser(email, password)) {
+            createUser(user)
+        } else false
     }
 
     override suspend fun signInUser(email: String, password: String): Boolean {
