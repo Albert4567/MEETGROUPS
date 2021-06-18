@@ -82,7 +82,7 @@
         android:minHeight="100dp"
         android:padding="10dp"
         android:saveEnabled="false"
-        android:text="Scrivi qui la tua bio..."
+        android:hint="Scrivi qui la tua bio..."
         app:layout_constraintBottom_toTopOf="@id/buttonLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
