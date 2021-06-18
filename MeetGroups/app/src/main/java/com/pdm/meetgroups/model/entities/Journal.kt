@@ -1,5 +1,7 @@
 package com.pdm.meetgroups.model.entities
 
+import android.graphics.Bitmap
+
 enum class JOURNAL_STATUS(val value: String) {
     IN_PROGRESS("inProgress"),
     CLOSED("closed")
@@ -11,4 +13,6 @@ data class Journal(
         var posts : List<Post>?,
         var status : JOURNAL_STATUS,
         var users : List<UserContext>
-)
+) {
+    var journalImage : Bitmap? = null
+}

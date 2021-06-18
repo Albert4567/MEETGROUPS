@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.model.entities
 
+import android.graphics.Bitmap
 import com.google.firebase.firestore.GeoPoint
 
 data class ConcreteAdmin(
@@ -10,7 +11,9 @@ data class ConcreteAdmin(
         override var openJournalID: String? = null,
         override var visibilityOnMap: Boolean = false,
         var currentPosition: GeoPoint? = null
-): UserState {
+):  UserState {
+    override var userImage: Bitmap? = null
+
     override fun stateHandle(newState : UserState) : UserState {
         return ConcreteUser(
             newState.bio,

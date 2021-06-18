@@ -10,7 +10,7 @@ import com.pdm.meetgroups.model.dbmanager.firestoremodel.UserFirestoreModel
 import com.pdm.meetgroups.model.dbmanager.firestoremodel.UserFirestoreModelImpl
 import com.pdm.meetgroups.model.entities.*
 
-class FirestoreModelImpl () : FirestoreModel {
+class FirestoreModelImpl : FirestoreModel {
 
     private val TAG : String = "FirestoreModelImpl"
     private val firestoreRef : FirebaseFirestore = Firebase.firestore
@@ -63,6 +63,10 @@ class FirestoreModelImpl () : FirestoreModel {
 
     override suspend fun downloadUserInfo(): UserContext? {
         return userFirestoreModel.downloadUserInfo()
+    }
+
+    override suspend fun getUserClosedJournals(user : UserContext): ArrayList<Journal>? {
+        return journalFirestoreModel.getUserClosedJournals(user)
     }
 
     override suspend fun createJournal(journal: Journal) : Boolean {

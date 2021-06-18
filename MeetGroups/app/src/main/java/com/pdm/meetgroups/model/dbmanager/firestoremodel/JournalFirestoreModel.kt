@@ -21,4 +21,6 @@ interface JournalFirestoreModel {
     suspend fun updateJournalTitle (journal: Journal) : Boolean
 
     suspend fun loadJournalPosts (journal: Journal) : ArrayList<Post>?
+
+    suspend fun getUserClosedJournals (user : UserContext) : ArrayList<Journal>?
 }
