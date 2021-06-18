@@ -21,13 +21,15 @@ interface FirestoreModel {
 
     suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 
-    suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
+    suspend fun updateUserImage (newImageUri : Uri, nickname : String) : Boolean
 
     suspend fun updateUserLocation (location : Location) : Boolean
 
     suspend fun changeUserState () : Boolean
 
     suspend fun downloadUserInfo () : UserContext?
+
+    suspend fun getUserClosedJournals (user : UserContext) : ArrayList<Journal>?
 
     //JournalsDedicatedMethods
     suspend fun createJournal (journal : Journal) : Boolean
