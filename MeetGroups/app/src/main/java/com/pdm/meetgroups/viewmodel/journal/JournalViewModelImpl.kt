@@ -1,6 +1,9 @@
 package com.pdm.meetgroups.viewmodel.journal
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +15,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.*
+import com.pdm.meetgroups.view.PostCreationActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -41,9 +45,9 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
 
     override fun getPosts(): LiveData<PostList> = posts
 
-    override fun showPostCreationFragment(activity: FragmentActivity) {
-        val navController = activity.let { Navigation.findNavController(it, R.id.nav_host_fragment) }
-        navController.navigate(R.id.action_navigation_journal_to_navigation_post_creation)
+    override fun showPostCreationFragment(context: Context) {
+        val intent = Intent(context, PostCreationActivity::class.java)
+        startActivity(context, intent, null)
     }
 
     override fun showEditJournalFragment(activity: FragmentActivity) {

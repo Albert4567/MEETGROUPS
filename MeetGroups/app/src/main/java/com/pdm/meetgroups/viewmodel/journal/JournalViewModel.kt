@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.viewmodel.journal
 
+import android.content.Context
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -24,5 +25,5 @@ interface JournalViewModel {
 
     fun showGroupParticipants(view: View)
 
-    fun showPostCreationFragment(activity: FragmentActivity)
+    fun showPostCreationFragment(context: Context)
 }
