@@ -3,9 +3,7 @@ package com.pdm.meetgroups.view
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pdm.meetgroups.databinding.ActivitySignUpBinding
@@ -59,6 +57,8 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         if (notEmpty) {
+            signUpButton.visibility = View.INVISIBLE
+            progressBarUp.visibility = View.VISIBLE
             loginVMImpl.signUpUser(
                 binding.editTextEmail.text.toString(),
                 binding.editTextPassword.text.toString(),

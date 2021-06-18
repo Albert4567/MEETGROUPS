@@ -4,10 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import androidx.activity.viewModels
 import com.pdm.meetgroups.databinding.ActivitySignInBinding
 import com.pdm.meetgroups.viewmodel.login.LoginViewModelImpl
+import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.editTextEmail
+import kotlinx.android.synthetic.main.activity_sign_up.editTextPassword
+import kotlinx.android.synthetic.main.activity_sign_up.signInButton
 
 class SignInActivity : AppCompatActivity() {
     private val loginVMImpl : LoginViewModelImpl by viewModels()
@@ -39,6 +44,8 @@ class SignInActivity : AppCompatActivity() {
         }
 
         if (notEmpty) {
+            signInButton.visibility = View.INVISIBLE
+            progressBarIn.visibility = View.VISIBLE
             loginVMImpl.signInUser(binding.editTextEmail.text.toString(),
                 binding.editTextPassword.text.toString())
         }
