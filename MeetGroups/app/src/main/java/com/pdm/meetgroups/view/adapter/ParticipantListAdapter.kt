@@ -11,7 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.viewmodel.EditJournalViewModel
+import com.pdm.meetgroups.viewmodel.editjournal.EditJournalViewModel
 
 // TODO(AB): Should i remove context formal parameter and pick the one in onCreateViewHolder
 class ParticipantListAdapter(
