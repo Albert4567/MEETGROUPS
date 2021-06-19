@@ -1,12 +1,11 @@
 package com.pdm.meetgroups.viewmodel.postcreation
 
 import android.content.ClipData
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.RadioButton
@@ -19,19 +18,17 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.databinding.ActivityPostCreationBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.view.PostCreationActivity
-import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 typealias ImageList = ArrayList<Uri>
 
-// TODO(AB): Add checks
 class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private val model = ModelImpl.modelRef
     private lateinit var visibility: POST_STATUS
@@ -94,14 +91,18 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     }
 
     private fun tagIsAllowed(tag: String): Boolean {
-        return Tags.values().contains(Tags.valueOf(tag))
+        return Tags.values().contains(
+            Tags.valueOf(tag.toLowerCase(Locale.ROOT))
+        )
     }
 
     private fun extractTagsFrom(tagsContainer: String): ArrayList<String> {
-        var tags = ArrayList<String>()
+        val tags = ArrayList<String>()
 
+        // TODO(AB): Check if this is working
         tagsContainer.trim().split("#").forEach {
-            if(it.length > 1 && tagIsAllowed(it))
+            if(tagIsAllowed(it))
+                Log.println(Log.ASSERT, "AB", "entrato")
                 tags.add(it)
         }
 
@@ -115,7 +116,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
-            title+Timestamp.now().toString(),
+            title+Timestamp.now(),
             title,
             description,
             visibility,
@@ -127,39 +128,21 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         )
     }
 
-    private fun checkInsertionErrors(activity: PostCreationActivity): Boolean {
-//        var notEmpty = true
-//        if (TextUtils.isEmpty(editTextNickname.text.toString())) {
-//            editTextNickname.error = "inserisci un nickname"
-//            notEmpty = false
-//        }
-//        if (TextUtils.isEmpty(editTextEmail.text.toString())) {
-//            editTextEmail.error = "inserisci un email"
-//            notEmpty = false
-//        }
-//        if (TextUtils.isEmpty(editTextPassword.text.toString())) {
-//            editTextPassword.error = "inserisci una password"
-//            notEmpty = false
-//        }
-//        if (TextUtils.isEmpty(editTextPasswordConfirm.text.toString())) {
-//            editTextPasswordConfirm.error = "conferma la tua password"
-//            notEmpty = false
-//        }
-//
-//        if (notEmpty) {
-//            signUpButton.visibility = View.INVISIBLE
-//            progressBarUp.visibility = View.VISIBLE
-//            loginVMImpl.signUpUser(
-//                binding.editTextEmail.text.toString(),
-//                binding.editTextPassword.text.toString(),
-//                binding.editTextNickname.text.toString()
-//            )
-//        }
+    private fun insertionErrors(activity: PostCreationActivity): Boolean {
+        val titleEditText = activity.findViewById<EditText>(R.id.et_post_creation_title)
+
+        if (TextUtils.isEmpty(titleEditText.text.toString())) {
+            titleEditText.error = "Insert title"
+            return true
+        }
+        if(!::visibility.isInitialized) {
+            return true
+        }
         return false
     }
 
     override fun publishPost(activity: PostCreationActivity, currentLocation: Location?) {
-        if(currentLocation == null) {
+        if(currentLocation == null || insertionErrors(activity)) {
             Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
             return
         }
@@ -176,6 +159,8 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             withContext(Dispatchers.Main) {
                 if(result != null && !result) {
                     Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                } else {
+                    activity.onBackPressed()
                 }
             }
         }

@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="tags ex. #summer #fun" />
+            android:hint="tags: ex. #mountain #sea #food #party #museum" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose visibility:"
+                android:text="Choose visibility*"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
             <RadioGroup
