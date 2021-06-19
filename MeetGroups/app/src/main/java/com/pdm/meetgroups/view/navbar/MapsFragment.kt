@@ -36,7 +36,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private lateinit var binding: FragmentMapsBinding
 
     companion object {
-        private const val LOCATION_REQUEST_CODE = 1
+        const val LOCATION_REQUEST_CODE = 1
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
