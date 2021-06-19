@@ -1,25 +1,89 @@
 package com.pdm.meetgroups.view
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-//import androidx.preference.PreferenceFragmentCompat
 import com.pdm.meetgroups.R
-import kotlinx.android.synthetic.main.activity_edit_profile.*
-import kotlinx.android.synthetic.main.fragment_profile.*
+import com.pdm.meetgroups.databinding.ActivityEditProfileBinding
+import com.pdm.meetgroups.viewmodel.editprofile.EditProfileViewModelImpl
 
-/*TODO:Completare editprofileactivity, creare il viewmodel e connettere al db
-   uguale per profile fragment e aggiungere imagebutton per entrare in editprofile*/
-
+//TODO RIMUOVERE NICKNAME DALL'EDIT PROFILE XML
 class EditProfileActivity : AppCompatActivity() {
+    private val editProfileVMImpl : EditProfileViewModelImpl by viewModels()
+    private lateinit var binding: ActivityEditProfileBinding
+
+    private var isWriting = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        editProfileVMImpl.loadView(this)
 
+        binding = ActivityEditProfileBinding.inflate(layoutInflater)
+
+        binding.buttonEditPassword.setOnClickListener {
+            onEditPasswordClick(binding.editTextPassword.text.toString())
+            binding.buttonEditPassword.text = ""
+        }
+
+        binding.buttonLogout.setOnClickListener {
+            onLogoutClick()
+        }
+
+        binding.buttonDeleteProfile.setOnClickListener {
+            onDeleteProfileClick()
+        }
+
+        binding.roundImageView.setOnClickListener {
+            editProfileVMImpl.startFileChooser()
+        }
+
+        //TODO edit bio in order to update the db
+        binding.editTextBio.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                isWriting = true
+            } else {
+                isWriting = false
+                onBioChanged(binding.editTextBio.text.toString())
+            }
+        }
+
+        return setContentView(binding.root)
     }
 
+    private fun onEditPasswordClick(password : String) {
+        editProfileVMImpl.updatePassword(password)
+    }
 
+    private fun onLogoutClick() {
+        editProfileVMImpl.logout()
+    }
+
+    private fun onDeleteProfileClick() {
+        editProfileVMImpl.deleteProfile()
+    }
+
+    private fun onBioChanged(bio : String) {
+        editProfileVMImpl.updateBio(bio)
+    }
+
+    fun updateImage (image : Bitmap?) {
+        binding.LinkImageView.setImageBitmap(image)
+    }
+
+    fun updateImageWithUri (imageUri : Uri) {
+        binding.LinkImageView.setImageURI(imageUri)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 111 && resultCode == Activity.RESULT_OK ){
+            editProfileVMImpl.pickSingleImage(data!!)
+        }
+    }
 }

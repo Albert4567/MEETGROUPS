@@ -14,11 +14,13 @@ class JournalListAdapter(val profileVM: ProfileViewModel) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        //Not yet implemented
     }
 
     override fun getItemCount(): Int {
-        return profileVM.getJournals().value!!.size
+        return if (profileVM.getJournals().value != null)
+            profileVM.getJournals().value!!.size
+        else 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
