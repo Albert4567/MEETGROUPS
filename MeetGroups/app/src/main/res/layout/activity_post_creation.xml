@@ -1,101 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/post_creation_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10sp"
-    tools:context=".view.PostCreationFragment">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create your Post"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <EditText
-        android:id="@+id/et_post_creation_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="Title" />
-
-    <!-- TODO(AB): Choose how to represent tags -->
-    <EditText
-        android:id="@+id/et_post_creation_tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="tags ex. #summer #fun" />
-
+    android:scrollbars="none"
+    tools:context=".view.PostCreationActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="30dp">
-        <TextView
+        android:padding="10sp">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create your Post"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <EditText
+            android:id="@+id/et_post_creation_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Choose visibility:"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
-        <RadioGroup
+            android:layout_marginTop="30dp"
+            android:hint="Title" />
+
+        <EditText
+            android:id="@+id/et_post_creation_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioButton
-                android:id="@+id/radio_post_creation_public"
-                android:layout_width="wrap_content"
+            android:minHeight="120dp"
+            android:gravity="top|left"
+            android:layout_marginTop="20dp"
+            android:hint="Description" />
+
+        <EditText
+            android:id="@+id/et_post_creation_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="tags ex. #summer #fun" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="Public" />
-            <RadioButton
-                android:id="@+id/radio_post_creation_private"
-                android:layout_width="wrap_content"
+                android:text="Choose visibility:"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
-                android:text="Private" />
-        </RadioGroup>
-    </LinearLayout>
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/radio_post_creation_public"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="Public" />
+                <RadioButton
+                    android:id="@+id/radio_post_creation_private"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClicked"
+                    android:text="Private" />
+            </RadioGroup>
+        </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_post_creation_images"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_post_creation_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
-    <Button
-        android:id="@+id/btn_post_creation_upload_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_button"
-        android:layout_marginTop="10dp"
-        android:text="choose images" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+        <Button
+            android:id="@+id/btn_post_creation_upload_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:text="choose images" />
 
         <Button
             android:id="@+id/btn_post_creation_publish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
             android:text="publish" />
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
