@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.pdm.meetgroups.view.navbar.home.HomeFragment"
+        android:name="com.pdm.meetgroups.view.navbar.home.NotJournalFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_not_journal" />
 
     <fragment
         android:id="@+id/navigation_dashboard"

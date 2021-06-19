@@ -1,19 +1,16 @@
 package com.pdm.meetgroups.view.navbar.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.view.SignUpActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : Fragment() {
+class NotJournalFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -27,7 +24,7 @@ class HomeFragment : Fragment() {
             text_home.text = it
         })
 
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_not_journal, container, false)
 
         return view
     }
