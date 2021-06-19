@@ -36,13 +36,15 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MeetGroups"
+        android:background="@drawable/logo_small"
         android:textAlignment="center"
         android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@id/editTextEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/editTextEmail"/>
+        app:layout_constraintHeight_max="150dp"
+        app:layout_constraintWidth_max="280dp"/>
 
     <Button
         android:id="@+id/signUpButton"
