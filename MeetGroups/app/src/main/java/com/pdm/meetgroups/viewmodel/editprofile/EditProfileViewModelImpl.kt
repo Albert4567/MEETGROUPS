@@ -3,6 +3,7 @@ package com.pdm.meetgroups.viewmodel.editprofile
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.model.ModelImpl
@@ -71,9 +72,11 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
             val result = model.updateUserImage(imageUri)
             if (result) {
                 val image = model.getUser()!!.getState().userImage
-                view.updateImage(image)
+                withContext(Dispatchers.Main) {
+                    view.updateImage(image)
+                }
             } else
-                Toast.makeText(view.applicationContext, "Qualcosa è andato storto!", Toast.LENGTH_SHORT)
+                 Toast.makeText(view.applicationContext, "Qualcosa è andato storto!", Toast.LENGTH_SHORT)
                     .show()
         }
     }
@@ -86,5 +89,22 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
         val intent = Intent(view.applicationContext, SignUpActivity::class.java)
         view.startActivity(intent)
         view.finish()
+    }
+
+    override fun startFileChooser() {
+        var intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(view, Intent.createChooser(intent, "Choose photo"),
+                   111, null)
+    }
+
+    override fun pickSingleImage(data: Intent) {
+        var imagesToDisplay = ArrayList<Uri>()
+
+        data.data?.let { imagesToDisplay.add(it) }
+        view.updateImageWithUri(imagesToDisplay.first())
+
+        updateImageUser(imagesToDisplay.first())
     }
 }

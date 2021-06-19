@@ -117,14 +117,13 @@ class ModelImpl : Model {
 
     override suspend fun updateUserImage(newImageUri: Uri) : Boolean {
         return if (localUser != null) {
-            if(firestoreModel.updateUserImage(newImageUri, localUser!!.getState().nickname))
-                if(storageModel.updateStoredUserImage(newImageUri, localUser!!.getState().nickname)) {
+            if(firestoreModel.updateUserImage(newImageUri, localUser!!.getState().nickname)) {
+                if (storageModel.updateStoredUserImage(newImageUri, localUser!!.getState().nickname)) {
                     instantiateLocalUser()
                     true
-                }
-            false
-        }
-        else false
+                } else false
+            } else false
+        } else false
     }
 
     override suspend fun changeUserState() {

@@ -258,6 +258,8 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
             val userJournalsIDs = userDoc.documents[0]["journalsID"] as Map<String, String>
 
             try {
+                if (userJournalsIDs.keys.toMutableList().isEmpty())
+                    return null
                 val userJournals = journalsCollectionRef
                     .whereIn("journalID", userJournalsIDs.keys.toMutableList())
                     .get()

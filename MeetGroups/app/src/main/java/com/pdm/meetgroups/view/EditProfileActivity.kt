@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.view
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -39,7 +40,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         binding.roundImageView.setOnClickListener {
-            onUpdateProfileImageClick(Uri.EMPTY)
+            editProfileVMImpl.startFileChooser()
         }
 
         //TODO edit bio in order to update the db
@@ -67,15 +68,22 @@ class EditProfileActivity : AppCompatActivity() {
         editProfileVMImpl.deleteProfile()
     }
 
-    private fun onUpdateProfileImageClick(imageUri : Uri) {
-        editProfileVMImpl.updateImageUser(imageUri)
-    }
-
     private fun onBioChanged(bio : String) {
         editProfileVMImpl.updateBio(bio)
     }
 
     fun updateImage (image : Bitmap?) {
         binding.LinkImageView.setImageBitmap(image)
+    }
+
+    fun updateImageWithUri (imageUri : Uri) {
+        binding.LinkImageView.setImageURI(imageUri)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == 111 && resultCode == Activity.RESULT_OK ){
+            editProfileVMImpl.pickSingleImage(data!!)
+        }
     }
 }
