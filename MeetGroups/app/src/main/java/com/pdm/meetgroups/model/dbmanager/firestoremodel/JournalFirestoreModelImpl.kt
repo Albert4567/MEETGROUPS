@@ -5,7 +5,6 @@ import android.location.LocationManager
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.firestore.ktx.toObject
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.utility.SnapshotUtilities
 import kotlinx.coroutines.tasks.await

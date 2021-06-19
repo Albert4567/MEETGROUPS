@@ -89,8 +89,13 @@ class ModelImpl : Model {
 
     override suspend fun deleteUser(): Boolean {
         return if(firestoreModel.deleteUser()) {
-            authenticationModel.deleteAuthUser()
-            true
+            if(authenticationModel.deleteAuthUser()) {
+                localUser = null
+                localJournal = null
+                true
+            }
+            else
+                false
         }
         else false
     }
@@ -113,7 +118,10 @@ class ModelImpl : Model {
     override suspend fun updateUserImage(newImageUri: Uri) : Boolean {
         return if (localUser != null) {
             if(firestoreModel.updateUserImage(newImageUri, localUser!!.getState().nickname))
-                return storageModel.updateStoredUserImage(newImageUri, localUser!!.getState().nickname)
+                if(storageModel.updateStoredUserImage(newImageUri, localUser!!.getState().nickname)) {
+                    instantiateLocalUser()
+                    true
+                }
             false
         }
         else false
@@ -153,7 +161,9 @@ class ModelImpl : Model {
     override fun getUser(): UserContext? { return  localUser }
 
     override fun getUserClosedJournals(): ArrayList<Journal>? {
-        return ArrayList(localUser?.getState()?.list)
+        return if (localUser?.getState()?.list != null)
+            ArrayList(localUser?.getState()?.list)
+        else null
     }
 
     override suspend fun addParticipant(journal: Journal, user: UserContext): Boolean {
@@ -201,12 +211,16 @@ class ModelImpl : Model {
     }
 
     override suspend fun signInUser(email: String, password: String): Boolean {
-        instantiateLocalUser()
-        return authenticationModel.signInUser(email, password)
+        return if (authenticationModel.signInUser(email, password)) {
+            instantiateLocalUser()
+            true
+        } else false
     }
 
     override fun signOutUser() {
         authenticationModel.signOutUser()
+        localUser = null
+        localJournal = null
     }
 
     override fun checkIfSignedIn(): Boolean {

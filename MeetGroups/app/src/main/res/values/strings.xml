@@ -24,4 +24,7 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="title_profile">Profile</string>
     <string name="no_bio_available">No bio available!</string>
+    <string name="edit_bio_hint">Scrivi qui la tua bio...</string>
+    <string name="logout">LOGOUT</string>
+    <string name="delete_profile">ELIMINA PROFILO</string>
 </resources>
