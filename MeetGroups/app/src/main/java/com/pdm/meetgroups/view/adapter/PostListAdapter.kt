@@ -43,7 +43,7 @@ class PostListAdapter(val journalVM: JournalViewModelImpl): RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // Set item views based on your views and data model
         val post = journalVM.getPostBy(position)
-        if(post.images != null && )
+        if(post.images != null )
             holder.postIMV.setImageURI(Uri.parse(post.images!!.first()))
         holder.postNameTV.text = post.title
         holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "Description" else post.description

@@ -47,16 +47,11 @@ class JournalFragment: Fragment() {
                 journalVM.showGroupParticipants(it)
             }
 
-<<<<<<< HEAD:MeetGroups/app/src/main/java/com/pdm/meetgroups/view/navbar/JournalFragment.kt
-        binding.btnJournalAddPost.setOnClickListener {
-            journalVM.showPostCreationActivity(requireActivity())
-=======
             bindingInJournal.btnJournalAddPost.setOnClickListener {
-                journalVM.showPostCreationFragment(requireActivity())
+                journalVM.showPostCreationActivity(requireActivity())
             }
 
             return bindingInJournal.root
->>>>>>> master:MeetGroups/app/src/main/java/com/pdm/meetgroups/view/journal/JournalFragment.kt
         }
         else {
             bindingNotInJournal = FragmentNotInJournalBinding.inflate(inflater, container, false)

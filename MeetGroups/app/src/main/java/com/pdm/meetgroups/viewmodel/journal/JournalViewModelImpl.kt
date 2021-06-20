@@ -38,11 +38,6 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         return model.getUser()!!.getState().openJournalID != null
     }
 
-    override fun showEditJournalFragment(context: Context) {
-        var intent = Intent(context, EditJournalActivity::class.java)
-        startActivity(context, intent, null)
-    }
-
     fun getPostBy(position: Int): Post = posts.value!![position]
 
     fun updateTitle(binding: FragmentJournalBinding) {

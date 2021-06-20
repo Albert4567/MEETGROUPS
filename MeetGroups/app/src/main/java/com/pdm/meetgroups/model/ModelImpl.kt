@@ -200,7 +200,7 @@ class ModelImpl : Model {
     override suspend fun loadJournalPosts(journal: Journal): ArrayList<Post>? {
         val posts = firestoreModel.loadJournalPosts(journal)
         if(posts != null && posts.size > 0) {
-            posts.
+           // posts.
         }
         return posts
     }
