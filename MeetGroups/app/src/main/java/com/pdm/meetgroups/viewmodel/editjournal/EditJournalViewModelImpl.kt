@@ -2,6 +2,7 @@ package com.pdm.meetgroups.viewmodel.editjournal
 
 import android.app.Activity
 import android.content.Context
+import android.text.TextUtils
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -19,7 +20,6 @@ import kotlinx.coroutines.withContext
 
 typealias ParticipantList = ArrayList<String>
 
-// TODO(AB): Add checks
 class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
     private val model = ModelImpl.modelRef
     private val journal = model.getJournal()
@@ -50,16 +50,29 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         return journal?.title
     }
 
-    override fun updateJournalTitle(context: EditJournalActivity) {
-        var result: Boolean
-        val updatedJournal = this.journal
+    private fun titleInsertionError(titleET: EditText): Boolean {
+        if(TextUtils.isEmpty(titleET.text.toString())) {
+            titleET.error = "Insert title"
+            return true
+        }
+        return false
+    }
 
-        updatedJournal?.title = context.findViewById<EditText>(R.id.et_edit_journal_title).text.toString()
+    override fun updateJournalTitle(activity: EditJournalActivity) {
+        var result: Boolean
+        val updatedJournal = journal
+        val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
+
+        if(titleInsertionError(titleET)) {
+            Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+            return
+        }
+        updatedJournal?.title = titleET.text.toString()
         viewModelScope.launch(Dispatchers.IO) {
             result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
             withContext(Dispatchers.Main) {
                 if(!result)
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -69,8 +82,8 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
     }
 
     override fun removeParticipant(position: Int): Boolean {
+        var result = false
         val participant = getParticipantBy(position)
-        var result: Boolean = false
 
         viewModelScope.launch(Dispatchers.IO) {
             if(participant != null && journal != null) {

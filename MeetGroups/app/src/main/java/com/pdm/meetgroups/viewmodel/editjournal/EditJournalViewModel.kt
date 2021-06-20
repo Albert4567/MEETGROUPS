@@ -12,7 +12,7 @@ interface EditJournalViewModel {
 
     fun getJournalTitle(): String?
 
-    fun updateJournalTitle(context: EditJournalActivity)
+    fun updateJournalTitle(activity: EditJournalActivity)
 
     fun showAddParticipantActivity(context: Context)
 
