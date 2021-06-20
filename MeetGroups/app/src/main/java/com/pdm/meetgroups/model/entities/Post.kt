@@ -19,4 +19,5 @@ data class Post(
         var creatorNickName: String,
         var spotLocation: GeoPoint,
         var tags: MutableList<String>?,
-) { var images: MutableList<Bitmap>? = null }
+        var images: MutableList<Uri>?
+)

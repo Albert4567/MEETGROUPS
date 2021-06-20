@@ -1,6 +1,7 @@
 package com.pdm.meetgroups.utility
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.pdm.meetgroups.model.entities.*
@@ -56,6 +57,7 @@ class SnapshotUtilities {
                         doc.data.getValue("creatorNickname") as String,
                         doc.data.getValue("spotLocation") as GeoPoint,
                         (doc.data.getValue("tags") as MutableList<String>?),
+                        (doc.data.getValue("images") as MutableList<String>?)?.map { it.toUri() } as MutableList<Uri>?
                     )
                 )
             }

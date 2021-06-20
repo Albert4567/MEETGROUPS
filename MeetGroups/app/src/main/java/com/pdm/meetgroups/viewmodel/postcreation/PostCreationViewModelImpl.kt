@@ -60,7 +60,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         val intent = Intent()
         intent.setType("image/*")
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT)
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT)
         startActivityForResult(activity, Intent.createChooser(intent, "Choose photo"), 111, null)
     }
 
@@ -114,7 +114,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private fun createPost(title: String, description: String, tagsContainer: String, currentLocation: Location): Post {
         val creatorNickname = model.getUser()?.getState()?.nickname ?: "Unknown"
         val tags = extractTagsFrom(tagsContainer)
-        val postImages = images.value?.map { it.toString() } as MutableList<String>?
+        val postImages = images.value as MutableList<Uri>?
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
@@ -155,6 +155,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             activity.findViewById<EditText>(R.id.et_post_creation_tags).text.toString(),
             currentLocation
         )
+
 
         viewModelScope.launch(Dispatchers.IO) {
             val result = model.getJournal()?.let { model.createPost(it, post) }
