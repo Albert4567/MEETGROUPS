@@ -50,7 +50,7 @@ interface Model {
 
     suspend fun getNearJournalsAndLocations (location: Location) : Hashtable<Location, Journal>?
 
-    suspend fun createPost (journal : Journal, post : Post) : Boolean
+    suspend fun createPost (journal : Journal, post : Post, imageUris : ArrayList<Uri>) : Boolean
 
     suspend fun deletePost (journal : Journal, post : Post) : Boolean
 

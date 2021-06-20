@@ -53,7 +53,7 @@ class ModelImpl : Model {
 
      private suspend fun getUserImage(): Bitmap? {
          return if (localUser != null)
-             storageModel.getUserImage(localUser!!.getState()!!.nickname)
+             storageModel.getUserImage(localUser!!.getState().nickname)
          else
              null
     }
@@ -200,7 +200,10 @@ class ModelImpl : Model {
     override suspend fun loadJournalPosts(journal: Journal): ArrayList<Post>? {
         val posts = firestoreModel.loadJournalPosts(journal)
         if(posts != null && posts.size > 0) {
-           // posts.
+            val images = storageModel.getJournalPostsImages(journal.journalID)
+            for (post in posts) {
+                post.images = images?.get(post.postID)
+            }
         }
         return posts
     }
@@ -209,17 +212,28 @@ class ModelImpl : Model {
         return firestoreModel.getNearJournalsAndLocations(location)
     }
 
-    override suspend fun createPost(journal: Journal, post: Post): Boolean {
-        return firestoreModel.createPost(journal, post)
+    override suspend fun createPost(journal: Journal, post: Post, imageUris : ArrayList<Uri>): Boolean {
+        return if (firestoreModel.createPost(journal, post)) {
+            var imagesHash =  Hashtable<String, ArrayList<Uri>>()
+            imagesHash[post.postID] = imageUris
+            storageModel.updateStoredJournalPostsImages( imagesHash, journal.journalID)
+            localJournal?.posts = loadJournalPosts(journal)
+            true
+        } else false
     }
 
     override suspend fun deletePost(journal: Journal, post: Post): Boolean {
-        return firestoreModel.deletePost(journal, post)
+        return if (firestoreModel.deletePost(journal, post)) {
+            localJournal?.posts?.remove(post)
+            storageModel.deleteJournalPostImages(journal.journalID, post.postID)
+            true
+        } else false
     }
 
     override suspend fun updateJournalImage(newImageUri: Uri): Boolean {
-        return if (localJournal != null) {
-            storageModel.updateStoredJournalImage(newImageUri, localJournal!!.journalID)
+        return if (localJournal != null && storageModel.updateStoredJournalImage(newImageUri, localJournal!!.journalID)) {
+            localJournal!!.journalImage = getJournalImage()
+            true
         } else false
     }
 

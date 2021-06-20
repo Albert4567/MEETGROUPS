@@ -31,12 +31,16 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
     }
 
     private fun loadJournalPosts() {
-        model.getJournal()?.let { posts.postValue(ArrayList(it.posts)) }
+        viewModelScope.launch(Dispatchers.IO) {
+            journal?.let { posts.postValue(model.loadJournalPosts(it)) }
+        }
     }
 
     override fun isInJournal(): Boolean {
         return model.getUser()!!.getState().openJournalID != null
     }
+
+    override fun getPosts(): LiveData<PostList> = posts
 
     fun getPostBy(position: Int): Post = posts.value!![position]
 

@@ -114,7 +114,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private fun createPost(title: String, description: String, tagsContainer: String, currentLocation: Location): Post {
         val creatorNickname = model.getUser()?.getState()?.nickname ?: "Unknown"
         val tags = extractTagsFrom(tagsContainer)
-        val postImages = images.value?.map { it.toString() } as MutableList<String>?
+        val postImages = images.value as MutableList<Uri>?
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
@@ -126,7 +126,6 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             creatorNickname,
             spotLocation,
             tags,
-            postImages
         )
     }
 
@@ -156,8 +155,11 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             currentLocation
         )
 
+
         viewModelScope.launch(Dispatchers.IO) {
-            val result = model.getJournal()?.let { model.createPost(it, post) }
+            //TODO TO CHECK
+            val imageUris = ArrayList(images.value as MutableList<Uri>)
+            val result = model.getJournal()?.let { model.createPost(it, post, imageUris) }
             withContext(Dispatchers.Main) {
                 if(result != null && !result) {
                     Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()

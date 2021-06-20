@@ -2,6 +2,8 @@ package com.pdm.meetgroups.model.dbmanager
 
 import android.graphics.Bitmap
 import android.net.Uri
+import java.util.*
+import kotlin.collections.ArrayList
 
 interface StorageModel {
     suspend fun updateStoredUserImage (newImageUri : Uri, nickname : String) : Boolean
@@ -12,7 +14,9 @@ interface StorageModel {
 
     suspend fun getJournalImage (journalID : String) : Bitmap?
 
-    suspend fun updateStoredJournalPostsImages (imageUris: ArrayList<Uri>, journalID: String) : Boolean
+    suspend fun updateStoredJournalPostsImages (imageUris: Hashtable<String, ArrayList<Uri>>, journalID: String) : Boolean
 
-    suspend fun  getJournalPostsImages (journalID: String) : ArrayList<Bitmap>?
+    suspend fun  getJournalPostsImages (journalID: String) : Hashtable<String, ArrayList<Bitmap>>?
+
+    fun deleteJournalPostImages (journalID: String, postID : String)
 }
