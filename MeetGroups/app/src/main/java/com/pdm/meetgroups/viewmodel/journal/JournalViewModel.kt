@@ -21,7 +21,7 @@ interface JournalViewModel {
 
     fun getPosts () : LiveData<PostList>
 
-    fun showEditJournalFragment(activity: FragmentActivity)
+    fun showEditJournalFragment(context: Context)
 
     fun showGroupParticipants(view: View)
 

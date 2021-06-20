@@ -16,13 +16,14 @@ import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.view.PostCreationActivity
+import com.pdm.meetgroups.view.EditJournalActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class JournalViewModelImpl : ViewModel(), JournalViewModel {
+    private val model = ModelImpl.modelRef
     private val posts: MutableLiveData<PostList> = MutableLiveData()
     private val participants: MutableLiveData<ParticipantList> = MutableLiveData()
-    private val model = ModelImpl.modelRef
 
     init {
         // (AB): Temporary code
@@ -50,8 +51,9 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         startActivity(context, intent, null)
     }
 
-    override fun showEditJournalFragment(activity: FragmentActivity) {
-
+    override fun showEditJournalFragment(context: Context) {
+        var intent = Intent(context, EditJournalActivity::class.java)
+        startActivity(context, intent, null)
     }
 
     override fun showGroupParticipants(view: View) {
