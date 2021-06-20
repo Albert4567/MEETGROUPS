@@ -71,7 +71,9 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         viewModelScope.launch(Dispatchers.IO) {
             result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
             withContext(Dispatchers.Main) {
-                if(!result)
+                if(result)
+                    Toast.makeText(activity,"Updated journal title successfully", Toast.LENGTH_SHORT).show()
+                else
                     Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
             }
         }
@@ -81,6 +83,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         // TODO(AB): Show AddParticipantActivity
     }
 
+    // TODO(AB): Check if removeParticipant is working
     override fun removeParticipant(position: Int): Boolean {
         var result = false
         val participant = getParticipantBy(position)
