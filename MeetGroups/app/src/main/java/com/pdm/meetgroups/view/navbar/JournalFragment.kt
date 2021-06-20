@@ -42,7 +42,7 @@ class JournalFragment: Fragment() {
         }
 
         binding.btnJournalAddPost.setOnClickListener {
-            journalVM.showPostCreationFragment(requireActivity())
+            journalVM.showPostCreationActivity(requireActivity())
         }
 
         return binding.root

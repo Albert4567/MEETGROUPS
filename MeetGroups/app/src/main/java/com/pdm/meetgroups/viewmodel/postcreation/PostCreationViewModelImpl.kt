@@ -100,10 +100,12 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         val tags = ArrayList<String>()
 
         // TODO(AB): Check if this is working
-        tagsContainer.trim().split("#").forEach {
-            if(tagIsAllowed(it))
-                Log.println(Log.ASSERT, "AB", "entrato")
+        if(!tagsContainer.isEmpty()) {
+            tagsContainer.trim().split("#").forEach {
+                if (tagIsAllowed(it))
+                    Log.println(Log.ASSERT, "AB", "entrato")
                 tags.add(it)
+            }
         }
 
         return tags
@@ -112,7 +114,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private fun createPost(title: String, description: String, tagsContainer: String, currentLocation: Location): Post {
         val creatorNickname = model.getUser()?.getState()?.nickname ?: "Unknown"
         val tags = extractTagsFrom(tagsContainer)
-        val postImages = images.value?.map { it.toString() }
+        val postImages = images.value?.map { it.toString() } as MutableList<String>?
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
