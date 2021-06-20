@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetGroups">
-        <activity android:name=".view.PostCreationActivity"></activity>
+        <activity android:name=".view.ReadOnlyJournalActivity"></activity>
+        <activity android:name=".view.PostCreationActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -38,7 +39,7 @@
         <activity
             android:name=".view.SignInActivity"
             android:label="SignInActivity" />
-        <activity android:name=".view.EditJournalActivity"></activity>
+        <activity android:name=".view.EditJournalActivity" />
         <activity
             android:name=".view.EditProfileActivity"
             android:label="@string/title_activity_edit_profile" />

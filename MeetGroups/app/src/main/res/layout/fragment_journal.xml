@@ -27,7 +27,7 @@
                 android:id="@+id/btn_journal_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/btn_journal_edit"
+                android:layout_alignParentRight="true"
                 android:backgroundTintMode="add"
                 android:src="@drawable/ic_journal_group_24" />
 
@@ -35,9 +35,10 @@
                 android:id="@+id/btn_journal_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@id/btn_journal_group"
                 android:backgroundTintMode="add"
                 android:src="@drawable/ic_journal_edit_24" />
+
         </RelativeLayout>
     </Toolbar>
 
