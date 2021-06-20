@@ -1,6 +1,7 @@
 package com.pdm.meetgroups.view.journal
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.databinding.FragmentNotInJournalBinding
+import com.pdm.meetgroups.view.EditJournalActivity
+import com.pdm.meetgroups.view.SignInActivity
 import com.pdm.meetgroups.view.adapter.PostListAdapter
 import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
@@ -58,6 +61,11 @@ class JournalFragment: Fragment() {
             val html = "Benvenuto in <b>MeetGroups!</b><br>Quest'app ti permette di condividere esperienze e ricordi delle tue vacanze con i tuoi amici.<br>Clicca qui sopra per aprire un nuovo diario e iniziare la tua avventura. Una volta terminata la vacanza i tuoi diari rimarrano salvati nel tuo profilo.<br>Inoltre nella sezione <b>Maps</b> puoi trovare persone che stanno usando l'app nelle tue vicinanze!<br>Detto questo... <b>Buona Vacanza!</b>"
             bindingNotInJournal.textHome.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
+            bindingNotInJournal.imageButtonJournal.setOnClickListener {
+                val intent = Intent(activity, EditJournalActivity::class.java)
+                startActivity(intent)
+            }
+            
             return bindingNotInJournal.root
         }
     }
