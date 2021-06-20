@@ -71,7 +71,7 @@
         android:saveEnabled="false"
         android:hint="@string/edit_bio_hint"
         app:layout_constraintBottom_toTopOf="@id/buttonLogout"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonEditBio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
         app:layout_constraintVertical_weight="1" />
@@ -101,15 +101,28 @@
         app:layout_constraintTop_toBottomOf="@id/editTextBio"
         app:layout_constraintVertical_weight="1" />
 
-    <Button
+    <ImageButton
         android:id="@+id/buttonEditPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:background="@drawable/custom_button"
-        android:text="edit"
+        android:src="@drawable/ic_done_24"
         app:layout_constraintBottom_toTopOf="@id/editTextBio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editTextPassword"
-        app:layout_constraintTop_toBottomOf="@id/roundImageView"/>
+        app:layout_constraintTop_toBottomOf="@id/roundImageView" />
+
+    <ImageButton
+        android:id="@+id/buttonEditBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/custom_button"
+        android:src="@drawable/ic_done_24"
+        app:layout_constraintBottom_toTopOf="@id/buttonDeleteProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editTextBio"
+        app:layout_constraintTop_toBottomOf="@id/buttonEditPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

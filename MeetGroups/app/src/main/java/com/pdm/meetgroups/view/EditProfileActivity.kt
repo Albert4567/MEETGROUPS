@@ -28,7 +28,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         binding.buttonEditPassword.setOnClickListener {
             onEditPasswordClick(binding.editTextPassword.text.toString())
-            binding.buttonEditPassword.text = ""
+            binding.editTextPassword.text.clear()
         }
 
         binding.buttonLogout.setOnClickListener {
