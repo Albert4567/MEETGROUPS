@@ -36,13 +36,13 @@ class SnapshotUtilities {
                     doc["title"] as String,
                     loadPostsFromCollection(postsCollection),
                     JOURNAL_STATUS.valueOf(doc["status"] as String),
-                    usersCollection.map { doc -> loadUserFromDoc(doc) }
+                    usersCollection.map { doc -> loadUserFromDoc(doc) }.toMutableList()
                 )
             } else
                 null
         }
 
-        fun loadPostsFromCollection(collection: QuerySnapshot?): List<Post>? {
+        fun loadPostsFromCollection(collection: QuerySnapshot?): MutableList<Post>? {
             val posts = mutableListOf<Post>()
             collection?.forEach { doc ->
                 posts.add(

@@ -18,7 +18,7 @@ interface UserFirestoreModel {
 
     suspend fun updateUserImage (newImageUri : Uri, uid : String) : Boolean
 
-    suspend fun updateOpenJournal (user : UserContext, name : String) : Boolean
+    suspend fun updateOpenJournal (user : UserContext, name : String?) : Boolean
 
     suspend fun updateUserLocation (location : Location) : Boolean
 

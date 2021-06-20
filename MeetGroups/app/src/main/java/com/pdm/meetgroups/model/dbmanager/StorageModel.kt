@@ -11,4 +11,8 @@ interface StorageModel {
     suspend fun updateStoredJournalImage (newImageUri : Uri, journalID: String) : Boolean
 
     suspend fun getJournalImage (journalID : String) : Bitmap?
+
+    suspend fun updateStoredJournalPostsImages (imageUris: ArrayList<Uri>, journalID: String) : Boolean
+
+    suspend fun  getJournalPostsImages (journalID: String) : ArrayList<Bitmap>?
 }

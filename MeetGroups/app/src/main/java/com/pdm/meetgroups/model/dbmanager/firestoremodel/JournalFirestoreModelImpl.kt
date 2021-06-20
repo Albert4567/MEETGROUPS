@@ -53,12 +53,12 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         }
     }
 
-    override suspend fun downloadJournalInfo (journalTitle: String) : Journal? {
+    override suspend fun downloadJournalInfo (journalID: String) : Journal? {
         return try {
-            val doc = journalsCollectionRef.document(journalTitle)
+            val doc = journalsCollectionRef.document(journalID)
                 .get()
                 .await()
-            val posts = journalsCollectionRef.document(journalTitle)
+            val posts = journalsCollectionRef.document(journalID)
                 .collection("posts")
                 .get()
                 .await()
@@ -104,8 +104,8 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         return try {
             val doc = journalRef.get()
                 .await()
-            val participants = doc.data?.getValue("usersID") as MutableList<String>
-            participants.toMutableList().remove(user.getState()!!.nickname)
+            var participants = doc.data?.getValue("usersID") as MutableList<String>
+            participants.remove(user.getState()!!.nickname)
 
             try {
                 journalRef.update("usersID", participants)

@@ -22,7 +22,7 @@ typealias ParticipantList = ArrayList<String>
 
 class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
     private val model = ModelImpl.modelRef
-    private val journal = model.getJournal()
+    private val journal get() = model.getJournal()
     private val participants: MutableLiveData<ParticipantList> = MutableLiveData()
 
     init {
@@ -90,7 +90,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
 
         viewModelScope.launch(Dispatchers.IO) {
             if(participant != null && journal != null) {
-                result = model.removeParticipant(journal, participant)
+                result = model.removeParticipant(journal!!, participant)
             }
             withContext(Dispatchers.Main) {
                 if(result)
