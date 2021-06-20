@@ -51,6 +51,10 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         startActivity(context, intent, null)
     }
 
+    override fun isInJournal(): Boolean {
+        return model.getUser()!!.getState().openJournalID != null
+    }
+
     override fun showEditJournalFragment(context: Context) {
         var intent = Intent(context, EditJournalActivity::class.java)
         startActivity(context, intent, null)

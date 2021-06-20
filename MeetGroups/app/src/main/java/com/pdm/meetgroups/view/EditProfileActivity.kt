@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pdm.meetgroups.R
@@ -43,14 +42,8 @@ class EditProfileActivity : AppCompatActivity() {
             editProfileVMImpl.startFileChooser()
         }
 
-        //TODO edit bio in order to update the db
-        binding.editTextBio.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                isWriting = true
-            } else {
-                isWriting = false
-                onBioChanged(binding.editTextBio.text.toString())
-            }
+        binding.editTextBio.setOnClickListener {
+            onBioChangedClick(binding.editTextBio.text.toString())
         }
 
         return setContentView(binding.root)
@@ -68,7 +61,7 @@ class EditProfileActivity : AppCompatActivity() {
         editProfileVMImpl.deleteProfile()
     }
 
-    private fun onBioChanged(bio : String) {
+    private fun onBioChangedClick(bio : String) {
         editProfileVMImpl.updateBio(bio)
     }
 
