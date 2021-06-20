@@ -48,13 +48,7 @@ class ParticipantListAdapter(
 //        holder.participantIMV = editJournalVM.getParticipantBy(position)!!.getState().
         holder.participantNameTV.text = participant?.getState()?.nickname ?: "Unknown"
         holder.removeButton.setOnClickListener {
-            val result = editJournalVM.removeParticipant(position)
-            if (!result)
-                Toast.makeText(
-                    context,
-                    "Something went wrong while removing this participant",
-                    Toast.LENGTH_LONG
-                ).show()
+            editJournalVM.removeParticipant(position, context)
         }
     }
 

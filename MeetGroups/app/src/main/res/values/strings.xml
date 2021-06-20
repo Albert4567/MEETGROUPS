@@ -27,4 +27,5 @@
     <string name="edit_bio_hint">Scrivi qui la tua bio...</string>
     <string name="logout">LOGOUT</string>
     <string name="delete_profile">ELIMINA PROFILO</string>
+    <string name="journal_navigation">Journal</string>
 </resources>

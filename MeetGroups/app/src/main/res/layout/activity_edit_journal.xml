@@ -32,6 +32,15 @@
                     android:layout_height="150dp"
                     android:scaleType="centerCrop"
                     app:srcCompat="@android:drawable/sym_def_app_icon" />
+                <TextView
+                    android:id="@+id/tv_edit_journal_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:text="Change image"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
         </androidx.cardview.widget.CardView>
 
