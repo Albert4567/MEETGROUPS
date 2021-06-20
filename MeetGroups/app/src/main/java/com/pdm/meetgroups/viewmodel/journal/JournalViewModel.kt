@@ -18,4 +18,5 @@ interface JournalViewModel {
     fun showGroupParticipants(view: View)
 
     fun showPostCreationActivity(context: Context)
+    fun isInJournal () : Boolean
 }

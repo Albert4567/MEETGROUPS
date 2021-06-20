@@ -146,13 +146,21 @@ class ModelImpl : Model {
     override suspend fun createJournal(journal: Journal): Boolean {
         return if (firestoreModel.createJournal(journal)) {
             instantiateLocalJournal(journal.journalID)
+            localUser?.getState()?.openJournalID = journal.journalID
+            firestoreModel.updateOpenJournal(localUser!!, journal.journalID)
+            firestoreModel.changeUserState()
             true
         } else false
     }
 
     override suspend fun closeJournal(journal: Journal): Boolean {
-        localJournal = null
-        return firestoreModel.closeJournal(journal)
+        return if (firestoreModel.closeJournal(journal)) {
+            localJournal = null
+            localUser?.getState()?.openJournalID = null
+            firestoreModel.updateOpenJournal(localUser!!, null)
+            firestoreModel.changeUserState()
+            true
+        } else false
     }
 
     override fun getJournal () : Journal? { return localJournal }
@@ -166,11 +174,19 @@ class ModelImpl : Model {
     }
 
     override suspend fun addParticipant(journal: Journal, user: UserContext): Boolean {
-        return firestoreModel.addParticipant(journal, user)
+        return if (firestoreModel.addParticipant(journal, user)) {
+            localJournal?.users?.add(user)
+            firestoreModel.updateOpenJournal(user, journal.journalID)
+            true
+        } else false
     }
 
     override suspend fun removeParticipant(journal: Journal, user: UserContext): Boolean {
-        return firestoreModel.removeParticipant(journal, user)
+        return if (firestoreModel.removeParticipant(journal, user)) {
+            localJournal?.users?.remove(user)
+            firestoreModel.updateOpenJournal(user, null)
+            true
+        } else false
     }
 
     override suspend fun loadParticipants(journal: Journal): ArrayList<String>? {
@@ -215,6 +231,7 @@ class ModelImpl : Model {
 
     override suspend fun signInUser(email: String, password: String): Boolean {
         return if (authenticationModel.signInUser(email, password)) {
+            instantiateUserModel()
             instantiateLocalUser()
             true
         } else false

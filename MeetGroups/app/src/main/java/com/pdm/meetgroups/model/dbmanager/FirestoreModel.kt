@@ -17,7 +17,7 @@ interface FirestoreModel {
 
     suspend fun updateUserBio (newBio : String) : Boolean
 
-    suspend fun updateOpenJournal (user : UserContext, name : String) : Boolean
+    suspend fun updateOpenJournal (user : UserContext, name : String?) : Boolean
 
     suspend fun updateUserAddNewJournalLink (user : UserContext, journal: Journal) : Boolean
 

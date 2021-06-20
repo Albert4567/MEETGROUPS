@@ -128,7 +128,7 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
         }
     }
 
-    override suspend fun updateOpenJournal(user : UserContext, name: String): Boolean {
+    override suspend fun updateOpenJournal(user : UserContext, name: String?): Boolean {
         return try {
             val userDoc = usersDocsRef
                 .whereEqualTo("nickname", user.getState().nickname)

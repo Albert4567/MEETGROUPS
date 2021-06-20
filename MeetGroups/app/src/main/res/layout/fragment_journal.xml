@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".view.navbar.JournalFragment">
+    tools:context=".view.navbar.journal.JournalFragment">
     <Toolbar
         android:id="@+id/toolbar_journal"
         android:layout_width="match_parent"

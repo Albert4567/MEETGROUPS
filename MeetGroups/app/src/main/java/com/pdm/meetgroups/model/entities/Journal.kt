@@ -10,9 +10,9 @@ enum class JOURNAL_STATUS(val value: String) {
 data class Journal(
         var journalID : String,
         var title : String,
-        var posts : List<Post>?,
+        var posts : MutableList<Post>?,
         var status : JOURNAL_STATUS,
-        var users : List<UserContext>
+        var users : MutableList<UserContext>
 ) {
     var journalImage : Bitmap? = null
 

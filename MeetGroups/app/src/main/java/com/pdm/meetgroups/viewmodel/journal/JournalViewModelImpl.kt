@@ -34,7 +34,14 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         model.getJournal()?.let { posts.postValue(ArrayList(it.posts)) }
     }
 
-    override fun getPosts(): LiveData<PostList> = posts
+    override fun isInJournal(): Boolean {
+        return model.getUser()!!.getState().openJournalID != null
+    }
+
+    override fun showEditJournalFragment(context: Context) {
+        var intent = Intent(context, EditJournalActivity::class.java)
+        startActivity(context, intent, null)
+    }
 
     fun getPostBy(position: Int): Post = posts.value!![position]
 

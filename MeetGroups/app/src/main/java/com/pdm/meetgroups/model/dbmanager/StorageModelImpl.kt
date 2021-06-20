@@ -63,4 +63,42 @@ class StorageModelImpl : StorageModel {
             null
         }
     }
+
+    override suspend fun updateStoredJournalPostsImages(
+        imageUris: ArrayList<Uri>,
+        journalID: String
+    ): Boolean {
+        return try {
+            for (uri in imageUris) {
+                storage.child("postImages/${journalID}/${uri.lastPathSegment}")
+                    .putFile(uri)
+                    .await()
+                Log.w(TAG, "update remote journal post images success!")
+            }
+            true
+        } catch (e : Exception) {
+            Log.e(TAG, "update remote journal post images failed with ", e)
+            false
+        }
+    }
+
+    override suspend fun getJournalPostsImages(journalID: String): ArrayList<Bitmap>? {
+        return try {
+            var images = ArrayList<Bitmap>()
+            val imageBytes = storage.child("JournalImages/${journalID}")
+                .listAll()
+                .await()
+                .items
+                .forEach { imgDoc ->
+                    val imageBytes = imgDoc.getBytes(1024 * 1024)
+                        .await()
+                    images.add(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size))
+                }
+            Log.w(TAG, "Get journal post images success!")
+            return images
+        } catch (e : Exception) {
+            Log.e(TAG, "get journal post images failed with ", e)
+            null
+        }
+    }
 }

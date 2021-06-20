@@ -48,7 +48,7 @@ class FirestoreModelImpl : FirestoreModel {
         return userFirestoreModel.updateUserBio(newBio)
     }
 
-    override suspend fun updateOpenJournal(user: UserContext, name: String): Boolean {
+    override suspend fun updateOpenJournal(user: UserContext, name: String?): Boolean {
         return userFirestoreModel.updateOpenJournal(user, name)
     }
 
