@@ -182,7 +182,11 @@ class ModelImpl : Model {
     }
 
     override suspend fun loadJournalPosts(journal: Journal): ArrayList<Post>? {
-        return firestoreModel.loadJournalPosts(journal)
+        val posts = firestoreModel.loadJournalPosts(journal)
+        if(posts != null && posts.size > 0) {
+            posts.
+        }
+        return posts
     }
 
     override suspend fun getNearJournalsAndLocations(location: Location): Hashtable<Location, Journal>? {

@@ -56,7 +56,6 @@ class SnapshotUtilities {
                         doc.data.getValue("creatorNickname") as String,
                         doc.data.getValue("spotLocation") as GeoPoint,
                         (doc.data.getValue("tags") as MutableList<String>?),
-                        (doc.data.getValue("images") as MutableList<String>?)
                     )
                 )
             }
