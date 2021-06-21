@@ -50,6 +50,10 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
 
     override fun getJournalTitle(): String? = journal?.title
 
+    override fun loadLocalUser() {
+        model.instantiateLocalUser()
+    }
+
     override fun getJournalImage(): Bitmap? = journal?.journalImage
 
     private fun titleInsertionError(titleET: EditText): Boolean {

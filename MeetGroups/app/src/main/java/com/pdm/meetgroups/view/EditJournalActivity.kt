@@ -21,6 +21,8 @@ class EditJournalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditJournalBinding.inflate(layoutInflater)
 
+        editJournalVM.loadLocalUser()
+
         binding.etEditJournalTitle.setText(editJournalVM.getJournalTitle())
 
         binding.imvEditJournalJournalphoto.setImageBitmap(editJournalVM.getJournalImage())
