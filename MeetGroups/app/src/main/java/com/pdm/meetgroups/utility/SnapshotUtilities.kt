@@ -1,6 +1,5 @@
 package com.pdm.meetgroups.utility
 
-import android.net.Uri
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.*
 import com.pdm.meetgroups.model.entities.*
@@ -13,7 +12,7 @@ class SnapshotUtilities {
                 fillUserData(ConcreteUser(), doc)
             else
                 fillUserData(ConcreteAdmin(), doc)
-            user.changeState(concrete)
+            user.setInitialState(concrete)
             return user
         }
 

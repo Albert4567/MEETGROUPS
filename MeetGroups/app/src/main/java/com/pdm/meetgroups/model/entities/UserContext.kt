@@ -11,9 +11,13 @@ class UserContext {
         state = state.stateHandle(newState)
     }
 
+    fun setInitialState (newState: UserState) {
+        state = newState
+    }
+
     fun getState () = state
 
     fun isAdmin () : Boolean {
-        return (state as? ConcreteAdmin)?.isAdmin ?: false
+        return state is ConcreteAdmin
     }
 }
