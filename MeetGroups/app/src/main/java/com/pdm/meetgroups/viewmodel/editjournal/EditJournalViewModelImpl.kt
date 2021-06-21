@@ -81,7 +81,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
 
         if(titleInsertionError(titleET)) {
-            Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -90,9 +90,9 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 result = model.createJournal(createJournal(titleET.text.toString()))
                 withContext(Dispatchers.Main) {
                     if(result)
-                        Toast.makeText(activity,"Created journal successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"Created journal successfully😃", Toast.LENGTH_SHORT).show()
                     else
-                        Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
                 }
             }
         } else {
@@ -101,9 +101,9 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
                 withContext(Dispatchers.Main) {
                     if(result)
-                        Toast.makeText(activity,"Updated journal title successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"Updated journal title successfully🤝", Toast.LENGTH_SHORT).show()
                     else
-                        Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -132,16 +132,16 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                         .findViewById<ImageView>(R.id.imv_edit_journal_journalphoto)
                         .setImageURI(data!!.data)
                 else if(journal == null)
-                    Toast.makeText(activity,"Insert your Journal title first!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun showAddParticipantActivity(context: Context) {
         if(journal == null)
-            Toast.makeText(context,"Insert your Journal title first!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
 //        else
             // TODO(AB): Show AddParticipantActivity
     }
@@ -157,7 +157,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 if(result)
                     postParticipantsValue()
                 else
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -171,7 +171,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 if (result)
                     // TODO(AB): Show newJournalFragment
                 else
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }

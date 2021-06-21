@@ -19,6 +19,6 @@ class UserContext {
     fun getState () = state
 
     fun isAdmin () : Boolean {
-        return state is ConcreteAdmin
+        return (state as? ConcreteAdmin)?.isAdmin ?: false
     }
 }

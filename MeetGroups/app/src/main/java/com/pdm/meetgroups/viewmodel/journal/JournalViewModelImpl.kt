@@ -3,6 +3,7 @@ package com.pdm.meetgroups.viewmodel.journal
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -59,6 +60,8 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         if(userIsAdmin()) {
             val intent = Intent(context, EditJournalActivity::class.java)
             startActivity(context, intent, null)
+        } else {
+            Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
         }
     }
 
