@@ -1,11 +1,8 @@
 package com.pdm.meetgroups.viewmodel.editjournal
 
-import android.app.Activity
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.text.TextUtils
 import android.widget.EditText
 import android.widget.ImageView
@@ -16,12 +13,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.databinding.ActivityEditJournalBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.EditJournalActivity
-import com.pdm.meetgroups.view.PostCreationActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

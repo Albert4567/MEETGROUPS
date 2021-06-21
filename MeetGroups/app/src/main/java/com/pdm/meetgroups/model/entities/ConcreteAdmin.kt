@@ -11,7 +11,7 @@ data class ConcreteAdmin(
         override var openJournalID: String? = null,
         override var visibilityOnMap: Boolean = false,
         var currentPosition: GeoPoint? = null,
-        var isAdmin: Boolean = true
+        var isAdmin: Boolean? = null
 ):  UserState {
     override var userImage: Bitmap? = null
 
