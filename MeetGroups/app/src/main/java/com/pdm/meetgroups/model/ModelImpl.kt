@@ -40,7 +40,7 @@ class ModelImpl : Model {
     //chiamato:
     //  all'avvio
     //  signin dell'utente
-    private fun instantiateLocalUser() {
+     fun instantiateLocalUser() {
         if (authenticationModel.getCurrentUserUID() != null) {
             GlobalScope.launch {
              localUser = firestoreModel.downloadUserInfo()
@@ -157,7 +157,10 @@ class ModelImpl : Model {
         return if (firestoreModel.closeJournal(journal) && localJournal != null) {
             localJournal = null
             localUser?.getState()?.openJournalID = null
-            firestoreModel.updateOpenJournal(localUser!!, null)
+
+            for (user in journal.users)
+                firestoreModel.updateOpenJournal(user, null)
+
             firestoreModel.changeUserState()
             true
         } else false

@@ -20,4 +20,6 @@ interface JournalViewModel {
     fun showPostCreationActivity(context: Context)
 
     fun isInJournal () : Boolean
+
+    fun loadLocalUser ()
 }

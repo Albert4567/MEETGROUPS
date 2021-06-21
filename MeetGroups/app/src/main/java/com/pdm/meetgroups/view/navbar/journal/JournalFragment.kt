@@ -30,7 +30,7 @@ class JournalFragment: Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-
+        journalVM.loadLocalUser()
         if (journalVM.isInJournal()) {
             bindingInJournal = FragmentJournalBinding.inflate(inflater, container, false)
 

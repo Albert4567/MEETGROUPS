@@ -41,6 +41,10 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         return model.getUser()!!.getState().openJournalID != null
     }
 
+    override fun loadLocalUser() {
+        model.instantiateLocalUser()
+    }
+
     override fun getPosts(): LiveData<PostList> = posts
 
     fun getPostBy(position: Int): Post = posts.value!![position]
