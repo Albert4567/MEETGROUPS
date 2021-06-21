@@ -158,7 +158,8 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
 
         viewModelScope.launch(Dispatchers.IO) {
             //TODO TO CHECK
-            val imageUris = ArrayList(images.value as MutableList<Uri>)
+            val imageUris : ArrayList<Uri>? = if (images.value != null) ArrayList(images.value as MutableList<Uri>)
+                                                else null
             val result = model.getJournal()?.let { model.createPost(it, post, imageUris) }
             withContext(Dispatchers.Main) {
                 if(result != null && !result) {

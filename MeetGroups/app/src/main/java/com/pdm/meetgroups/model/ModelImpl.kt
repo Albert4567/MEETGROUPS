@@ -212,11 +212,13 @@ class ModelImpl : Model {
         return firestoreModel.getNearJournalsAndLocations(location)
     }
 
-    override suspend fun createPost(journal: Journal, post: Post, imageUris : ArrayList<Uri>): Boolean {
+    override suspend fun createPost(journal: Journal, post: Post, imageUris : ArrayList<Uri>?): Boolean {
         return if (firestoreModel.createPost(journal, post)) {
-            var imagesHash =  Hashtable<String, ArrayList<Uri>>()
-            imagesHash[post.postID] = imageUris
-            storageModel.updateStoredJournalPostsImages( imagesHash, journal.journalID)
+            if (imageUris != null) {
+                val imagesHash = Hashtable<String, ArrayList<Uri>>()
+                imagesHash[post.postID] = imageUris
+                storageModel.updateStoredJournalPostsImages(imagesHash, journal.journalID)
+            }
             localJournal?.posts = loadJournalPosts(journal)
             true
         } else false

@@ -1,7 +1,6 @@
 package com.pdm.meetgroups.model.entities
 
 import android.graphics.Bitmap
-import android.net.Uri
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 
