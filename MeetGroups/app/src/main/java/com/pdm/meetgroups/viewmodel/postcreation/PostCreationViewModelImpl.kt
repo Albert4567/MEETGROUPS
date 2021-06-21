@@ -34,6 +34,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private lateinit var visibility: POST_STATUS
     private var images: MutableLiveData<ImageList> = MutableLiveData()
 
+
     fun getImages(): LiveData<ImageList> = images
 
     fun getImageBy(position: Int): Uri {
@@ -103,8 +104,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         if(!tagsContainer.isEmpty()) {
             tagsContainer.trim().split("#").forEach {
                 if (tagIsAllowed(it))
-                    Log.println(Log.ASSERT, "AB", "entrato")
-                tags.add(it)
+                    tags.add(it)
             }
         }
 

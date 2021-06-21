@@ -154,7 +154,7 @@ class ModelImpl : Model {
     }
 
     override suspend fun closeJournal(journal: Journal): Boolean {
-        return if (firestoreModel.closeJournal(journal)) {
+        return if (firestoreModel.closeJournal(journal) && localJournal != null) {
             localJournal = null
             localUser?.getState()?.openJournalID = null
             firestoreModel.updateOpenJournal(localUser!!, null)

@@ -30,7 +30,9 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         )
 
         return try {
-            journalsCollectionRef.add(journalData)
+            journalsCollectionRef
+                .document(journal.journalID)
+                .set(journalData)
                 .await()
             Log.w(TAG, "Create Journal success!")
             true
@@ -63,7 +65,7 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
                 .get()
                 .await()
             val users = usersCollectionRef.whereIn("nickname",
-                                                    doc["usersID"] as List<UserContext>)
+                                                    doc["usersID"] as ArrayList<String>)
                 .get()
                 .await()
             Log.w(TAG, "Download Journal Info success!")

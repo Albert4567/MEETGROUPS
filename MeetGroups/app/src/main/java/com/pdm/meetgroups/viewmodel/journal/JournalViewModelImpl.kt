@@ -48,10 +48,6 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         binding.tvJournalTitle.text = journal?.title
     }
 
-    fun updatePosts() {
-        loadJournalPosts()
-    }
-
     override fun showPostCreationActivity(context: Context) {
         val intent = Intent(context, PostCreationActivity::class.java)
         startActivity(context, intent, null)
