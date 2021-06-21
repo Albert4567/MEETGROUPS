@@ -114,7 +114,6 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private fun createPost(title: String, description: String, tagsContainer: String, currentLocation: Location): Post {
         val creatorNickname = model.getUser()?.getState()?.nickname ?: "Unknown"
         val tags = extractTagsFrom(tagsContainer)
-        val postImages = images.value as MutableList<Uri>?
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
@@ -157,7 +156,6 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
 
 
         viewModelScope.launch(Dispatchers.IO) {
-            //TODO TO CHECK
             val imageUris : ArrayList<Uri>? = if (images.value != null) ArrayList(images.value as MutableList<Uri>)
                                                 else null
             val result = model.getJournal()?.let { model.createPost(it, post, imageUris) }

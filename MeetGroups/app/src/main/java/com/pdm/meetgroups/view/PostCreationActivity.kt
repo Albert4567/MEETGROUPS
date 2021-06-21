@@ -13,20 +13,29 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.LatLng
 import com.pdm.meetgroups.databinding.ActivityPostCreationBinding
 import com.pdm.meetgroups.view.adapter.PostImageListAdapter
 import com.pdm.meetgroups.view.navbar.MapsFragment
 import com.pdm.meetgroups.viewmodel.postcreation.PostCreationViewModelImpl
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class PostCreationActivity : AppCompatActivity() {
     private val postCreationVM: PostCreationViewModelImpl by viewModels()
     private lateinit var binding: ActivityPostCreationBinding
+    private lateinit var fusedLocationClient : FusedLocationProviderClient
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostCreationBinding.inflate(layoutInflater)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         postCreationVM.getImages().observe(this, {
             val layoutManager = LinearLayoutManager(
@@ -53,9 +62,12 @@ class PostCreationActivity : AppCompatActivity() {
                 )
                 return@setOnClickListener
             }
-            postCreationVM.publishPost(this, Location(LocationManager.GPS_PROVIDER))
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    postCreationVM.publishPost(this, location)
+                }
+            }
         }
-
         return setContentView(binding.root)
     }
 
