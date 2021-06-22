@@ -12,7 +12,6 @@ import com.pdm.meetgroups.databinding.ActivityEditJournalBinding
 import com.pdm.meetgroups.view.adapter.ParticipantListAdapter
 import com.pdm.meetgroups.viewmodel.editjournal.EditJournalViewModelImpl
 
-// TODO(AB): Set new journal image from gallery
 class EditJournalActivity : AppCompatActivity() {
     private val editJournalVM: EditJournalViewModelImpl by viewModels()
     private lateinit var binding: ActivityEditJournalBinding
