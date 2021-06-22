@@ -8,22 +8,23 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/roundImageView"
-        android:layout_width="0dp"
+        android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_weight="0.2"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="250dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
             app:cardCornerRadius="250dp">
 
             <ImageView
                 android:id="@+id/LinkImageView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:adjustViewBounds="false"
+                android:scaleType="centerCrop"
                 app:srcCompat="@android:drawable/ic_notification_overlay" />
 
         </androidx.cardview.widget.CardView>
