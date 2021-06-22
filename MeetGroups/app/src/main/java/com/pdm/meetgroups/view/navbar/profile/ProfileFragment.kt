@@ -30,6 +30,7 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         profileVMImpl.loadLocalUser()
+
         binding.settingsButton.setOnClickListener {
             onSettingsButtonClick()
         }
@@ -39,7 +40,7 @@ class ProfileFragment : Fragment() {
             binding.journalView.adapter = JournalListAdapter(profileVMImpl)
         })
 
-        binding.LinkImageView.setImageBitmap(profileVMImpl.getUserImage())
+        binding.ProfileImageView.setImageBitmap(profileVMImpl.getUserImage())
 
         binding.bioTextView.text = if (profileVMImpl.getUserBio() != "")
                                         profileVMImpl.getUserBio()

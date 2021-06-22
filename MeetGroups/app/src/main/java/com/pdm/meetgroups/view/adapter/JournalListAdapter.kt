@@ -33,6 +33,6 @@ class JournalListAdapter(val profileVM: ProfileViewModel) : RecyclerView.Adapter
     }
 
     override fun getItemCount(): Int {
-        return profileVM.getJournals().value?.size ?: 0
+        return profileVM.getJournals().value!!.size
     }
 }

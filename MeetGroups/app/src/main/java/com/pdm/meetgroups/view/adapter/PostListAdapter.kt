@@ -16,9 +16,9 @@ class PostListAdapter(val journalVM: ViewModelAdapter): RecyclerView.Adapter<Pos
      * (custom ViewHolder).
      */
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        lateinit var postIMV: ImageView
-        lateinit var postNameTV: TextView
-        lateinit var postDescriptionTV: TextView
+        var postIMV: ImageView
+        var postNameTV: TextView
+        var postDescriptionTV: TextView
 
         init {
             postIMV = listItemView.findViewById(R.id.imv_postcard_photo)

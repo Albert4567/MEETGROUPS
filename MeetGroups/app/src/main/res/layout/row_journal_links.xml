@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-app:cardCornerRadius="5sp"
-app:cardElevation="5dp"
-app:cardUseCompatPadding="true"
-android:layout_marginHorizontal="5sp"
-android:clickable="true"
-android:foreground="?android:attr/selectableItemBackground">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5sp"
+    android:clickable="true"
+    app:cardCornerRadius="5sp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,24 +34,23 @@ android:foreground="?android:attr/selectableItemBackground">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/roundImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="250dp">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 app:cardCornerRadius="250dp">
 
                 <ImageView
                     android:id="@+id/LinkImageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:adjustViewBounds="false"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@android:drawable/ic_notification_overlay" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 
