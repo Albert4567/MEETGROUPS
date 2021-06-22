@@ -92,17 +92,14 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     }
 
     private fun tagIsAllowed(tag: String): Boolean {
-        return Tags.values().contains(
-            Tags.valueOf(tag.toLowerCase(Locale.ROOT))
-        )
+        return enumValues<Tags>().map{ it.value }.contains(tag)
     }
 
     private fun extractTagsFrom(tagsContainer: String): ArrayList<String> {
         val tags = ArrayList<String>()
 
-        // TODO(AB): Check if this is working
         if(!tagsContainer.isEmpty()) {
-            tagsContainer.trim().split("#").forEach {
+            tagsContainer.replace(" ","").split("#").forEach {
                 if (tagIsAllowed(it))
                     tags.add(it)
             }
@@ -117,7 +114,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
-            title+Timestamp.now(),
+            title+Timestamp.now().nanoseconds.toString(),
             title,
             description,
             visibility,

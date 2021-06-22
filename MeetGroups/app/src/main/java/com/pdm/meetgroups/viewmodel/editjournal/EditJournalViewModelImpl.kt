@@ -109,8 +109,6 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
     }
 
     override fun updateJournalTitle(activity: EditJournalActivity) {
-        var result: Boolean
-
         if(titleInsertionError(activity)) {
             Toast.makeText(activity, "Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             return
