@@ -14,8 +14,11 @@ class ProfileViewModelImpl : ViewModel(),ProfileViewModel {
     private val model = ModelImpl.modelRef
     private val journals: MutableLiveData<JournalList> = MutableLiveData()
 
-    override fun getJournals(): LiveData<JournalList> {
+    init {
         loadJournals()
+    }
+
+    override fun getJournals(): LiveData<JournalList> {
         return journals
     }
 
