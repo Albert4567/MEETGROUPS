@@ -1,16 +1,14 @@
-package com.pdm.meetgroups.viewmodel.readonlyjournal
+package com.pdm.meetgroups.viewmodel.journal
 import android.view.View
 import androidx.lifecycle.LiveData
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
-
 typealias PostList = ArrayList<Post>
 
-
-interface ReadOnlyJournalViewModel {
-    fun getPosts () : LiveData<PostList>
+interface ViewModelAdapter {
+    fun getPosts(): LiveData<PostList>
 
     fun showGroupParticipants(view: View)
 
-    fun loadJournalPosts(loadJournal: Journal)
+    fun getPostBy(position: Int): Post
 }

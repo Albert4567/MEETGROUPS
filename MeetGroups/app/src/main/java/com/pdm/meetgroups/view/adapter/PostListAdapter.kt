@@ -1,19 +1,15 @@
 package com.pdm.meetgroups.view.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.viewmodel.journal.JournalViewModel
-import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
+import com.pdm.meetgroups.viewmodel.journal.ViewModelAdapter
 
-class PostListAdapter(val journalVM: JournalViewModelImpl): RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
+class PostListAdapter(val journalVM: ViewModelAdapter): RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using

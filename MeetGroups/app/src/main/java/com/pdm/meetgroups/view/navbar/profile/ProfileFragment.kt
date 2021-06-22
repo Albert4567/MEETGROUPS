@@ -29,6 +29,7 @@ class ProfileFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+        profileVMImpl.loadLocalUser()
         binding.settingsButton.setOnClickListener {
             onSettingsButtonClick()
         }

@@ -10,9 +10,13 @@ typealias JournalList = ArrayList<Journal>
 interface ProfileViewModel {
     fun getJournals(): LiveData<JournalList>
 
+    fun getJournalBy (position : Int) : Journal
+
     fun getUserImage() : Bitmap?
 
     fun getUserBio() : String?
 
     fun getUserNickname() : String
+
+    fun loadLocalUser()
 }
