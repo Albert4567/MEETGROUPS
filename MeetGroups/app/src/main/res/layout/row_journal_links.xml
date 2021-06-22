@@ -16,8 +16,8 @@
         app:cardCornerRadius="250dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             app:cardCornerRadius="250dp">
 
