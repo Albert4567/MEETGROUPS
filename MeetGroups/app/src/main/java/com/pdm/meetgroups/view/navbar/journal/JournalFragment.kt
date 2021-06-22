@@ -1,6 +1,5 @@
-package com.pdm.meetgroups.view.journal
+package com.pdm.meetgroups.view.navbar.journal
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.databinding.FragmentNotInJournalBinding
 import com.pdm.meetgroups.view.EditJournalActivity
-import com.pdm.meetgroups.view.SignInActivity
 import com.pdm.meetgroups.view.adapter.PostListAdapter
 import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
@@ -32,9 +30,11 @@ class JournalFragment: Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-
+        journalVM.loadLocalUser()
         if (journalVM.isInJournal()) {
             bindingInJournal = FragmentJournalBinding.inflate(inflater, container, false)
+
+            journalVM.updateTitle(bindingInJournal)
 
             journalVM.getPosts().observe(viewLifecycleOwner, Observer {
                 bindingInJournal.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
@@ -50,7 +50,7 @@ class JournalFragment: Fragment() {
             }
 
             bindingInJournal.btnJournalAddPost.setOnClickListener {
-                journalVM.showPostCreationFragment(requireActivity())
+                journalVM.showPostCreationActivity(requireActivity())
             }
 
             return bindingInJournal.root

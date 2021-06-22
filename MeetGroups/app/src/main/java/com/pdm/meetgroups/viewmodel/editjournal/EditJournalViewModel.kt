@@ -17,6 +17,8 @@ interface EditJournalViewModel {
 
     fun getJournalImage(): Bitmap?
 
+    fun loadLocalUser()
+
     fun updateJournalTitle(activity: EditJournalActivity)
 
     fun startFileChooser(activity: EditJournalActivity)

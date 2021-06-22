@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_journal"
-        android:name="com.pdm.meetgroups.view.journal.JournalFragment"
+        android:name="com.pdm.meetgroups.view.navbar.journal.JournalFragment"
         android:label="@string/journal_navigation"
         tools:layout="@layout/fragment_journal" >
     </fragment>

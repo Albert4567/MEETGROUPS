@@ -42,8 +42,9 @@ class EditProfileActivity : AppCompatActivity() {
             editProfileVMImpl.startFileChooser()
         }
 
-        binding.editTextBio.setOnClickListener {
+        binding.buttonEditBio.setOnClickListener {
             onBioChangedClick(binding.editTextBio.text.toString())
+            binding.editTextBio.text.clear()
         }
 
         return setContentView(binding.root)

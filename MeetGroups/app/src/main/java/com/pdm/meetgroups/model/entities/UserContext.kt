@@ -1,19 +1,18 @@
 package com.pdm.meetgroups.model.entities
 
 class UserContext {
-    private val user : UserState
-    private val admin : UserState
-
     private var state : UserState
 
     init {
-        user = ConcreteUser()
-        admin = ConcreteAdmin()
-        state = user
+        state = ConcreteUser()
     }
 
     fun changeState(newState : UserState) {
         state = state.stateHandle(newState)
+    }
+
+    fun setInitialState (newState: UserState) {
+        state = newState
     }
 
     fun getState () = state

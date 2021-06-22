@@ -11,21 +11,15 @@ typealias PostList = ArrayList<Post>
 typealias ParticipantList = ArrayList<String>
 
 interface JournalViewModel {
-    fun loadJournalPosts (journal: Journal)
-
-    fun loadParticipants (journal : Journal)
-
-    fun createJournal(journal: Journal)
-
-    fun closeJournal(journal: Journal)
-
     fun getPosts () : LiveData<PostList>
 
     fun showEditJournalFragment(context: Context)
 
     fun showGroupParticipants(view: View)
 
-    fun showPostCreationFragment(context: Context)
+    fun showPostCreationActivity(context: Context)
 
     fun isInJournal () : Boolean
+
+    fun loadLocalUser ()
 }

@@ -6,6 +6,8 @@ import android.net.Uri
 import android.util.Log
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
+import java.util.*
+import kotlin.collections.ArrayList
 
 class StorageModelImpl : StorageModel {
 
@@ -65,15 +67,17 @@ class StorageModelImpl : StorageModel {
     }
 
     override suspend fun updateStoredJournalPostsImages(
-        imageUris: ArrayList<Uri>,
+        imageUris: Hashtable<String, ArrayList<Uri>>,
         journalID: String
     ): Boolean {
         return try {
-            for (uri in imageUris) {
-                storage.child("postImages/${journalID}/${uri.lastPathSegment}")
-                    .putFile(uri)
-                    .await()
-                Log.w(TAG, "update remote journal post images success!")
+            for (post in imageUris) {
+                for (uri in post.value) {
+                    storage.child("postImages/${journalID}/${post.key}/${uri.lastPathSegment}")
+                        .putFile(uri)
+                        .await()
+                    Log.w(TAG, "update remote journal post images success!")
+                }
             }
             true
         } catch (e : Exception) {
@@ -82,23 +86,41 @@ class StorageModelImpl : StorageModel {
         }
     }
 
-    override suspend fun getJournalPostsImages(journalID: String): ArrayList<Bitmap>? {
+    override suspend fun getJournalPostsImages(journalID: String):  Hashtable<String, ArrayList<Bitmap>>? {
         return try {
-            var images = ArrayList<Bitmap>()
-            val imageBytes = storage.child("JournalImages/${journalID}")
+            var images = Hashtable<String, ArrayList<Bitmap>>()
+             storage.child("postImages/${journalID}")
                 .listAll()
                 .await()
-                .items
-                .forEach { imgDoc ->
-                    val imageBytes = imgDoc.getBytes(1024 * 1024)
+                .prefixes
+                .forEach { postCollection ->
+                    var imagesBitmap = ArrayList<Bitmap>()
+                        postCollection
+                        .listAll()
                         .await()
-                    images.add(BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size))
+                        .items
+                        .forEach { imgDoc ->
+                            val imageBytes = imgDoc.getBytes(1024 * 1024)
+                                .await()
+                            imagesBitmap.add( BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size))
+                        }
+                    images[postCollection.name] = imagesBitmap
                 }
             Log.w(TAG, "Get journal post images success!")
             return images
         } catch (e : Exception) {
             Log.e(TAG, "get journal post images failed with ", e)
             null
+        }
+    }
+
+    override fun deleteJournalPostImages(journalID: String, postID: String) {
+        try {
+            storage.child("JournalImages/${journalID}/${postID}")
+                .delete()
+            Log.w(TAG, "Delete journal post images success!")
+        } catch (e : Exception) {
+            Log.e(TAG, "Delete journal post images failed with ", e)
         }
     }
 }

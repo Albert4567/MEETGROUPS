@@ -1,11 +1,8 @@
 package com.pdm.meetgroups.viewmodel.editjournal
 
-import android.app.Activity
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.text.TextUtils
 import android.widget.EditText
 import android.widget.ImageView
@@ -16,14 +13,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.databinding.ActivityEditJournalBinding
 import com.pdm.meetgroups.model.ModelImpl
+import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.EditJournalActivity
-import com.pdm.meetgroups.view.PostCreationActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.google.firebase.Timestamp
+import com.pdm.meetgroups.model.entities.JOURNAL_STATUS
 
 typealias ParticipantList = ArrayList<String>
 
@@ -52,6 +50,10 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
 
     override fun getJournalTitle(): String? = journal?.title
 
+    override fun loadLocalUser() {
+        model.instantiateLocalUser()
+    }
+
     override fun getJournalImage(): Bitmap? = journal?.journalImage
 
     private fun titleInsertionError(titleET: EditText): Boolean {
@@ -62,24 +64,46 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         return false
     }
 
+    private fun createJournal(title: String): Journal {
+        return Journal(
+            title+Timestamp.now().nanoseconds.toString(),
+            title,
+            null,
+            JOURNAL_STATUS.IN_PROGRESS,
+            mutableListOf(model.getUser()!!)
+        )
+    }
+
     override fun updateJournalTitle(activity: EditJournalActivity) {
         var result: Boolean
         val updatedJournal = journal
         val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
 
         if(titleInsertionError(titleET)) {
-            Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             return
         }
 
-        updatedJournal?.title = titleET.text.toString()
-        viewModelScope.launch(Dispatchers.IO) {
-            result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
-            withContext(Dispatchers.Main) {
-                if(result)
-                    Toast.makeText(activity,"Updated journal title successfully", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+        if(journal == null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                result = model.createJournal(createJournal(titleET.text.toString()))
+                withContext(Dispatchers.Main) {
+                    if(result)
+                        Toast.makeText(activity,"Created journal successfully😃", Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            updatedJournal?.title = titleET.text.toString()
+            viewModelScope.launch(Dispatchers.IO) {
+                result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
+                withContext(Dispatchers.Main) {
+                    if(result)
+                        Toast.makeText(activity,"Updated journal title successfully🤝", Toast.LENGTH_SHORT).show()
+                    else
+                        Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -106,14 +130,19 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                     activity
                         .findViewById<ImageView>(R.id.imv_edit_journal_journalphoto)
                         .setImageURI(data!!.data)
+                else if(journal == null)
+                    Toast.makeText(activity,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun showAddParticipantActivity(context: Context) {
-        // TODO(AB): Show AddParticipantActivity
+        if(journal == null)
+            Toast.makeText(context,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
+//        else
+            // TODO(AB): Show AddParticipantActivity
     }
 
     override fun removeParticipant(position: Int, context: Context) {
@@ -127,7 +156,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 if(result)
                     postParticipantsValue()
                 else
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -141,7 +170,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 if (result)
                     // TODO(AB): Show newJournalFragment
                 else
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
