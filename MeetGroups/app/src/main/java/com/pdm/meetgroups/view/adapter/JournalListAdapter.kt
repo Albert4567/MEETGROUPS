@@ -18,7 +18,7 @@ import com.pdm.meetgroups.viewmodel.profile.ProfileViewModel
 class JournalListAdapter(val profileVM: ProfileViewModel, val context: Context) : RecyclerView.Adapter<JournalListAdapter.ViewHolder>() {
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        var container: CardView = listItemView.findViewById(R.id.idacaso)
+        var container: CardView = listItemView.findViewById(R.id.Container)
         var journalImageIW: ImageView = listItemView.findViewById(R.id.LinkImageView)
         var journalNameTV: TextView = listItemView.findViewById(R.id.textViewLink)
     }

@@ -2,11 +2,12 @@ package com.pdm.meetgroups.view.navbar.profile
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.pdm.meetgroups.view.EditProfileActivity
 import com.pdm.meetgroups.view.SignInActivity
 import com.pdm.meetgroups.view.adapter.JournalListAdapter
 import com.pdm.meetgroups.viewmodel.profile.ProfileViewModelImpl
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 
 class ProfileFragment : Fragment() {
@@ -47,6 +49,7 @@ class ProfileFragment : Fragment() {
                                    else binding.bioTextView.text
 
         binding.nameTextView.text = profileVMImpl.getUserNickname()
+        
 
         return binding.root
     }
