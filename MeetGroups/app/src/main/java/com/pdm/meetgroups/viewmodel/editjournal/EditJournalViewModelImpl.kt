@@ -8,20 +8,23 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.Timestamp
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
+import com.pdm.meetgroups.model.entities.JOURNAL_STATUS
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.EditJournalActivity
+import com.pdm.meetgroups.view.navbar.journal.JournalFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.google.firebase.Timestamp
-import com.pdm.meetgroups.model.entities.JOURNAL_STATUS
+
 
 typealias ParticipantList = ArrayList<String>
 
@@ -118,7 +121,6 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
             uploadUpdatedJournal(activity)
         else
             uploadNewJournal(activity)
-
     }
 
     override fun startFileChooser(activity: EditJournalActivity) {
@@ -174,16 +176,17 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         }
     }
 
-    override fun closeJournal(context: Context) {
-        var result: Boolean
-
+    override fun closeJournal(activity: EditJournalActivity) {
         viewModelScope.launch(Dispatchers.IO) {
-            result = journal?.let { model.closeJournal(it) } ?: false
+            val result = journal?.let { model.closeJournal(it) } ?: false
             withContext(Dispatchers.Main) {
-                if (result)
-                    // TODO(AB): Show newJournalFragment
+                if (result) {
+                    // TODO(AB): Check why this is not working when called twice or find another way
+                    val intent = Intent(activity, JournalFragment::class.java)
+                    startActivity(activity, intent, null)
+                }
                 else
-                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }

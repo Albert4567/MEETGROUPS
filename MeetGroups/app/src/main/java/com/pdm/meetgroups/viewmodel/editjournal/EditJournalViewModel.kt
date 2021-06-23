@@ -3,6 +3,7 @@ package com.pdm.meetgroups.viewmodel.editjournal
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.EditJournalActivity
@@ -29,5 +30,5 @@ interface EditJournalViewModel {
 
     fun removeParticipant(position: Int, context: Context)
 
-    fun closeJournal(context: Context)
+    fun closeJournal(activity: EditJournalActivity)
 }
