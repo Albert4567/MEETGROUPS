@@ -37,7 +37,7 @@ class ProfileFragment : Fragment() {
 
         profileVMImpl.getJournals().observe(viewLifecycleOwner, Observer {
             binding.journalView.layoutManager = LinearLayoutManager(activity)
-            binding.journalView.adapter = JournalListAdapter(profileVMImpl)
+            binding.journalView.adapter = JournalListAdapter(profileVMImpl, requireContext())
         })
 
         binding.ProfileImageView.setImageBitmap(profileVMImpl.getUserImage())
