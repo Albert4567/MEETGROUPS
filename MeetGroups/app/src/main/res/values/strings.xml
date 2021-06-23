@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MeetGroups</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_discovery">Scopri</string>
     <string name="title_journal">Journal</string>
     <string name="title_maps">Maps</string>
     <!-- TODO: Remove or change this placeholder text -->
