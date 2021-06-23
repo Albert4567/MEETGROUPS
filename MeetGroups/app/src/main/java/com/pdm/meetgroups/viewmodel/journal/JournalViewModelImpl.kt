@@ -37,9 +37,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
         }
     }
 
-    override fun isInJournal(): Boolean {
-        return model.getUser()!!.getState().openJournalID != null
-    }
+    override fun isInJournal(): Boolean = model.getUser()?.getState()?.openJournalID != null
 
     override fun loadLocalUser() {
         model.instantiateLocalUser()
@@ -49,8 +47,12 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
 
     fun getPostBy(position: Int): Post = posts.value!![position]
 
-    fun updateTitle(binding: FragmentJournalBinding) {
+    override fun setTitle(binding: FragmentJournalBinding) {
         binding.tvJournalTitle.text = journal?.title
+    }
+
+    override fun setImage(binding: FragmentJournalBinding) {
+        journal?.let { binding.imvJournalImage.setImageBitmap(it.journalImage) }
     }
 
     override fun showPostCreationActivity(context: Context) {

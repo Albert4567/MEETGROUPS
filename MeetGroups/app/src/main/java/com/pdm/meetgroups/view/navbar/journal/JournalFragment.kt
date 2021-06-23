@@ -34,7 +34,8 @@ class JournalFragment: Fragment() {
         if (journalVM.isInJournal()) {
             bindingInJournal = FragmentJournalBinding.inflate(inflater, container, false)
 
-            journalVM.updateTitle(bindingInJournal)
+            journalVM.setTitle(bindingInJournal)
+            journalVM.setImage(bindingInJournal)
 
             journalVM.getPosts().observe(viewLifecycleOwner, Observer {
                 bindingInJournal.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
