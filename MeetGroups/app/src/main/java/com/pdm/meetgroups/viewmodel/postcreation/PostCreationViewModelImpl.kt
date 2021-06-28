@@ -34,6 +34,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private lateinit var visibility: POST_STATUS
     private var images: MutableLiveData<ImageList> = MutableLiveData()
 
+
     fun getImages(): LiveData<ImageList> = images
 
     fun getImageBy(position: Int): Uri {
@@ -91,19 +92,17 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     }
 
     private fun tagIsAllowed(tag: String): Boolean {
-        return Tags.values().contains(
-            Tags.valueOf(tag.toLowerCase(Locale.ROOT))
-        )
+        return enumValues<Tags>().map{ it.value }.contains(tag)
     }
 
     private fun extractTagsFrom(tagsContainer: String): ArrayList<String> {
         val tags = ArrayList<String>()
 
-        // TODO(AB): Check if this is working
-        tagsContainer.trim().split("#").forEach {
-            if(tagIsAllowed(it))
-                Log.println(Log.ASSERT, "AB", "entrato")
-                tags.add(it)
+        if(!tagsContainer.isEmpty()) {
+            tagsContainer.replace(" ","").split("#").forEach {
+                if (tagIsAllowed(it))
+                    tags.add(it)
+            }
         }
 
         return tags
@@ -112,11 +111,10 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
     private fun createPost(title: String, description: String, tagsContainer: String, currentLocation: Location): Post {
         val creatorNickname = model.getUser()?.getState()?.nickname ?: "Unknown"
         val tags = extractTagsFrom(tagsContainer)
-        val postImages = images.value?.map { it.toString() }
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
         return Post(
-            title+Timestamp.now(),
+            title+Timestamp.now().nanoseconds.toString(),
             title,
             description,
             visibility,
@@ -124,7 +122,6 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             creatorNickname,
             spotLocation,
             tags,
-            postImages
         )
     }
 
@@ -154,8 +151,11 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             currentLocation
         )
 
+
         viewModelScope.launch(Dispatchers.IO) {
-            val result = model.getJournal()?.let { model.createPost(it, post) }
+            val imageUris : ArrayList<Uri>? = if (images.value != null) ArrayList(images.value as MutableList<Uri>)
+                                                else null
+            val result = model.getJournal()?.let { model.createPost(it, post, imageUris) }
             withContext(Dispatchers.Main) {
                 if(result != null && !result) {
                     Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()

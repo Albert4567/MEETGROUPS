@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.model.entities
 
+import android.graphics.Bitmap
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.GeoPoint
 
@@ -16,6 +17,5 @@ data class Post(
         var creationDate: Timestamp,
         var creatorNickName: String,
         var spotLocation: GeoPoint,
-        var tags: List<String>?,
-        var images: List<String>?
-)
+        var tags: MutableList<String>?,
+) { var images: MutableList<Bitmap>? = null }

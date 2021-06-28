@@ -12,7 +12,7 @@ class SnapshotUtilities {
                 fillUserData(ConcreteUser(), doc)
             else
                 fillUserData(ConcreteAdmin(), doc)
-            user.changeState(concrete)
+            user.setInitialState(concrete)
             return user
         }
 
@@ -54,8 +54,7 @@ class SnapshotUtilities {
                         doc.data.getValue("creationDate") as Timestamp,
                         doc.data.getValue("creatorNickname") as String,
                         doc.data.getValue("spotLocation") as GeoPoint,
-                        (doc.data.getValue("tags") as List<String>?),
-                        (doc.data.getValue("images") as List<String>?)
+                        (doc.data.getValue("tags") as MutableList<String>?),
                     )
                 )
             }

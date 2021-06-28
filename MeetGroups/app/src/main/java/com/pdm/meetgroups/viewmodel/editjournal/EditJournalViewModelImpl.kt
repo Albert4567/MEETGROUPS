@@ -1,29 +1,31 @@
 package com.pdm.meetgroups.viewmodel.editjournal
 
-import android.app.Activity
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.text.TextUtils
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigation
+import com.google.firebase.Timestamp
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.databinding.ActivityEditJournalBinding
 import com.pdm.meetgroups.model.ModelImpl
+import com.pdm.meetgroups.model.entities.JOURNAL_STATUS
+import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.EditJournalActivity
-import com.pdm.meetgroups.view.PostCreationActivity
+import com.pdm.meetgroups.view.navbar.journal.JournalFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 typealias ParticipantList = ArrayList<String>
 
@@ -52,9 +54,17 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
 
     override fun getJournalTitle(): String? = journal?.title
 
+    override fun loadLocalUser() {
+        model.instantiateLocalUser()
+    }
+
     override fun getJournalImage(): Bitmap? = journal?.journalImage
 
-    private fun titleInsertionError(titleET: EditText): Boolean {
+    private fun journalIsAlreadyCreated(): Boolean = journal != null
+
+    private fun titleInsertionError(activity: EditJournalActivity): Boolean {
+        val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
+
         if(TextUtils.isEmpty(titleET.text.toString())) {
             titleET.error = "Insert title"
             return true
@@ -62,26 +72,56 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         return false
     }
 
-    override fun updateJournalTitle(activity: EditJournalActivity) {
-        var result: Boolean
+    private fun createJournal(title: String): Journal {
+        return Journal(
+            title+Timestamp.now().nanoseconds.toString(),
+            title,
+            null,
+            JOURNAL_STATUS.IN_PROGRESS,
+            mutableListOf(model.getUser()!!)
+        )
+    }
+    
+    private fun uploadNewJournal(activity: EditJournalActivity) {
+        val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
+        
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = model.createJournal(createJournal(titleET.text.toString()))
+            withContext(Dispatchers.Main) {
+                if(result)
+                    Toast.makeText(activity,"Created journal successfully😃", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    
+    private fun uploadUpdatedJournal(activity: EditJournalActivity) {
         val updatedJournal = journal
         val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
 
-        if(titleInsertionError(titleET)) {
-            Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+        updatedJournal?.title = titleET.text.toString()
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
+            withContext(Dispatchers.Main) {
+                if(result)
+                    Toast.makeText(activity,"Updated journal title successfully🤝", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun updateJournalTitle(activity: EditJournalActivity) {
+        if(titleInsertionError(activity)) {
+            Toast.makeText(activity, "Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             return
         }
 
-        updatedJournal?.title = titleET.text.toString()
-        viewModelScope.launch(Dispatchers.IO) {
-            result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
-            withContext(Dispatchers.Main) {
-                if(result)
-                    Toast.makeText(activity,"Updated journal title successfully", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
-            }
-        }
+        if(journalIsAlreadyCreated())
+            uploadUpdatedJournal(activity)
+        else
+            uploadNewJournal(activity)
     }
 
     override fun startFileChooser(activity: EditJournalActivity) {
@@ -106,14 +146,19 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                     activity
                         .findViewById<ImageView>(R.id.imv_edit_journal_journalphoto)
                         .setImageURI(data!!.data)
+                else if(!journalIsAlreadyCreated())
+                    Toast.makeText(activity,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun showAddParticipantActivity(context: Context) {
-        // TODO(AB): Show AddParticipantActivity
+        if(!journalIsAlreadyCreated())
+            Toast.makeText(context,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
+//        else
+            // TODO(AB): Show AddParticipantActivity
     }
 
     override fun removeParticipant(position: Int, context: Context) {
@@ -127,21 +172,23 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 if(result)
                     postParticipantsValue()
                 else
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    override fun closeJournal(context: Context) {
-        var result: Boolean
-
+    override fun closeJournal(activity: EditJournalActivity) {
         viewModelScope.launch(Dispatchers.IO) {
-            result = journal?.let { model.closeJournal(it) } ?: false
+            val result = journal?.let { model.closeJournal(it) } ?: false
             withContext(Dispatchers.Main) {
-                if (result)
-                    // TODO(AB): Show newJournalFragment
+                if (result) {
+                    // TODO(AB): This is not working when called twice, find another way if possible
+                    Navigation
+                        .findNavController(activity, R.id.mobile_navigation)
+                        .navigate(R.id.navigation_not_in_journal)
+                }
                 else
-                    Toast.makeText(context,"Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
             }
         }
     }

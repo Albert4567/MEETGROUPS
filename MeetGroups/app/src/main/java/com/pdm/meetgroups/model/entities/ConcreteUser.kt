@@ -19,7 +19,9 @@ data class ConcreteUser(
             newState.email,
             newState.list,
             newState.openJournalID,
-            newState.visibilityOnMap
+            newState.visibilityOnMap,
+            null,
+            true
         )
     }
 }
