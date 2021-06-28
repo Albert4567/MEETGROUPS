@@ -13,6 +13,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.Navigation
 import com.google.firebase.Timestamp
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
@@ -181,9 +182,10 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
             val result = journal?.let { model.closeJournal(it) } ?: false
             withContext(Dispatchers.Main) {
                 if (result) {
-                    // TODO(AB): Check why this is not working when called twice or find another way
-                    val intent = Intent(activity, JournalFragment::class.java)
-                    startActivity(activity, intent, null)
+                    // TODO(AB): This is not working when called twice, find another way if possible
+                    Navigation
+                        .findNavController(activity, R.id.mobile_navigation)
+                        .navigate(R.id.navigation_not_in_journal)
                 }
                 else
                     Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
