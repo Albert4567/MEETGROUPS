@@ -39,7 +39,7 @@ class JournalFragment: Fragment() {
 
             journalVM.getPosts().observe(viewLifecycleOwner, Observer {
                 bindingInJournal.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
-                bindingInJournal.rvJournalPostlist.adapter = PostListAdapter(journalVM)
+                bindingInJournal.rvJournalPostlist.adapter = PostListAdapter(journalVM, requireActivity())
             })
 
             bindingInJournal.btnJournalEdit.setOnClickListener {

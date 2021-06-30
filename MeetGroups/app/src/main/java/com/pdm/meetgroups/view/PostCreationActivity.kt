@@ -9,6 +9,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -30,7 +31,6 @@ class PostCreationActivity : AppCompatActivity() {
     private val postCreationVM: PostCreationViewModelImpl by viewModels()
     private lateinit var binding: ActivityPostCreationBinding
     private lateinit var fusedLocationClient : FusedLocationProviderClient
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +65,8 @@ class PostCreationActivity : AppCompatActivity() {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     postCreationVM.publishPost(this, location)
-                }
+                } else
+                    Toast.makeText(this, "Cannot determine your position🤯", Toast.LENGTH_SHORT).show()
             }
         }
         return setContentView(binding.root)

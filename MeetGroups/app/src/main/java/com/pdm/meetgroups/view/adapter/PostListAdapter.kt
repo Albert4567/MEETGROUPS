@@ -1,21 +1,30 @@
 package com.pdm.meetgroups.view.adapter
 
-import android.net.Uri
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.net.toUri
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.viewmodel.journal.JournalViewModel
+import com.pdm.meetgroups.view.PostActivity
+import com.pdm.meetgroups.view.PostCreationActivity
 import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
-class PostListAdapter(val journalVM: JournalViewModelImpl): RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
+
+class PostListAdapter(private val journalVM: JournalViewModelImpl, private var context: Context): RecyclerView.Adapter<PostListAdapter.ViewHolder>() {
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
+        val context: Context = listItemView.context
+        var postContainer: CardView = listItemView.findViewById(R.id.postcard_container)
         var postIMV: ImageView = listItemView.findViewById(R.id.imv_postcard_photo)
         var postNameTV: TextView = listItemView.findViewById(R.id.tv_postcard_title)
         var postDescriptionTV: TextView = listItemView.findViewById(R.id.tv_postcard_description)
@@ -32,10 +41,16 @@ class PostListAdapter(val journalVM: JournalViewModelImpl): RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = journalVM.getPostBy(position)
 
-        if(post.images != null )
+        if(post.images != null)
             holder.postIMV.setImageBitmap(post.images!!.first())
         holder.postNameTV.text = post.title
         holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "Description" else post.description
+
+        holder.postContainer.setOnClickListener {
+            val intent = Intent(context, PostActivity::class.java)
+            intent.putExtra("position", position)
+            startActivity(context, intent, null)
+        }
     }
 
     override fun getItemCount(): Int {

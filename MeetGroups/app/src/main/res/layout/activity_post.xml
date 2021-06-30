@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.PostActivity"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <!--    <Toolbar-->
+    <!--        android:id="@+id/toolbar_journal"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/rl_journal"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent">-->
+    <TextView
+        android:id="@+id/tv_post_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PostTitle"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:maxLength="20" />
+    <!--        </RelativeLayout>-->
+    <!--    </Toolbar>-->
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_post_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="No description"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="30dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_post_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_post_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
