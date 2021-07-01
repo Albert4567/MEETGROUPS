@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.view.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +13,12 @@ class TagListAdapter(private val postVM: PostViewModelImpl) : RecyclerView.Adapt
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         var tagTV: TextView = listItemView.findViewById(R.id.tv_tag_name)
-//        var postNameTV: TextView = listItemView.findViewById(R.id.tv_postcard_title)
-//        var postDescriptionTV: TextView = listItemView.findViewById(R.id.tv_postcard_description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagListAdapter.ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
-        val postView = inflater.inflate(R.layout.row_post, parent, false) //
+        val postView = inflater.inflate(R.layout.row_tag, parent, false) //
 
         return ViewHolder(postView)
     }

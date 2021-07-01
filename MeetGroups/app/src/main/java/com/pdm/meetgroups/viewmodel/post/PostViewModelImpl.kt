@@ -1,17 +1,24 @@
 package com.pdm.meetgroups.viewmodel.post
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.widget.Toast
+import androidx.core.net.toUri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.databinding.ActivityPostBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.view.PostActivity
+import com.pdm.meetgroups.viewmodel.journal.ViewModelImageListAdapter
+import com.pdm.meetgroups.viewmodel.postcreation.ImageList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class PostViewModelImpl : ViewModel(), PostViewModel {
+class PostViewModelImpl : ViewModel(), PostViewModel, ViewModelImageListAdapter {
     private val model = ModelImpl.modelRef
     private lateinit var post: Post
 
@@ -21,7 +28,7 @@ class PostViewModelImpl : ViewModel(), PostViewModel {
         }
     }
 
-    override fun getTagBy(position: Int): String? = post.tags?.get(position)
+    override fun getTagBy(position: Int): String? = post.tags?.let { "#" + it[position] }
 
     override fun tagCount(): Int = post.tags?.size ?: 0
 
@@ -47,4 +54,8 @@ class PostViewModelImpl : ViewModel(), PostViewModel {
             }
         }
     }
+
+    override fun getImageBy(position: Int): Any = post.images!![position]
+
+    override fun imageCount(): Int = post.images?.size ?: 0
 }

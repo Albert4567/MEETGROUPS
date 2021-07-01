@@ -21,6 +21,7 @@ import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.*
 import com.pdm.meetgroups.view.PostCreationActivity
+import com.pdm.meetgroups.viewmodel.journal.ViewModelImageListAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,18 +30,16 @@ import kotlin.collections.ArrayList
 
 typealias ImageList = ArrayList<Uri>
 
-class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
+class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel, ViewModelImageListAdapter {
     private val model = ModelImpl.modelRef
     private lateinit var visibility: POST_STATUS
     private var images: MutableLiveData<ImageList> = MutableLiveData()
 
-
     fun getImages(): LiveData<ImageList> = images
 
-    fun getImageBy(position: Int): Uri {
-        val images = images.value!!
-        return images[position]
-    }
+    override fun getImageBy(position: Int): Any = images.value!![position]
+
+    override fun imageCount(): Int = images.value?.size ?: 0
 
     override fun setPostVisibility(view: View) {
         if (view is RadioButton) {
@@ -150,7 +149,6 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel {
             activity.findViewById<EditText>(R.id.et_post_creation_tags).text.toString(),
             currentLocation
         )
-
 
         viewModelScope.launch(Dispatchers.IO) {
             val imageUris : ArrayList<Uri>? = if (images.value != null) ArrayList(images.value as MutableList<Uri>)
