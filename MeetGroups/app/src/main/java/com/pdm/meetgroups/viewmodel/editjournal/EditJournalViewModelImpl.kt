@@ -20,6 +20,7 @@ import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.JOURNAL_STATUS
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
+import com.pdm.meetgroups.view.AddParticipantActivity
 import com.pdm.meetgroups.view.EditJournalActivity
 import com.pdm.meetgroups.view.navbar.journal.JournalFragment
 import kotlinx.coroutines.Dispatchers
@@ -157,8 +158,10 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
     override fun showAddParticipantActivity(context: Context) {
         if(!journalIsAlreadyCreated())
             Toast.makeText(context,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
-//        else
-            // TODO(AB): Show AddParticipantActivity
+        else {
+            val intent = Intent(context, AddParticipantActivity::class.java)
+            startActivity(context, intent, null)
+        }
     }
 
     override fun removeParticipant(position: Int, context: Context) {
