@@ -15,15 +15,19 @@ class ReadOnlyJournalViewModelImpl : ViewModel(), ViewModelAdapter {
     private val model = ModelImpl.modelRef
     private lateinit var journal : Journal
     private val posts: MutableLiveData<PostList> = MutableLiveData()
+    private val title: MutableLiveData<String> = MutableLiveData()
 
-    fun loadJournalPosts(loadJournal: Journal) {
-        journal = loadJournal
+    fun loadJournal(journalID: String) {
         viewModelScope.launch(Dispatchers.IO) {
+            journal = model.loadJournal(journalID)
             posts.postValue(model.loadJournalPosts(journal))
+            title.postValue(journal.title)
         }
     }
 
     override fun getPosts(): LiveData<PostList> = posts
+
+    fun getTitle(): LiveData<String> = title
 
     override fun showGroupParticipants(view: View) {
 

@@ -45,6 +45,9 @@ class ModelImpl : Model {
             GlobalScope.launch {
              localUser = firestoreModel.downloadUserInfo()
              localUser?.getState()?.list = firestoreModel.getUserClosedJournals(localUser!!)?.toList() ?: emptyList()
+             localUser?.getState()?.list?.forEach { it ->
+                 it.journalImage = storageModel.getJournalImage(it.journalID)
+             }
              localUser?.getState()?.userImage = getUserImage()
              instantiateLocalJournal(localUser?.getState()?.openJournalID)
             }
@@ -190,6 +193,10 @@ class ModelImpl : Model {
             firestoreModel.updateOpenJournal(user, null)
             true
         } else false
+    }
+
+    override suspend fun loadJournal(journalID: String): Journal {
+        return firestoreModel.loadJournal(journalID)
     }
 
     override suspend fun loadParticipants(journal: Journal): ArrayList<String>? {

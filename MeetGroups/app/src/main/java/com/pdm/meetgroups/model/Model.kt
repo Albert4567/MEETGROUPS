@@ -42,6 +42,8 @@ interface Model {
 
     suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
 
+    suspend fun loadJournal (journalID : String) : Journal
+
     suspend fun loadParticipants (journal : Journal) : ArrayList<String>?
 
     suspend fun updateJournalTitle (journal: Journal) : Boolean

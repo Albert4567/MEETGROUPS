@@ -21,10 +21,6 @@ class JournalFragment: Fragment() {
     private lateinit var bindingInJournal: FragmentJournalBinding
     private lateinit var bindingNotInJournal: FragmentNotInJournalBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,

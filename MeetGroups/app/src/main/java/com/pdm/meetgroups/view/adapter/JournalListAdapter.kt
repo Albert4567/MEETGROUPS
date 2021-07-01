@@ -40,6 +40,7 @@ class JournalListAdapter(val profileVM: ProfileViewModel, val context: Context) 
 
         holder.container.setOnClickListener {
             var intent = Intent(context, ReadOnlyJournalActivity::class.java)
+            intent.putExtra("journal", journal.journalID)
             startActivity(context, intent, null)
         }
     }

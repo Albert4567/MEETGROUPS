@@ -38,10 +38,11 @@ interface FirestoreModel {
 
     suspend fun downloadJournalInfo (journalID : String) : Journal?
 
-    //TODO checks to use this methods only if admin
     suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean
 
     suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
+
+    suspend fun loadJournal(journalID: String): Journal
 
     suspend fun loadParticipants (journal : Journal) : ArrayList<String>?
 
