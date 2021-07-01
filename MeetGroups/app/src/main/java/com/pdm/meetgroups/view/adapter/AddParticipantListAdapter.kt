@@ -25,13 +25,13 @@ class AddParticipantListAdapter(private val addParticipantVM: AddParticipantView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.participantNameTV.text =
+        holder.participantNameTV.text = addParticipantVM.getUserBy(position)
         holder.addButton.setOnClickListener {
-
+            addParticipantVM.addParticipantUsing(position)
         }
     }
 
     override fun getItemCount(): Int {
-        return 0
+        return addParticipantVM.usersCount()
     }
 }
