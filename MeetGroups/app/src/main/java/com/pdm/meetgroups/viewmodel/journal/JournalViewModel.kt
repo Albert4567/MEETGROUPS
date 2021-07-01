@@ -8,9 +8,6 @@ import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 
-typealias PostList = ArrayList<Post>
-typealias ParticipantList = ArrayList<String>
-
 interface JournalViewModel {
     fun getPosts(): LiveData<PostList>
 

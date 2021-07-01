@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.viewmodel.journal
 
+import android.graphics.Bitmap
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,18 +17,22 @@ class ReadOnlyJournalViewModelImpl : ViewModel(), ViewModelAdapter {
     private lateinit var journal : Journal
     private val posts: MutableLiveData<PostList> = MutableLiveData()
     private val title: MutableLiveData<String> = MutableLiveData()
+    private val image: MutableLiveData<Bitmap> = MutableLiveData()
 
     fun loadJournal(journalID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             journal = model.loadJournal(journalID)
             posts.postValue(model.loadJournalPosts(journal))
             title.postValue(journal.title)
+            image.postValue(journal.journalImage)
         }
     }
 
     override fun getPosts(): LiveData<PostList> = posts
 
     fun getTitle(): LiveData<String> = title
+
+    fun getImage(): LiveData<Bitmap> = image
 
     override fun showGroupParticipants(view: View) {
 

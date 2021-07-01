@@ -3,6 +3,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
+
 typealias PostList = ArrayList<Post>
 
 interface ViewModelAdapter {

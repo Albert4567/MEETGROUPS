@@ -196,7 +196,9 @@ class ModelImpl : Model {
     }
 
     override suspend fun loadJournal(journalID: String): Journal {
-        return firestoreModel.loadJournal(journalID)
+        val journal = firestoreModel.loadJournal(journalID)
+        journal.journalImage = storageModel.getJournalImage(journalID)
+        return journal
     }
 
     override suspend fun loadParticipants(journal: Journal): ArrayList<String>? {

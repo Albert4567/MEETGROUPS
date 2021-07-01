@@ -23,11 +23,15 @@ class ReadOnlyJournalActivity : AppCompatActivity() {
         readOnlyJournalVM.loadJournal(intent.getStringExtra("journal")!!)
         readOnlyJournalVM.getPosts().observe(this, Observer {
             binding.rvJournalPostlist.layoutManager = LinearLayoutManager(this)
-            binding.rvJournalPostlist.adapter = PostListAdapter(readOnlyJournalVM)
+            binding.rvJournalPostlist.adapter = PostListAdapter(readOnlyJournalVM, this)
         })
 
         readOnlyJournalVM.getTitle().observe(this, Observer { title ->
             binding.tvJournalTitle.text = title
+        })
+
+        readOnlyJournalVM.getImage().observe(this, Observer { image ->
+            binding.imvJournalImage.setImageBitmap(image)
         })
         
         return setContentView(binding.root)
