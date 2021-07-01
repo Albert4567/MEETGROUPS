@@ -104,6 +104,10 @@ class FirestoreModelImpl : FirestoreModel {
         return journalFirestoreModel.removeParticipant(journal, user)
     }
 
+    override suspend fun loadJournal(journalID: String): Journal {
+        return journalFirestoreModel.downloadJournalInfo(journalID)!!
+    }
+
     override suspend fun loadParticipants(journal: Journal) : ArrayList<String>? {
         return journalFirestoreModel.loadParticipants(journal)
     }

@@ -7,6 +7,25 @@
     android:padding="20dp"
     tools:context=".view.navbar.profile.ProfileFragment">
 
+    <FrameLayout
+        android:id="@+id/frameLayoutJournals"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bioTextView">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/journalView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </FrameLayout>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/roundImageView"
         android:layout_width="155dp"
@@ -25,7 +44,7 @@
             app:cardCornerRadius="250dp">
 
             <ImageView
-                android:id="@+id/LinkImageView"
+                android:id="@+id/ProfileImageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
@@ -34,16 +53,6 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/journalView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_border"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bioTextView" />
 
     <TextView
         android:id="@+id/bioTextView"
@@ -55,7 +64,7 @@
         android:text="@string/no_bio_available"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/journalView"
+        app:layout_constraintBottom_toTopOf="@id/frameLayoutJournals"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />

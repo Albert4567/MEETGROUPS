@@ -9,6 +9,7 @@ import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
 
 typealias PostList = ArrayList<Post>
+typealias ParticipantList = ArrayList<String>
 
 interface JournalViewModel {
     fun getPosts(): LiveData<PostList>
@@ -18,8 +19,6 @@ interface JournalViewModel {
     fun setImage(binding: FragmentJournalBinding)
 
     fun showEditJournalFragment(context: Context)
-
-    fun showGroupParticipants(view: View)
 
     fun showPostCreationActivity(context: Context)
 

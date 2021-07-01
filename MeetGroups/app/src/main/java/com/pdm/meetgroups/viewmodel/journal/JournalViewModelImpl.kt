@@ -22,7 +22,7 @@ import com.pdm.meetgroups.view.EditJournalActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class JournalViewModelImpl : ViewModel(), JournalViewModel {
+class JournalViewModelImpl : ViewModel(), JournalViewModel, ViewModelAdapter {
     private val model = ModelImpl.modelRef
     private val journal get() = model.getJournal()
     private val posts: MutableLiveData<PostList> = MutableLiveData()
@@ -45,7 +45,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel {
 
     override fun getPosts(): LiveData<PostList> = posts
 
-    fun getPostBy(position: Int): Post = posts.value!![position]
+    override fun getPostBy(position: Int): Post = posts.value!![position]
 
     override fun setTitle(binding: FragmentJournalBinding) {
         binding.tvJournalTitle.text = journal?.title

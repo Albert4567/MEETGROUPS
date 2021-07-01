@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/journal_container"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="15dp"
+tools:context=".view.ReadOnlyJournalActivity">
+<Toolbar
+    android:id="@+id/toolbar_journal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/rl_journal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_journal_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JournalTitle"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_journal_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:backgroundTintMode="add"
+            android:src="@drawable/ic_journal_group_24"/>
+    </RelativeLayout>
+</Toolbar>
+
+<FrameLayout
+    android:id="@+id/child_fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+
+<FrameLayout
+    android:id="@+id/fl_journal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
+    android:paddingTop="20dp">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_journal_postlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>
+</LinearLayout>

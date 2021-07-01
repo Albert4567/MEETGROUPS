@@ -64,6 +64,7 @@
                 android:layout_centerInParent="true"
                 android:backgroundTintMode="add"
                 android:src="@drawable/ic_journal_edit_24" />
+
         </RelativeLayout>
     </Toolbar>
 

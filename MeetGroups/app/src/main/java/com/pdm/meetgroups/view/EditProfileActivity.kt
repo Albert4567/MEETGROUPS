@@ -67,11 +67,11 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     fun updateImage (image : Bitmap?) {
-        binding.LinkImageView.setImageBitmap(image)
+        binding.EditProfileImageView.setImageBitmap(image)
     }
 
     fun updateImageWithUri (imageUri : Uri) {
-        binding.LinkImageView.setImageURI(imageUri)
+        binding.EditProfileImageView.setImageURI(imageUri)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
