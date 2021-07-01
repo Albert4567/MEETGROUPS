@@ -8,24 +8,27 @@
     android:orientation="vertical"
     android:padding="15dp">
 
-    <!--    <Toolbar-->
-    <!--        android:id="@+id/toolbar_journal"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content">-->
-    <!--        <RelativeLayout-->
-    <!--            android:id="@+id/rl_journal"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-    <TextView
-        android:id="@+id/tv_post_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PostTitle"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:maxLength="20" />
-    <!--        </RelativeLayout>-->
-    <!--    </Toolbar>-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_post_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PostTitle"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:maxLength="20" />
+
+        <ImageButton
+            android:id="@+id/btn_post_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:backgroundTintMode="add"
+            android:src="@drawable/ic_delete_24" />
+    </RelativeLayout>
 
     <Space
         android:layout_width="match_parent"

@@ -6,10 +6,10 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.ActivityPostBinding
 import com.pdm.meetgroups.view.adapter.TagListAdapter
-import com.pdm.meetgroups.viewmodel.post.PostViewModel
+import com.pdm.meetgroups.viewmodel.post.PostViewModelImpl
 
 class PostActivity : AppCompatActivity() {
-    private val postVM: PostViewModel by viewModels()
+    private val postVM: PostViewModelImpl by viewModels()
     private lateinit var binding: ActivityPostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,12 @@ class PostActivity : AppCompatActivity() {
             false
         )
         binding.rvPostImages.layoutManager = layoutManager
+        // TODO(AB): Update when viewmodel adapter is merged
 //        binding.rvPostImages.adapter = PostImageListAdapter()
+
+        binding.btnPostDelete.setOnClickListener {
+            postVM.deletePost(this)
+        }
 
         return setContentView(binding.root)
     }

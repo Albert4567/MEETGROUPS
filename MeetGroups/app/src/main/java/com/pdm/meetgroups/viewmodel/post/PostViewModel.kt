@@ -1,30 +1,18 @@
 package com.pdm.meetgroups.viewmodel.post
 
-import androidx.lifecycle.ViewModel
 import com.pdm.meetgroups.databinding.ActivityPostBinding
-import com.pdm.meetgroups.model.ModelImpl
-import com.pdm.meetgroups.model.entities.Post
+import com.pdm.meetgroups.view.PostActivity
 
-class PostViewModel : ViewModel() {
-    private val model = ModelImpl.modelRef
-    private lateinit var post: Post
+interface PostViewModel {
+    fun getPostBy(position: Int)
 
-    fun getPostBy(position: Int) {
-        model.getJournal()?.let {
-            post = it.posts!![position]
-        }
-    }
+    fun getTagBy(position: Int): String?
 
-    fun getTagBy(position: Int): String? = post.tags?.get(position)
+    fun tagCount(): Int
 
-    fun setTitle(binding: ActivityPostBinding) {
-        binding.tvPostTitle.text = post.title
-    }
+    fun setTitle(binding: ActivityPostBinding)
 
-    fun setDescription(binding: ActivityPostBinding) {
-        binding.tvPostDescription.text = post.description
-    }
+    fun setDescription(binding: ActivityPostBinding)
 
-    fun tagCount(): Int = post.tags?.size ?: 0
-
+    fun deletePost(activity: PostActivity)
 }
