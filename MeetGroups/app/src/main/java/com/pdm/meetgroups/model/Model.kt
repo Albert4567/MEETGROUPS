@@ -9,7 +9,6 @@ import com.pdm.meetgroups.model.entities.UserContext
 import java.util.*
 import kotlin.collections.ArrayList
 
-//TODO CHECK THE PARAMETERS NEEDED NOW THAT WE HAVE LOCAL INSTANCES
 interface Model {
     //FirestoreModel interface
     suspend fun createUser (user : UserContext) : Boolean
@@ -36,9 +35,11 @@ interface Model {
 
     fun getUser () : UserContext?
 
+    suspend fun getUser (nickname: String): UserContext?
+
     fun getUserClosedJournals () : ArrayList<Journal>?
 
-    suspend fun addParticipant (journal : Journal, user : UserContext) : Boolean
+    suspend fun addParticipant (journal : Journal, nickname: String) : Boolean
 
     suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean
 

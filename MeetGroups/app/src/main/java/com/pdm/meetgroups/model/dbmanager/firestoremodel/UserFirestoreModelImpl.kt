@@ -57,6 +57,20 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
         }
     }
 
+    override suspend fun getUser(nickname: String): UserContext? {
+        return try {
+            val doc = usersDocsRef
+                .whereEqualTo("nickname", nickname)
+                .get()
+                .await()
+            Log.w(TAG, "Get User Success!")
+            return SnapshotUtilities.loadUserFromDoc(doc.first())
+        } catch (e : Exception) {
+            Log.e(TAG, "Get User failed with, ", e)
+            null
+        }
+    }
+
     override suspend fun downloadUserInfo(): UserContext? {
         return try {
             val doc = userDocRef
