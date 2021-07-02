@@ -1,6 +1,7 @@
 package com.pdm.meetgroups.view.navbar
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.fragment.app.Fragment
@@ -22,6 +23,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.FragmentMapsBinding
 import com.pdm.meetgroups.model.entities.Journal
+import com.pdm.meetgroups.view.EditProfileActivity
+import com.pdm.meetgroups.view.ReadOnlyJournalActivity
 import com.pdm.meetgroups.viewmodel.maps.MapsViewModelImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -104,6 +107,9 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     override fun onMarkerClick(p0: Marker): Boolean {
         //show the journal readOnly activity
         val journal = p0.tag as Journal
+        val intent = Intent(activity, ReadOnlyJournalActivity::class.java)
+        intent.putExtra("journal", journal.journalID)
+        startActivity(intent)
         return false
     }
 }
