@@ -24,7 +24,7 @@ class PostImageListAdapter(private val postCreationVM: PostCreationViewModelImpl
     }
 
     override fun onBindViewHolder(holder: PostImageListAdapter.ViewHolder, position: Int) {
-        holder.image.setImageURI(postCreationVM.getImageBy(position))
+        //holder.image.setImageURI(postCreationVM.getImageBy(position))
     }
 
     override fun getItemCount(): Int {
