@@ -35,7 +35,7 @@ class PostActivity : AppCompatActivity() {
             false
         )
         binding.rvPostImages.layoutManager = layoutManagers
-        binding.rvPostImages.adapter = PostImageListAdapter(postVM)
+        //binding.rvPostImages.adapter = PostImageListAdapter(postVM)
 
         binding.btnPostDelete.setOnClickListener {
             postVM.deletePost(this)
