@@ -19,7 +19,6 @@ class ParticipantListAdapter(
     ): RecyclerView.Adapter<ParticipantListAdapter.ViewHolder>() {
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
-        var participantIMV: ImageView = listItemView.findViewById(R.id.imv_participant_photo)
         var participantNameTV: TextView = listItemView.findViewById(R.id.tv_participant_name)
         var removeButton: Button = listItemView.findViewById(R.id.btn_participant_remove)
     }

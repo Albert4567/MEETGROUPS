@@ -28,4 +28,5 @@
     <string name="logout">LOGOUT</string>
     <string name="delete_profile">ELIMINA PROFILO</string>
     <string name="journal_navigation">Journal</string>
+    <string name="participantname">ParticipantName</string>
 </resources>
