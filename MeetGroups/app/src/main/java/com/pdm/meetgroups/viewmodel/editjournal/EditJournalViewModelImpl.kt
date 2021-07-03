@@ -35,11 +35,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
     private val journal get() = model.getJournal()
     private val participants: MutableLiveData<ParticipantList> = MutableLiveData()
 
-    init {
-        postParticipantsValue()
-    }
-
-    private fun postParticipantsValue() {
+    override fun postParticipantsValue() {
         var participants = ArrayList<String>()
 
         journal?.let { journal ->

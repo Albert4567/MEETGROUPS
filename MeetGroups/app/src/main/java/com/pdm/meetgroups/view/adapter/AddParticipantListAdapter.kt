@@ -1,15 +1,21 @@
 package com.pdm.meetgroups.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
+import com.pdm.meetgroups.view.AddParticipantActivity
 import com.pdm.meetgroups.viewmodel.addparticipant.AddParticipantViewModelImpl
 
-class AddParticipantListAdapter(private val addParticipantVM: AddParticipantViewModelImpl) : RecyclerView.Adapter<AddParticipantListAdapter.ViewHolder>()  {
+class AddParticipantListAdapter(
+    private val addParticipantVM: AddParticipantViewModelImpl,
+    private val activity: AddParticipantActivity
+    ) : RecyclerView.Adapter<AddParticipantListAdapter.ViewHolder>()  {
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         val participantNameTV: TextView = listItemView.findViewById(R.id.tv_add_participant_name)
@@ -27,7 +33,7 @@ class AddParticipantListAdapter(private val addParticipantVM: AddParticipantView
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.participantNameTV.text = addParticipantVM.getUserBy(position)
         holder.addButton.setOnClickListener {
-            addParticipantVM.addParticipantUsing(position)
+            addParticipantVM.addParticipantUsing(position, activity)
         }
     }
 

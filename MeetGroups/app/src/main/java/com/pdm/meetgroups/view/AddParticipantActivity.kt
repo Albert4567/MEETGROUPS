@@ -24,7 +24,7 @@ class AddParticipantActivity : AppCompatActivity() {
 
         addParticipantVM.getUsers().observe(this, Observer {
             binding.rvAddParticipantList.layoutManager = LinearLayoutManager(this)
-            binding.rvAddParticipantList.adapter = AddParticipantListAdapter(addParticipantVM)
+            binding.rvAddParticipantList.adapter = AddParticipantListAdapter(addParticipantVM, this)
         })
 
         return setContentView(binding.root)
