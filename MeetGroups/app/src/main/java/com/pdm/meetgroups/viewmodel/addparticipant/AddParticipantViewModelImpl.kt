@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddParticipantViewModelImpl : ViewModel() {
+class AddParticipantViewModelImpl : ViewModel(), AddParticipantViewModel {
     private val model = ModelImpl.modelRef
     private val users: MutableLiveData<ParticipantList> = MutableLiveData()
     private var usersContainer = ParticipantList()
@@ -27,7 +27,9 @@ class AddParticipantViewModelImpl : ViewModel() {
         }
     }
 
-    fun getUsers(): LiveData<ParticipantList> = users
+    override fun getUsers(): LiveData<ParticipantList> = users
+
+    override fun getUserBy(position: Int): String? = users.value?.get(position)
 
     private fun removeParticipantsFromSearchList(usersToPost: ArrayList<String>): ArrayList<String> {
         usersToPost.removeAll(model.getJournal()!!.users.map { it.getState().nickname })
@@ -35,13 +37,11 @@ class AddParticipantViewModelImpl : ViewModel() {
         return usersToPost
     }
 
-    fun searchUserBy(name: String) {
+    override fun searchUserBy(name: String) {
         var usersToPost = ArrayList(usersContainer.filter { it.contains(name) })
         usersToPost = removeParticipantsFromSearchList(usersToPost)
         users.postValue(usersToPost)
     }
-
-    fun getUserBy(position: Int): String? = users.value?.get(position)
 
     private fun removeParticipantFromSearchList(participant: String) {
         val updatedList = users.value!!
@@ -49,7 +49,7 @@ class AddParticipantViewModelImpl : ViewModel() {
         users.postValue(updatedList)
     }
 
-    fun addParticipantUsing(position: Int, activity: AddParticipantActivity) {
+    override fun addParticipantUsing(position: Int, activity: AddParticipantActivity) {
         val newParticipant = getUserBy(position)
         viewModelScope.launch(Dispatchers.IO) {
             val result = model.addParticipant(model.getJournal()!!, newParticipant!!)
@@ -67,5 +67,5 @@ class AddParticipantViewModelImpl : ViewModel() {
         }
     }
 
-    fun usersCount(): Int = users.value?.size ?: 0
+    override fun usersCount(): Int = users.value?.size ?: 0
 }
