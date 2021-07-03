@@ -40,14 +40,14 @@
             <TextView
                 android:id="@+id/tv_journal_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_centerInParent="true"
                 android:layout_toLeftOf="@id/btn_journal_group"
                 android:layout_toRightOf="@+id/roundImageView"
-                android:maxLength="20"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="10dp"
                 android:text="JournalTitle"
-                android:textSize="22sp"
+                android:textSize="23sp"
                 android:textStyle="bold" />
 
             <ImageButton
