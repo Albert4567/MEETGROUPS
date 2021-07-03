@@ -34,7 +34,7 @@ class ReadOnlyJournalViewModelImpl : ViewModel(), ViewModelAdapter {
 
     fun getImage(): LiveData<Bitmap> = image
 
-    override fun showGroupParticipants(view: View) {
+    fun showGroupParticipants(view: View) {
 
     }
 

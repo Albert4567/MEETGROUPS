@@ -12,8 +12,6 @@ typealias PostList = ArrayList<Post>
 interface ViewModelAdapter {
     fun getPosts(): LiveData<PostList>
 
-    fun showGroupParticipants(view: View)
-
     fun getPostBy(position: Int): Post
 }
 

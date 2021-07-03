@@ -1,4 +1,4 @@
-package com.pdm.meetgroups.view.navbar
+package com.pdm.meetgroups.view.navbar.maps
 
 import android.Manifest
 import android.content.Intent
@@ -23,7 +23,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.FragmentMapsBinding
 import com.pdm.meetgroups.model.entities.Journal
-import com.pdm.meetgroups.view.EditProfileActivity
 import com.pdm.meetgroups.view.ReadOnlyJournalActivity
 import com.pdm.meetgroups.viewmodel.maps.MapsViewModelImpl
 import kotlinx.coroutines.CoroutineScope

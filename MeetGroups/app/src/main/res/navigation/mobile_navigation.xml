@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/navigation_maps"
-        android:name="com.pdm.meetgroups.view.navbar.MapsFragment"
+        android:name="com.pdm.meetgroups.view.navbar.maps.MapsFragment"
         android:label="@string/title_maps"
         tools:layout="@layout/fragment_maps" />
 
