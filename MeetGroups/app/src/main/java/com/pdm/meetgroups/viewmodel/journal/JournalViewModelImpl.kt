@@ -27,11 +27,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel, ViewModelAdapter {
     private val journal get() = model.getJournal()
     private val posts: MutableLiveData<PostList> = MutableLiveData()
 
-    init {
-        loadJournalPosts()
-    }
-
-    private fun loadJournalPosts() {
+    fun loadJournalPosts() {
         viewModelScope.launch(Dispatchers.IO) {
             journal?.let { posts.postValue(model.loadJournalPosts(it)) }
         }
