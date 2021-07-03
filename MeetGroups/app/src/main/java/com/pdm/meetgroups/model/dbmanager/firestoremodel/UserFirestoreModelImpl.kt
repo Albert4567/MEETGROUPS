@@ -19,7 +19,6 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
     private val TAG = "UserFirestoreModelImpl"
     private val usersDocsRef = usersRef
 
-    //TODO TEST
     override suspend fun createUser (user : UserContext) : Boolean {
         val mUser = user.getState()
         val userData = hashMapOf (
@@ -71,13 +70,11 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
     }
 
     override suspend fun updateUserBio (newBio : String) : Boolean {
-        //TODO update for emojis https://stackoverflow.com/questions/40519352/put-emoji-code-in-a-string/40520115
         if (newBio.length in 0..256) {
             return try {
                 userDocRef.update("bio", newBio)
                     .await()
                 Log.w(TAG, "Update user bio transaction success!")
-                //TODO send callback to update local user variable
                 true
             } catch (e : Exception) {
                 Log.e(TAG, "create post failed with ", e)

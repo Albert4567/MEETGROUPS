@@ -56,4 +56,6 @@ interface FirestoreModel {
     suspend fun createPost (journal : Journal, post : Post) : Boolean
 
     suspend fun deletePost (journal : Journal, post : Post) : Boolean
+
+    suspend fun getAllPosts () : ArrayList<Post>
 }

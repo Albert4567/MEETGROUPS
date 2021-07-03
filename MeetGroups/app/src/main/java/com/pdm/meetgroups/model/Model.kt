@@ -56,6 +56,8 @@ interface Model {
 
     suspend fun deletePost (journal : Journal, post : Post) : Boolean
 
+    suspend fun getAllPosts () : ArrayList<Post>
+
     suspend fun updateJournalImage (newImageUri : Uri) : Boolean
 
     //AuthentificationModel interface

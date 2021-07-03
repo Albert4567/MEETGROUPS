@@ -244,6 +244,10 @@ class ModelImpl : Model {
         } else false
     }
 
+    override suspend fun getAllPosts(): ArrayList<Post> {
+        return firestoreModel.getAllPosts()
+    }
+
     override suspend fun updateJournalImage(newImageUri: Uri): Boolean {
         return if (localJournal != null && storageModel.updateStoredJournalImage(newImageUri, localJournal!!.journalID)) {
             localJournal!!.journalImage = getJournalImage()
