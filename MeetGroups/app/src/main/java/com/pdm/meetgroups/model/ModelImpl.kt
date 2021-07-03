@@ -174,6 +174,10 @@ class ModelImpl : Model {
         return firestoreModel.getUser(nickname)
     }
 
+    override suspend fun getAllUsers(): ArrayList<UserContext> {
+        return firestoreModel.getAllUsers()
+    }
+
     override fun getUserClosedJournals(): ArrayList<Journal>? {
         return if (localUser?.getState()?.list != null)
             ArrayList(localUser?.getState()?.list)

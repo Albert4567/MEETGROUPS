@@ -12,6 +12,8 @@ interface UserFirestoreModel {
 
     suspend fun getUser (nickname: String): UserContext?
 
+    suspend fun getAllUsers () : ArrayList<UserContext>
+
     suspend fun downloadUserInfo () : UserContext?
 
     suspend fun updateUserBio (newBio : String) : Boolean

@@ -37,6 +37,8 @@ interface Model {
 
     suspend fun getUser (nickname: String): UserContext?
 
+    suspend fun getAllUsers () : ArrayList<UserContext>
+
     fun getUserClosedJournals () : ArrayList<Journal>?
 
     suspend fun addParticipant (journal : Journal, nickname: String) : Boolean

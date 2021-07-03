@@ -71,6 +71,21 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
         }
     }
 
+    override suspend fun getAllUsers(): ArrayList<UserContext> {
+        val users = ArrayList<UserContext>()
+        return try {
+            val docs = usersDocsRef
+                .get()
+                .await()
+            docs.documents.forEach { doc -> users.add(SnapshotUtilities.loadUserFromDoc(doc)) }
+            Log.w(TAG, "Get All Users Success!")
+            users
+        } catch (e : Exception) {
+            Log.e(TAG, "Get All Users failed with, ", e)
+            users
+        }
+    }
+
     override suspend fun downloadUserInfo(): UserContext? {
         return try {
             val doc = userDocRef
