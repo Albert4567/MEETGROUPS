@@ -22,6 +22,7 @@ import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 import com.pdm.meetgroups.view.AddParticipantActivity
 import com.pdm.meetgroups.view.EditJournalActivity
+import com.pdm.meetgroups.view.MainActivity
 import com.pdm.meetgroups.view.navbar.journal.JournalFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -181,10 +182,8 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
             val result = journal?.let { model.closeJournal(it) } ?: false
             withContext(Dispatchers.Main) {
                 if (result) {
-                    // TODO(AB): This is not working when called twice, find another way if possible
-                    Navigation
-                        .findNavController(activity, R.id.mobile_navigation)
-                        .navigate(R.id.navigation_not_in_journal)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(activity, intent, null)
                 }
                 else
                     Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
