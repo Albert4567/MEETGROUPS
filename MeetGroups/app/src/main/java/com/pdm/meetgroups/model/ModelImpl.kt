@@ -244,13 +244,12 @@ class ModelImpl : Model {
         } else false
     }
 
+    override suspend fun getPostImage(postID: String): Bitmap? {
+        return storageModel.getPostImage(postID)
+    }
+
     override suspend fun getAllPosts(): ArrayList<Post> {
-        val posts = firestoreModel.getAllPosts()
-        posts.forEach { post ->
-            val image = storageModel.getPostImage(post.postID)
-            if (image != null) post.images = mutableListOf(image)
-        }
-        return posts
+        return firestoreModel.getAllPosts()
     }
 
     override suspend fun updateJournalImage(newImageUri: Uri): Boolean {

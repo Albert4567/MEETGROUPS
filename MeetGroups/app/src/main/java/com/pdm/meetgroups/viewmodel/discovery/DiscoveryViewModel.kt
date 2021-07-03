@@ -24,6 +24,17 @@ class DiscoveryViewModel : ViewModel(), ViewModelAdapter {
         viewModelScope.launch(Dispatchers.IO) {
             postsContainer = model.getAllPosts()
             posts.postValue(postsContainer)
+            loadPostsImages()
+        }
+    }
+
+    private fun loadPostsImages() {
+        viewModelScope.launch(Dispatchers.IO) {
+            postsContainer.forEach { post ->
+                val image = model.getPostImage(post.postID)
+                if (image != null) post.images = mutableListOf(image)
+            }
+            posts.postValue(postsContainer)
         }
     }
 

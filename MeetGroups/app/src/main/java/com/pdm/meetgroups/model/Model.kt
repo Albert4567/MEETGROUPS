@@ -1,5 +1,6 @@
 package com.pdm.meetgroups.model
 
+import android.graphics.Bitmap
 import android.location.Location
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
@@ -55,6 +56,8 @@ interface Model {
     suspend fun createPost (journal : Journal, post : Post, imageUris : ArrayList<Uri>?) : Boolean
 
     suspend fun deletePost (journal : Journal, post : Post) : Boolean
+
+    suspend fun getPostImage (postID : String) : Bitmap?
 
     suspend fun getAllPosts () : ArrayList<Post>
 
