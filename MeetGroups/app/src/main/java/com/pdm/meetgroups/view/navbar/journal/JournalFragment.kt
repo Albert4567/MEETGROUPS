@@ -66,4 +66,10 @@ class JournalFragment: Fragment() {
             return bindingNotInJournal.root
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        if(journalVM.isInJournal())
+            journalVM.loadJournalPosts()
+    }
 }
