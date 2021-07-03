@@ -2,8 +2,11 @@ package com.pdm.meetgroups.model.dbmanager.firestoremodel
 
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
+import com.pdm.meetgroups.utility.SnapshotUtilities
 import kotlinx.coroutines.tasks.await
 import java.lang.Exception
 
@@ -42,12 +45,30 @@ class PostFirestoreModelImpl (journalsRef : CollectionReference) : PostFirestore
             journalsCollectionRef.document(journal.journalID)
                 .collection("posts")
                 .document(post.postID)
-                .delete().await()
+                .delete()
+                .await()
             Log.w(TAG, "Delete post success!")
             true
         } catch (e : Exception) {
             Log.e(TAG, "delete post failed with ", e)
             false
+        }
+    }
+
+    override suspend fun getAllPosts(): ArrayList<Post> {
+        val posts = ArrayList<Post>()
+        return try {
+            val postDocs = Firebase.firestore.collectionGroup("posts")
+                .get()
+                .await()
+            postDocs?.let { it ->
+                posts.addAll(SnapshotUtilities.loadPostsFromCollection(it)!!.toTypedArray())
+            }
+            Log.w(TAG, "Get All Posts success!")
+            posts
+        } catch (e : Exception) {
+            Log.e(TAG, "Get All Posts failed with ", e)
+            posts
         }
     }
 }

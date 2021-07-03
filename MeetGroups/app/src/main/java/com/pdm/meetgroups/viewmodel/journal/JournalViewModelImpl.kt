@@ -67,7 +67,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel, ViewModelAdapter {
         }
     }
 
-    override fun showGroupParticipants(view: View) {
+    fun showGroupParticipants(view: View) {
 
     }
 }

@@ -139,4 +139,8 @@ class FirestoreModelImpl : FirestoreModel {
     override suspend fun deletePost(journal: Journal, post: Post) : Boolean {
         return postFirestoreModel.deletePost(journal, post)
     }
+
+    override suspend fun getAllPosts(): ArrayList<Post> {
+        return postFirestoreModel.getAllPosts()
+    }
 }
