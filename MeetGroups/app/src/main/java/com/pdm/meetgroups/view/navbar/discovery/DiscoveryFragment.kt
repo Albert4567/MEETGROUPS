@@ -26,7 +26,7 @@ class  DiscoveryFragment : Fragment() {
 
         binding.discoverySearch.setOnClickListener {
             val tag = binding.discoverySearch.query.toString()
-            //discoveryVM.searchPostBy(tag)
+            discoveryVM.searchPostBy(tag)
         }
 
         discoveryVM.getPosts().observe(viewLifecycleOwner, Observer {

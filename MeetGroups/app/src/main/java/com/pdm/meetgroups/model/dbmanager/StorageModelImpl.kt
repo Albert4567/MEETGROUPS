@@ -123,4 +123,36 @@ class StorageModelImpl : StorageModel {
             Log.e(TAG, "Delete journal post images failed with ", e)
         }
     }
+
+    override suspend fun getPostImage(postID: String): Bitmap? {
+        return try {
+            var image : Bitmap? = null
+            storage.child("postImages")
+                .listAll()
+                .await()
+                .prefixes
+                .forEach { journalImageFolder ->
+                    val images = journalImageFolder
+                        .child(postID)
+                        .list(1)
+                        .await()
+                        .items
+                    if (images.size > 0) {
+                        val imageBytes = images.first()
+                            .getBytes(1024 * 1024)
+                            .await()
+                        image = BitmapFactory.decodeByteArray(
+                            imageBytes,
+                            0,
+                            imageBytes.size
+                        )
+                    }
+                }
+            Log.w(TAG, "get post image success!")
+            image
+        } catch (e : Exception) {
+            Log.e(TAG, "get post image failed with ", e)
+            null
+        }
+    }
 }
