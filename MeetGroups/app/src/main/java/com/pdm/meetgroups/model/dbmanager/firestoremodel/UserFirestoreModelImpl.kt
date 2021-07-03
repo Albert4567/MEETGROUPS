@@ -75,6 +75,7 @@ class UserFirestoreModelImpl (private val userDocRef: DocumentReference, usersRe
         val users = ArrayList<UserContext>()
         return try {
             val docs = usersDocsRef
+                .whereEqualTo("openJournal", null)
                 .get()
                 .await()
             docs.documents.forEach { doc -> users.add(SnapshotUtilities.loadUserFromDoc(doc)) }
