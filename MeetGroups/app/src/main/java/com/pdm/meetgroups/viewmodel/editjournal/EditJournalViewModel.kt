@@ -18,6 +18,8 @@ interface EditJournalViewModel {
 
     fun getJournalImage(): Bitmap?
 
+    fun postParticipantsValue()
+
     fun loadLocalUser()
 
     fun updateJournalTitle(activity: EditJournalActivity)

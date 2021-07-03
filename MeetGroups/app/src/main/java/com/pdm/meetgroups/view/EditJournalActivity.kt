@@ -49,6 +49,11 @@ class EditJournalActivity : AppCompatActivity() {
         return setContentView(binding.root)
     }
 
+    override fun onStart() {
+        super.onStart()
+        editJournalVM.postParticipantsValue()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 111 && resultCode == Activity.RESULT_OK ){

@@ -173,13 +173,22 @@ class ModelImpl : Model {
 
     override fun getUser(): UserContext? { return  localUser }
 
+    override suspend fun getUser (nickname: String): UserContext? {
+        return firestoreModel.getUser(nickname)
+    }
+
+    override suspend fun getAllUsers(): ArrayList<UserContext> {
+        return firestoreModel.getAllUsers()
+    }
+
     override fun getUserClosedJournals(): ArrayList<Journal>? {
         return if (localUser?.getState()?.list != null)
             ArrayList(localUser?.getState()?.list)
         else null
     }
 
-    override suspend fun addParticipant(journal: Journal, user: UserContext): Boolean {
+    override suspend fun addParticipant(journal: Journal, nickname: String): Boolean {
+        val user = getUser(nickname)!!
         return if (firestoreModel.addParticipant(journal, user)) {
             localJournal?.users?.add(user)
             firestoreModel.updateOpenJournal(user, journal.journalID)

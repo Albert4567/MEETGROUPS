@@ -44,6 +44,14 @@ class FirestoreModelImpl : FirestoreModel {
         return userFirestoreModel.deleteUser()
     }
 
+    override suspend fun getUser(nickname: String): UserContext? {
+        return userFirestoreModel.getUser(nickname)
+    }
+
+    override suspend fun getAllUsers(): ArrayList<UserContext> {
+        return userFirestoreModel.getAllUsers()
+    }
+
     override suspend fun updateUserBio(newBio: String) : Boolean {
         return userFirestoreModel.updateUserBio(newBio)
     }

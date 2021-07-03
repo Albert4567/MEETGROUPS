@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MeetGroups">
-        <activity android:name=".view.PostActivity"></activity>
+        <activity android:name=".view.AddParticipantActivity"></activity>
+        <activity android:name=".view.PostActivity" />
         <activity android:name=".view.PostCreationActivity" />
         <activity android:name=".view.ReadOnlyJournalActivity"></activity>
         <activity android:name=".view.PostCreationActivity" />
