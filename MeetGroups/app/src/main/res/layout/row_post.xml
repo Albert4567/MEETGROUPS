@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/postcard_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5sp"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true"
     android:layout_marginHorizontal="5sp"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
-        <LinearLayout
+    app:cardCornerRadius="5sp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/fl_postcard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <FrameLayout
-                android:id="@+id/fl_postcard"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imv_postcard_photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/imv_postcard_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:src="@drawable/ponte"
-                    android:scaleType="fitXY" />
-                    <TextView
-                        android:id="@+id/tv_postcard_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:paddingVertical="10sp"
-                        android:paddingLeft="10sp"
-                        android:text="PostTitle"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
-            </FrameLayout>
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ponte" />
 
             <TextView
-                android:id="@+id/tv_postcard_description"
+                android:id="@+id/tv_postcard_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Description"
-                android:textSize="15sp"
-                android:paddingStart="10sp"
-                android:paddingVertical="10sp"/>
-        </LinearLayout>
+                android:layout_gravity="bottom"
+                android:paddingVertical="10sp"
+                android:paddingLeft="10sp"
+                android:shadowColor="@color/black"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="7"
+                android:text="PostTitle"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_postcard_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="10sp"
+            android:paddingStart="10sp"
+            android:text="Description"
+            android:textSize="15sp" />
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
