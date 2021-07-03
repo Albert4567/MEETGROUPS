@@ -40,16 +40,23 @@ class PostViewModelImpl : ViewModel(), PostViewModel, ViewModelImageListAdapter 
         binding.tvPostDescription.text = post.description
     }
 
-    override fun deletePost(activity: PostActivity) {
-        model.getJournal()?.let {
-            viewModelScope.launch(Dispatchers.IO) {
-                val result = model.deletePost(it, post)
+    private fun userIsAdmin(): Boolean = model.getUser()?.isAdmin() ?: false
 
+    override fun deletePost(activity: PostActivity) {
+        val journal = model.getJournal()
+
+        if(userIsAdmin() && journal != null) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = model.deletePost(journal, post)
                 withContext(Dispatchers.Main) {
-                    if(result)
+                    if (result)
                         activity.onBackPressed()
                     else
-                        Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            activity,
+                            "Oops! Something went wrong",
+                            Toast.LENGTH_SHORT
+                        ).show()
                 }
             }
         }

@@ -69,7 +69,10 @@ class JournalFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if(journalVM.isInJournal())
+        if(journalVM.isInJournal()) {
             journalVM.loadJournalPosts()
+            journalVM.setTitle(bindingInJournal)
+            journalVM.setImage(bindingInJournal)
+        }
     }
 }
