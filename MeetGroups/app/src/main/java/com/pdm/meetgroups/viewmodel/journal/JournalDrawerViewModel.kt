@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pdm.meetgroups.model.ModelImpl
+import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.UserContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,11 +13,20 @@ import kotlinx.coroutines.withContext
 
 class JournalDrawerViewModel : ViewModel() {
     private val model = ModelImpl.modelRef
-    private val journal get() = model.getJournal()
+    private var journal : Journal? = null
     private val participants: MutableLiveData<ArrayList<UserContext>> = MutableLiveData()
 
+    fun setLocalJournal() {
+        journal = model.getJournal()
+    }
 
-    fun postParticipantsValue() {
+    fun setJournal(journal : Journal) {
+        this.journal = journal
+        participants.postValue(ArrayList(journal.users))
+        loadUserImages(journal.users)
+    }
+
+    fun postLocalParticipantsValue() {
         journal?.let { journal ->
             participants.postValue(ArrayList(journal.users))
             loadUserImages(journal.users)

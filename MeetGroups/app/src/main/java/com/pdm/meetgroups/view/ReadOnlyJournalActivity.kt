@@ -36,12 +36,14 @@ class ReadOnlyJournalActivity : AppCompatActivity() {
         readOnlyJournalVM.getImage().observe(this, Observer { image ->
             binding.imvJournalImage.setImageBitmap(image)
         })
+
         journalDrawerVM.getParticipants().observe(this, Observer {
             binding.partecipantRecyclerView.layoutManager = LinearLayoutManager(this)
             binding.partecipantRecyclerView.adapter = ParticipantDrawerAdapter(journalDrawerVM, this)
         })
 
         binding.btnJournalGroup.setOnClickListener {
+            journalDrawerVM.setJournal(readOnlyJournalVM.getJournal())
             readOnlyJournalVM.showGroupParticipants(binding)
         }
 

@@ -29,6 +29,8 @@ class ReadOnlyJournalViewModelImpl : ViewModel(), ViewModelAdapter {
         }
     }
 
+    fun getJournal() : Journal = journal
+
     override fun getPosts(): LiveData<PostList> = posts
 
     fun getTitle(): LiveData<String> = title

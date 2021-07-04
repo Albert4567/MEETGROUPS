@@ -82,7 +82,8 @@ class JournalFragment: Fragment() {
             journalVM.loadJournalPosts()
             journalVM.setTitle(bindingInJournal)
             journalVM.setImage(bindingInJournal)
-            journalDrawerVM.postParticipantsValue()
+            journalDrawerVM.setLocalJournal()
+            journalDrawerVM.postLocalParticipantsValue()
         }
     }
 }
