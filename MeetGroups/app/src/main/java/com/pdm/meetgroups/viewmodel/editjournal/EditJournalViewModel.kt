@@ -12,6 +12,8 @@ import com.pdm.meetgroups.view.PostCreationActivity
 interface EditJournalViewModel {
     fun getParticipants(): LiveData<ParticipantList>
 
+    fun getParticipantNicknameBy(position: Int): String?
+
     fun getParticipantBy(position: Int): UserContext?
 
     fun getJournalTitle(): String?

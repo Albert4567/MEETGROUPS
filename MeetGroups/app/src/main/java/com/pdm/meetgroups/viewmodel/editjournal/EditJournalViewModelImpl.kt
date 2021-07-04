@@ -48,7 +48,16 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
 
     override fun getParticipants(): LiveData<ParticipantList> = participants
 
-    override fun getParticipantBy(position: Int): UserContext? = journal?.let { ArrayList(it.users)[position] }
+    override fun getParticipantNicknameBy(position: Int): String? = getParticipants().value?.get(position)
+
+    override fun getParticipantBy(position: Int): UserContext? {
+        journal?.let {
+            val participants = ArrayList(it.users)
+            participants.remove(model.getUser()?.getState())
+            return participants[position]
+        }
+        return null
+    }
 
     override fun getJournalTitle(): String? = journal?.title
 

@@ -32,9 +32,9 @@ class ParticipantListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val participant = editJournalVM.getParticipantBy(position)
+        val participant = editJournalVM.getParticipantNicknameBy(position)
 
-        holder.participantNameTV.text = participant?.getState()?.nickname ?: "Unknown"
+        holder.participantNameTV.text = participant ?: "Unknown"
         holder.removeButton.setOnClickListener {
             editJournalVM.removeParticipant(position, context)
         }
