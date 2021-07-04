@@ -44,6 +44,8 @@ interface Model {
 
     fun getUserClosedJournals () : ArrayList<Journal>?
 
+    suspend fun getUserClosedJournals (user: UserContext) : ArrayList<Journal>?
+
     suspend fun addParticipant (journal : Journal, nickname: String) : Boolean
 
     suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean

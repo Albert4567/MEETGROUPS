@@ -175,7 +175,9 @@ class ModelImpl : Model {
     override fun getUser(): UserContext? { return  localUser }
 
     override suspend fun getUser (nickname: String): UserContext? {
-        return firestoreModel.getUser(nickname)
+        val user = firestoreModel.getUser(nickname)
+        user?.getState()?.userImage = getUserImage(nickname)
+        return user
     }
 
     override suspend fun getUserImage(nickname: String): Bitmap? {
@@ -190,6 +192,14 @@ class ModelImpl : Model {
         return if (localUser?.getState()?.list != null)
             ArrayList(localUser?.getState()?.list)
         else null
+    }
+
+    override suspend fun getUserClosedJournals(user: UserContext): ArrayList<Journal>? {
+        val journals = firestoreModel.getUserClosedJournals(user)
+        journals?.forEach { journal ->
+            journal.journalImage = storageModel.getJournalImage(journal.journalID)
+        }
+        return journals
     }
 
     override suspend fun addParticipant(journal: Journal, nickname: String): Boolean {

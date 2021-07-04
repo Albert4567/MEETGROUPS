@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.view.ReadOnlyJournalActivity
+import com.pdm.meetgroups.view.ReadOnlyProfileActivity
 import com.pdm.meetgroups.view.navbar.profile.ProfileFragment
 import com.pdm.meetgroups.viewmodel.journal.JournalDrawerViewModel
 
@@ -38,7 +39,7 @@ class ParticipantDrawerAdapter(val journalDrawerVM: JournalDrawerViewModel, val 
         holder.participantNameTV.text = participant?.getState()?.nickname
 
         holder.container.setOnClickListener {
-            val intent = Intent(context, ProfileFragment::class.java)
+            val intent = Intent(context, ReadOnlyProfileActivity::class.java)
             intent.putExtra("user", participant!!.getState().nickname)
             ContextCompat.startActivity(context, intent, null)
         }

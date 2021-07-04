@@ -12,10 +12,9 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.view.ReadOnlyJournalActivity
-import com.pdm.meetgroups.view.navbar.profile.ProfileFragment
-import com.pdm.meetgroups.viewmodel.profile.ProfileViewModel
+import com.pdm.meetgroups.viewmodel.profile.JournalListViewModelAdapter
 
-class JournalListAdapter(val profileVM: ProfileViewModel, val context: Context) : RecyclerView.Adapter<JournalListAdapter.ViewHolder>() {
+class JournalListAdapter(val profileVM: JournalListViewModelAdapter, val context: Context) : RecyclerView.Adapter<JournalListAdapter.ViewHolder>() {
 
     inner class ViewHolder(listItemView: View) : RecyclerView.ViewHolder(listItemView) {
         var container: CardView = listItemView.findViewById(R.id.Container)
@@ -39,7 +38,7 @@ class JournalListAdapter(val profileVM: ProfileViewModel, val context: Context) 
         holder.journalNameTV.text = journal.title
 
         holder.container.setOnClickListener {
-            var intent = Intent(context, ReadOnlyJournalActivity::class.java)
+            val intent = Intent(context, ReadOnlyJournalActivity::class.java)
             intent.putExtra("journal", journal.journalID)
             startActivity(context, intent, null)
         }
