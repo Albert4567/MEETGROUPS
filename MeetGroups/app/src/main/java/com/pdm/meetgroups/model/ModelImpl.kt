@@ -69,6 +69,7 @@ class ModelImpl : Model {
         if (journalID != null) {
             GlobalScope.launch {
                 localJournal = firestoreModel.downloadJournalInfo(journalID)
+                localJournal?.posts = loadJournalPosts(localJournal!!)
                 localJournal?.journalImage = getJournalImage()
             }
         }

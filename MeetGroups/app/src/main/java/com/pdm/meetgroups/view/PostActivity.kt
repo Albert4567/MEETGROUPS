@@ -21,7 +21,7 @@ class PostActivity : AppCompatActivity() {
         postVM.setTitle(binding)
         postVM.setDescription(binding)
 
-        var layoutManager = LinearLayoutManager(
+        val layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
             false
@@ -29,13 +29,13 @@ class PostActivity : AppCompatActivity() {
         binding.rvPostTags.layoutManager = layoutManager
         binding.rvPostTags.adapter = TagListAdapter(postVM)
 
-        var layoutManagers = LinearLayoutManager(
+        val layoutManagersImages = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        binding.rvPostImages.layoutManager = layoutManagers
-        //binding.rvPostImages.adapter = PostImageListAdapter(postVM)
+        binding.rvPostImages.layoutManager = layoutManagersImages
+        binding.rvPostImages.adapter = PostImageListAdapter(postVM)
 
         binding.btnPostDelete.setOnClickListener {
             postVM.deletePost(this)
