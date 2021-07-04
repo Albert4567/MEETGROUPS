@@ -29,4 +29,9 @@
     <string name="delete_profile">ELIMINA PROFILO</string>
     <string name="journal_navigation">Journal</string>
     <string name="participantname">ParticipantName</string>
+    <string name="addNickname">inserisci un nickname</string>
+    <string name="addEmail">inserisci un email</string>
+    <string name="addPassword">inserisci una password</string>
+    <string name="confirmPassword">conferma la tua password</string>
+    <string name="passwordsNotEquals">Le password non coincidono</string>
 </resources>
