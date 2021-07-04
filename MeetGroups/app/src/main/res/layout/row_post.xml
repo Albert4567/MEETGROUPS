@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ponte" />
+                android:src="@drawable/vector_sunset_landscape_illustration" />
 
             <TextView
                 android:id="@+id/tv_postcard_title"
