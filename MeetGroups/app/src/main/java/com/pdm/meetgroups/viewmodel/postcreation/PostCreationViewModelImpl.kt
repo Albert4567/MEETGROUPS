@@ -108,7 +108,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel, ViewModelI
     }
 
     private fun createPost(title: String, description: String, tagsContainer: String, currentLocation: Location): Post {
-        val creatorNickname = model.getUser()?.getState()?.nickname ?: "Unknown"
+        val creatorNickname = model.getUser()?.getState()?.nickname ?: R.string.unknown.toString()
         val tags = extractTagsFrom(tagsContainer)
         val spotLocation = GeoPoint(currentLocation.latitude, currentLocation.longitude)
 
@@ -128,7 +128,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel, ViewModelI
         val titleEditText = activity.findViewById<EditText>(R.id.et_post_creation_title)
 
         if (TextUtils.isEmpty(titleEditText.text.toString())) {
-            titleEditText.error = "Insert title"
+            titleEditText.error = R.string.insert_title_error.toString()
             return true
         }
         if(!::visibility.isInitialized) {
@@ -139,7 +139,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel, ViewModelI
 
     override fun publishPost(activity: PostCreationActivity, currentLocation: Location?) {
         if(currentLocation == null || insertionErrors(activity)) {
-            Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, R.string.error_message, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -156,7 +156,7 @@ class PostCreationViewModelImpl : ViewModel(), PostCreationViewModel, ViewModelI
             val result = model.getJournal()?.let { model.createPost(it, post, imageUris) }
             withContext(Dispatchers.Main) {
                 if(result != null && !result) {
-                    Toast.makeText(activity, "Oops! Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.error_message, Toast.LENGTH_SHORT).show()
                 } else {
                     activity.onBackPressed()
                 }

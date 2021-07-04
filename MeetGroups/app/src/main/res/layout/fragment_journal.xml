@@ -46,7 +46,7 @@
                 android:layout_toRightOf="@+id/roundImageView"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="10dp"
-                android:text="JournalTitle"
+                android:text="@string/journaltitle"
                 android:textSize="23sp"
                 android:textStyle="bold" />
 

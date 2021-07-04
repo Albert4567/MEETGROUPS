@@ -58,7 +58,7 @@ class DiscoveryViewModel : ViewModel(), ViewModelAdapter {
 
     override fun getPostBy(position: Int): Post {
         val post = posts.value!![position]
-        if(post.images?.first() == defaultImage) 
+        if(post.images?.first() == defaultImage)
             post.images = null
         return post
     }

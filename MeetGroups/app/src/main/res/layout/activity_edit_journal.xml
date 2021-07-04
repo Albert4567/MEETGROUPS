@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:text="Change image"
+                    android:text="@string/change_image"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -53,7 +53,7 @@
                 android:id="@+id/et_edit_journal_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Title"
+                android:hint="@string/title"
                 android:layout_weight="4"/>
 
             <ImageButton
@@ -78,14 +78,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Add Participant" />
+            android:text="@string/add_participant" />
 
         <Button
             android:id="@+id/btn_edit_journal_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Close journal"
+            android:text="@string/close_journal"
             android:layout_marginTop="30dp"/>
     </LinearLayout>
 </ScrollView>

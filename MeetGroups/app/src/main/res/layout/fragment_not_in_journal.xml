@@ -42,7 +42,7 @@
             android:shadowDx="5"
             android:shadowDy="5"
             android:shadowRadius="7"
-            android:text="inizia una vacanza!"
+            android:text="@string/inizia_una_vacanza"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="48sp"

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.view.AddParticipantActivity
 import com.pdm.meetgroups.viewmodel.editjournal.ParticipantList
@@ -57,12 +58,12 @@ class AddParticipantViewModelImpl : ViewModel(), AddParticipantViewModel {
                 if(result) {
                     Toast.makeText(
                         activity,
-                        "Just added $newParticipant correctly🤩",
+                        activity.getString(R.string.added_participant) + newParticipant + "🤩",
                         Toast.LENGTH_SHORT
                     ).show()
                     removeParticipantFromSearchList(newParticipant)
                 } else
-                    Toast.makeText(activity, "Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.error_message, Toast.LENGTH_SHORT).show()
             }
         }
     }

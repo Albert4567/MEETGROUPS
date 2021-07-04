@@ -30,7 +30,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:background="@null"
-            android:text="+"
+            android:text="@string/plus"
             android:textColor="#000"
             android:backgroundTint="#FFFFFF"
             android:textSize="30sp"

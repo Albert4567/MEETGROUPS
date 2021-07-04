@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.view.EditProfileActivity
 import com.pdm.meetgroups.view.SignUpActivity
@@ -24,12 +25,12 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
             withContext(Dispatchers.Main) {
                 if (result)
                     Toast.makeText(
-                        view.applicationContext, "Password Aggiornata!", Toast.LENGTH_SHORT
+                        view.applicationContext, R.string.updated_password, Toast.LENGTH_SHORT
                     )
                     .show()
                 else
                     Toast.makeText(
-                        view.applicationContext, "Qualcosa è andato storto!", Toast.LENGTH_SHORT
+                        view.applicationContext, R.string.error_message, Toast.LENGTH_SHORT
                     )
                     .show()
             }
@@ -42,10 +43,10 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
 
             withContext(Dispatchers.Main) {
                 if (result)
-                    Toast.makeText(view.applicationContext, "Bio Aggiornata!", Toast.LENGTH_SHORT)
+                    Toast.makeText(view.applicationContext, R.string.updated_bio, Toast.LENGTH_SHORT)
                         .show()
                 else
-                    Toast.makeText(view.applicationContext, "Qualcosa è andato storto!", Toast.LENGTH_SHORT)
+                    Toast.makeText(view.applicationContext, R.string.error_message, Toast.LENGTH_SHORT)
                         .show()
             }
         }
@@ -62,7 +63,7 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
             if (result)
                 goToSignUp()
             else
-                Toast.makeText(view.applicationContext, "Qualcosa è andato storto!", Toast.LENGTH_SHORT)
+                Toast.makeText(view.applicationContext, R.string.error_message, Toast.LENGTH_SHORT)
                     .show()
         }
     }
@@ -76,7 +77,7 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
                     view.updateImage(image)
                 }
             } else
-                 Toast.makeText(view.applicationContext, "Qualcosa è andato storto!", Toast.LENGTH_SHORT)
+                 Toast.makeText(view.applicationContext, R.string.error_message, Toast.LENGTH_SHORT)
                     .show()
         }
     }

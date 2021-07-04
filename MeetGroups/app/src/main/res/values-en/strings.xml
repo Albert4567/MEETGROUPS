@@ -1,77 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MeetGroups</string>
     <string name="title_home">Home</string>
-    <string name="title_discovery">Scopri</string>
+    <string name="title_discovery">Explore</string>
     <string name="title_journal">Journal</string>
-    <string name="title_maps">Maps</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_edit_profile">EditProfileActivity</string>
-
-    <!-- Preference Titles -->
+    <string name="title_maps">Map</string>
     <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
-    <!-- Preference Titles -->
     <string name="title_profile">Profile</string>
     <string name="no_bio_available">No bio available!</string>
-    <string name="edit_bio_hint">Scrivi qui la tua bio...</string>
+    <string name="edit_bio_hint">Insert here your bio...</string>
     <string name="logout">LOGOUT</string>
-    <string name="delete_profile">ELIMINA PROFILO</string>
+    <string name="delete_profile">DELETE PROFILE</string>
     <string name="journal_navigation">Journal</string>
     <string name="participantname">ParticipantName</string>
-    <string name="addNickname">inserisci un nickname</string>
-    <string name="addEmail">inserisci un email</string>
-    <string name="addPassword">inserisci una password</string>
-    <string name="confirmPassword">conferma la tua password</string>
-    <string name="passwordsNotEquals">Le password non coincidono</string>
     <string name="change_image">Change image</string>
     <string name="title">Title</string>
     <string name="add_participant">Add Participant</string>
     <string name="close_journal">Close journal</string>
     <string name="edit_password">Edit password</string>
     <string name="no_description">No description</string>
-    <string name="description">Description</string>
     <string name="tags_ex_mountain_sea_food_party_museum">tags: ex. #mountain #sea #food #party #museum</string>
     <string name="choose_visibility">Choose visibility*</string>
     <string name="visibility_public">Public</string>
     <string name="visibility_private">Private</string>
-    <string name="choose_images">choose images</string>
-    <string name="publish">publish</string>
+    <string name="choose_images">Choose images</string>
+    <string name="publish">Publish</string>
     <string name="journaltitle">JournalTitle</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="accedi">Accedi</string>
-    <string name="conferma_password">Conferma Password</string>
+    <string name="accedi">SignIn</string>
+    <string name="conferma_password">Confirm Password</string>
     <string name="nickname">Nickname</string>
-    <string name="registrati">Registrati</string>
-    <string name="inizia_una_vacanza">Inizia una vacanza!</string>
+    <string name="registrati">SignUp</string>
+    <string name="inizia_una_vacanza">Start your holiday!</string>
     <string name="plus">+</string>
     <string name="textview">TextView</string>
     <string name="Minus">-</string>
     <string name="posttitle">PostTitle</string>
     <string name="tag">Tag</string>
+    <string name="description">Description</string>
     <string name="error_message">Oops! Something went wrong😱</string>
+    <string name="addNickname">Insert a nickname</string>
+    <string name="addEmail">Insert an email</string>
+    <string name="addPassword">Insert a password</string>
+    <string name="confirmPassword">Confirm your password</string>
+    <string name="passwordsNotEquals">Password aren\'t matching</string>
     <string name="added_participant">Added participant</string>
     <string name="insert_title">Insert title</string>
     <string name="created_journal">Created journal successfully😃</string>
     <string name="updated_journal">Updated journal title successfully🤝</string>
     <string name="insert_journal_title_first">Insert your Journal title first!👍🏻</string>
-    <string name="updated_password">Password Aggiornata!</string>
-    <string name="updated_bio">Bio Aggiornata!</string>
     <string name="not_admin">You aren\'t an admin😎</string>
-    <string name="wrong_fields">I campi non sono corretti</string>
     <string name="unknown">Unknown</string>
     <string name="insert_title_error">Insert title</string>
+    <string name="updated_password">Updated password!</string>
+    <string name="updated_bio">Updated Bio!</string>
+    <string name="wrong_fields">Wrong fields!</string>
 </resources>

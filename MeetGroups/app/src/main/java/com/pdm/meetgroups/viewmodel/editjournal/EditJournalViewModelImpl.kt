@@ -73,7 +73,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
         val titleET = activity.findViewById<EditText>(R.id.et_edit_journal_title)
 
         if(TextUtils.isEmpty(titleET.text.toString())) {
-            titleET.error = "Insert title"
+            titleET.error = activity.getString(R.string.insert_title)
             return true
         }
         return false
@@ -96,9 +96,9 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
             val result = model.createJournal(createJournal(titleET.text.toString()))
             withContext(Dispatchers.Main) {
                 if(result)
-                    Toast.makeText(activity,"Created journal successfully😃", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.created_journal, Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,R.string.error_message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -112,16 +112,16 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
             val result = updatedJournal?.let { model.updateJournalTitle(it) } ?: false
             withContext(Dispatchers.Main) {
                 if(result)
-                    Toast.makeText(activity,"Updated journal title successfully🤝", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.updated_journal, Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,R.string.error_message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun updateJournalTitle(activity: EditJournalActivity) {
         if(titleInsertionError(activity)) {
-            Toast.makeText(activity, "Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, R.string.error_message, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -154,16 +154,16 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                         .findViewById<ImageView>(R.id.imv_edit_journal_journalphoto)
                         .setImageURI(data!!.data)
                 else if(!journalIsAlreadyCreated())
-                    Toast.makeText(activity,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.insert_journal_title_first, Toast.LENGTH_SHORT).show()
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.error_message, Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun showAddParticipantActivity(context: Context) {
         if(!journalIsAlreadyCreated())
-            Toast.makeText(context,"Insert your Journal title first!👍🏻", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.insert_journal_title_first, Toast.LENGTH_SHORT).show()
         else {
             val intent = Intent(context, AddParticipantActivity::class.java)
             startActivity(context, intent, null)
@@ -181,7 +181,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                 if(result)
                     postParticipantsValue()
                 else
-                    Toast.makeText(context,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,R.string.error_message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -195,7 +195,7 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
                     startActivity(activity, intent, null)
                 }
                 else
-                    Toast.makeText(activity,"Oops! Something went wrong😱", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,R.string.error_message, Toast.LENGTH_SHORT).show()
             }
         }
     }

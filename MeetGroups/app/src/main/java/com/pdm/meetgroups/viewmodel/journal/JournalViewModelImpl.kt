@@ -63,7 +63,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel, ViewModelAdapter {
             val intent = Intent(context, EditJournalActivity::class.java)
             startActivity(context, intent, null)
         } else {
-            Toast.makeText(context,"You aren't an admin😎", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.not_admin), Toast.LENGTH_SHORT).show()
         }
     }
 

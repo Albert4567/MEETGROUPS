@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pdm.meetgroups.R
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.ConcreteUser
 import com.pdm.meetgroups.model.entities.UserContext
@@ -44,7 +45,7 @@ class LoginViewModelImpl : ViewModel(), LoginViewModel {
                 withContext(Dispatchers.Main){
                     view.progressBarUp.visibility = View.INVISIBLE
                     view.signUpButton.visibility = View.VISIBLE
-                    Toast.makeText(view.applicationContext, "I campi non sono corretti", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.applicationContext, R.string.wrong_fields, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -63,7 +64,7 @@ class LoginViewModelImpl : ViewModel(), LoginViewModel {
                 withContext(Dispatchers.Main){
                     view.progressBarIn.visibility = View.INVISIBLE
                     view.signInButton.visibility = View.VISIBLE
-                    Toast.makeText(view.applicationContext, "I campi non sono corretti", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(view.applicationContext, R.string.wrong_fields, Toast.LENGTH_SHORT).show()
                 }
             }
 

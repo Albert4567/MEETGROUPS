@@ -36,14 +36,14 @@
             android:minHeight="120dp"
             android:gravity="top|left"
             android:layout_marginTop="20dp"
-            android:hint="Description" />
+            android:hint="@string/description" />
 
         <EditText
             android:id="@+id/et_post_creation_tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="tags: ex. #mountain #sea #food #party #museum" />
+            android:hint="@string/tags_ex_mountain_sea_food_party_museum" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose visibility*"
+                android:text="@string/choose_visibility"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
             <RadioGroup
@@ -65,13 +65,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onRadioButtonClicked"
-                    android:text="Public" />
+                    android:text="@string/visibility_public" />
                 <RadioButton
                     android:id="@+id/radio_post_creation_private"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="onRadioButtonClicked"
-                    android:text="Private" />
+                    android:text="@string/visibility_private" />
             </RadioGroup>
         </LinearLayout>
 
@@ -88,7 +88,7 @@
             android:background="@drawable/custom_button"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:text="choose images" />
+            android:text="@string/choose_images" />
 
         <Button
             android:id="@+id/btn_post_creation_publish"
@@ -97,6 +97,6 @@
             android:background="@drawable/custom_button"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:text="publish" />
+            android:text="@string/publish" />
     </LinearLayout>
 </ScrollView>

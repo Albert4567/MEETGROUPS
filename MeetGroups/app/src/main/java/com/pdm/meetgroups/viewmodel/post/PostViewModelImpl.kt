@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.ActivityPostBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Post
@@ -59,7 +60,7 @@ class PostViewModelImpl : ViewModel(), PostViewModel, ViewModelImageListAdapter 
                     else
                         Toast.makeText(
                             activity,
-                            "Oops! Something went wrong",
+                            R.string.error_message,
                             Toast.LENGTH_SHORT
                         ).show()
                 }
