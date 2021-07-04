@@ -99,8 +99,6 @@ class JournalFirestoreModelImpl (journalsRef : CollectionReference,
         }
     }
 
-    //TODO Block admin from removing himself
-    //TODO to test
     override suspend fun removeParticipant (journal : Journal, user : UserContext) : Boolean {
         val journalRef = journalsCollectionRef.document(journal.journalID)
         return try {

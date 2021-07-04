@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.databinding.FragmentNotInJournalBinding
 import com.pdm.meetgroups.view.EditJournalActivity
+import com.pdm.meetgroups.view.adapter.ParticipantDrawerAdapter
 import com.pdm.meetgroups.view.adapter.PostListAdapter
+import com.pdm.meetgroups.viewmodel.journal.JournalDrawerViewModel
 import com.pdm.meetgroups.viewmodel.journal.JournalViewModelImpl
 
 class JournalFragment: Fragment() {
     private val journalVM: JournalViewModelImpl by viewModels()
+    private val journalDrawerVM: JournalDrawerViewModel by viewModels()
     private lateinit var bindingInJournal: FragmentJournalBinding
     private lateinit var bindingNotInJournal: FragmentNotInJournalBinding
 
@@ -38,12 +41,18 @@ class JournalFragment: Fragment() {
                 bindingInJournal.rvJournalPostlist.adapter = PostListAdapter(journalVM, requireActivity())
             })
 
+            journalDrawerVM.getParticipants().observe(viewLifecycleOwner, Observer {
+                bindingInJournal.partecipantRecyclerView.layoutManager = LinearLayoutManager(activity)
+                bindingInJournal.partecipantRecyclerView.adapter =
+                    ParticipantDrawerAdapter(journalDrawerVM, requireActivity())
+            })
+
             bindingInJournal.btnJournalEdit.setOnClickListener {
                 journalVM.showEditJournalFragment(requireActivity())
             }
 
             bindingInJournal.btnJournalGroup.setOnClickListener {
-                journalVM.showGroupParticipants(it)
+                journalVM.showGroupParticipants(bindingInJournal)
             }
 
             bindingInJournal.btnJournalAddPost.setOnClickListener {
@@ -73,6 +82,8 @@ class JournalFragment: Fragment() {
             journalVM.loadJournalPosts()
             journalVM.setTitle(bindingInJournal)
             journalVM.setImage(bindingInJournal)
+            journalDrawerVM.setLocalJournal()
+            journalDrawerVM.postLocalParticipantsValue()
         }
     }
 }
