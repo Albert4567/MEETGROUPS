@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.pdm.meetgroups.R
 import com.pdm.meetgroups.view.PostActivity
 import com.pdm.meetgroups.viewmodel.journal.ViewModelAdapter
@@ -39,11 +40,11 @@ class PostListAdapter(private val journalVM: ViewModelAdapter, private var conte
         if(post.images != null)
             holder.postIMV.setImageBitmap(post.images!!.first())
         holder.postNameTV.text = post.title
-        holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "Description" else post.description
+        holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "No Description" else post.description
 
         holder.postContainer.setOnClickListener {
             val intent = Intent(context, PostActivity::class.java)
-            intent.putExtra("position", position)
+            intent.putExtra("post", Gson().toJson(post))
             startActivity(context, intent, null)
         }
     }

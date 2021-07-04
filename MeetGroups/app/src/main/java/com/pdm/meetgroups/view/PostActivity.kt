@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pdm.meetgroups.databinding.ActivityPostBinding
+import com.pdm.meetgroups.model.entities.Post
 import com.pdm.meetgroups.view.adapter.PostImageListAdapter
 import com.pdm.meetgroups.view.adapter.TagListAdapter
 import com.pdm.meetgroups.viewmodel.post.PostViewModelImpl
@@ -17,7 +18,7 @@ class PostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPostBinding.inflate(layoutInflater)
 
-        postVM.getPostBy(intent.getIntExtra("position", 0))
+        postVM.setPostUsing(intent.getStringExtra("post"))
         postVM.setTitle(binding)
         postVM.setDescription(binding)
 

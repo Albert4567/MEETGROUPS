@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.pdm.meetgroups.databinding.ActivityPostBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Post
@@ -21,6 +22,10 @@ import kotlinx.coroutines.withContext
 class PostViewModelImpl : ViewModel(), PostViewModel, ViewModelImageListAdapter {
     private val model = ModelImpl.modelRef
     private lateinit var post: Post
+
+    fun setPostUsing(serializedPost: String?) {
+        post = Gson().fromJson(serializedPost, Post::class.java)
+    }
 
     override fun getPostBy(position: Int) {
         model.getJournal()?.let {
