@@ -38,6 +38,8 @@ interface Model {
 
     suspend fun getUser (nickname: String): UserContext?
 
+    suspend fun getUserImage (nickname: String): Bitmap?
+
     suspend fun getAllUsers () : ArrayList<UserContext>
 
     fun getUserClosedJournals () : ArrayList<Journal>?

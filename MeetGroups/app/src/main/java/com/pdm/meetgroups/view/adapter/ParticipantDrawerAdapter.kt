@@ -33,13 +33,13 @@ class ParticipantDrawerAdapter(val journalDrawerVM: JournalDrawerViewModel, val 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val participant = journalDrawerVM.getParticipantBy(position)
-        if (participant.userImage != null)
-            holder.participantImageIW.setImageBitmap(participant.userImage)
-        holder.participantNameTV.text = participant.getState()?.nickname
+        if (participant?.getState()?.userImage != null)
+            holder.participantImageIW.setImageBitmap(participant.getState().userImage)
+        holder.participantNameTV.text = participant?.getState()?.nickname
 
         holder.container.setOnClickListener {
-            var intent = Intent(context, ProfileFragment::class.java)
-            intent.putExtra("user", participant.userID)
+            val intent = Intent(context, ProfileFragment::class.java)
+            intent.putExtra("user", participant!!.getState().nickname)
             ContextCompat.startActivity(context, intent, null)
         }
     }

@@ -178,6 +178,10 @@ class ModelImpl : Model {
         return firestoreModel.getUser(nickname)
     }
 
+    override suspend fun getUserImage(nickname: String): Bitmap? {
+        return storageModel.getUserImage(nickname)
+    }
+
     override suspend fun getAllUsers(): ArrayList<UserContext> {
         return firestoreModel.getAllUsers()
     }
