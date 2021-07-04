@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -67,7 +68,7 @@ class JournalViewModelImpl : ViewModel(), JournalViewModel, ViewModelAdapter {
         }
     }
 
-    fun showGroupParticipants(view: View) {
-
+    fun showGroupParticipants(binding: FragmentJournalBinding) {
+        binding.journalContainer.openDrawer(GravityCompat.END)
     }
 }
