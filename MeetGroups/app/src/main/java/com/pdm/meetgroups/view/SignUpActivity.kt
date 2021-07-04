@@ -36,7 +36,7 @@ class SignUpActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-    
+
     private fun onSignUpClick() {
         var notEmpty = true
         var notEqualPasswords = true
