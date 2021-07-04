@@ -45,6 +45,6 @@ class JournalListAdapter(val profileVM: JournalListViewModelAdapter, val context
     }
 
     override fun getItemCount(): Int {
-        return profileVM.getJournals().value!!.size
+        return profileVM.getJournals().value?.size ?:0
     }
 }

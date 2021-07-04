@@ -1,11 +1,12 @@
 package com.pdm.meetgroups.viewmodel.journal
 
 import android.graphics.Bitmap
-import android.view.View
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pdm.meetgroups.databinding.ActivityReadOnlyJournalBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.Journal
 import com.pdm.meetgroups.model.entities.Post
@@ -34,8 +35,8 @@ class ReadOnlyJournalViewModelImpl : ViewModel(), ViewModelAdapter {
 
     fun getImage(): LiveData<Bitmap> = image
 
-    fun showGroupParticipants(view: View) {
-
+    fun showGroupParticipants(binding: ActivityReadOnlyJournalBinding) {
+        binding.journalContainer.openDrawer(GravityCompat.END)
     }
 
     override fun getPostBy(position: Int): Post = posts.value!![position]

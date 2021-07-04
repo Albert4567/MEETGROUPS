@@ -2,19 +2,13 @@ package com.pdm.meetgroups.viewmodel.journal
 
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.GeoPoint
-import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.model.ModelImpl
 import com.pdm.meetgroups.model.entities.*

@@ -11,9 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pdm.meetgroups.R
-import com.pdm.meetgroups.view.ReadOnlyJournalActivity
 import com.pdm.meetgroups.view.ReadOnlyProfileActivity
-import com.pdm.meetgroups.view.navbar.profile.ProfileFragment
 import com.pdm.meetgroups.viewmodel.journal.JournalDrawerViewModel
 
 class ParticipantDrawerAdapter(val journalDrawerVM: JournalDrawerViewModel, val context: Context): RecyclerView.Adapter<ParticipantDrawerAdapter.ViewHolder>() {
