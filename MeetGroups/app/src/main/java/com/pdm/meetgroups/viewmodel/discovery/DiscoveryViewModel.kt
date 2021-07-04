@@ -56,7 +56,12 @@ class DiscoveryViewModel : ViewModel(), ViewModelAdapter {
 
     override fun getPosts(): LiveData<PostList> = posts
 
-    override fun getPostBy(position: Int): Post = posts.value!![position]
+    override fun getPostBy(position: Int): Post {
+        val post = posts.value!![position]
+        if(post.images?.first() == defaultImage) 
+            post.images = null
+        return post
+    }
 
     fun getBlankBitmaps(context: Context){
         blankImageBitmap = extractBitmap(context, R.drawable.loading)
