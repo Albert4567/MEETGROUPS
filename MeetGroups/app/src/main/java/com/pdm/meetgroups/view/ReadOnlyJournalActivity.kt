@@ -23,7 +23,7 @@ class ReadOnlyJournalActivity : AppCompatActivity() {
 
         binding = ActivityReadOnlyJournalBinding.inflate(layoutInflater)
 
-        readOnlyJournalVM.loadJournal(intent.getStringExtra("journal")!!)
+        readOnlyJournalVM.loadJournal(intent.getStringExtra("journal")!!, journalDrawerVM)
         readOnlyJournalVM.getPosts().observe(this, Observer {
             binding.rvJournalPostlist.layoutManager = LinearLayoutManager(this)
             binding.rvJournalPostlist.adapter = PostListAdapter(readOnlyJournalVM, this)

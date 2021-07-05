@@ -20,12 +20,15 @@ class ReadOnlyJournalViewModelImpl : ViewModel(), ViewModelAdapter {
     private val title: MutableLiveData<String> = MutableLiveData()
     private val image: MutableLiveData<Bitmap> = MutableLiveData()
 
-    fun loadJournal(journalID: String) {
+    fun loadJournal(journalID: String, journalDrawerVM : JournalDrawerViewModel) {
         viewModelScope.launch(Dispatchers.IO) {
             journal = model.loadJournal(journalID)
             posts.postValue(model.loadJournalPosts(journal))
             title.postValue(journal.title)
             image.postValue(journal.journalImage)
+
+            journalDrawerVM.setJournal(journal)
+            journalDrawerVM.postLocalParticipantsValue()
         }
     }
 
