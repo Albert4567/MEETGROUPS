@@ -56,4 +56,14 @@
     <string name="updated_password">Updated password!</string>
     <string name="updated_bio">Updated Bio!</string>
     <string name="wrong_fields">Wrong fields!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="sync_header">Sync</string>
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">"Automatically download attachments for incoming emails "</string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="startHoliday"><![CDATA[Welcome in <b>MeetGroups!</b><br>This app will let you share memories and experiences of your holidays with your firends.<br>Click here above to open a new journal and start your journey. Once the holiday ends your journals will be saved on your profile.<br>Also in <b>Map</b> section you can find people that are using the app near you!<br>All said... <b>Good Holiday!</b>]]></string>
 </resources>
