@@ -25,6 +25,7 @@ class AddParticipantViewModelImpl : ViewModel(), AddParticipantViewModel {
     private fun getAllUsers() {
         viewModelScope.launch(Dispatchers.IO) {
             usersContainer = ArrayList(model.getAllUsers().map { it.getState().nickname })
+            users.postValue(usersContainer)
         }
     }
 

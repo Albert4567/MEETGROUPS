@@ -133,8 +133,8 @@ class EditJournalViewModelImpl : ViewModel(), EditJournalViewModel {
 
     override fun startFileChooser(activity: EditJournalActivity) {
         val intent = Intent()
-        intent.setType("image/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
         ActivityCompat.startActivityForResult(
             activity,
             Intent.createChooser(intent, "Choose photo"),

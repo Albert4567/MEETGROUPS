@@ -8,6 +8,7 @@ import com.pdm.meetgroups.model.dbmanager.AuthenticationModelImpl
 import com.pdm.meetgroups.model.dbmanager.FirestoreModelImpl
 import com.pdm.meetgroups.model.dbmanager.StorageModelImpl
 import com.pdm.meetgroups.model.entities.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -42,7 +43,7 @@ class ModelImpl : Model {
     //  signin dell'utente
      fun instantiateLocalUser() {
         if (authenticationModel.getCurrentUserUID() != null) {
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
              localUser = firestoreModel.downloadUserInfo()
              localUser?.getState()?.list = firestoreModel.getUserClosedJournals(localUser!!)?.toList() ?: emptyList()
              localUser?.getState()?.list?.forEach { it ->

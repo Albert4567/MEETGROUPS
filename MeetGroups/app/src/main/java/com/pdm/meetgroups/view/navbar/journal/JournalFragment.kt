@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.pdm.meetgroups.R
 import com.pdm.meetgroups.databinding.FragmentJournalBinding
 import com.pdm.meetgroups.databinding.FragmentNotInJournalBinding
 import com.pdm.meetgroups.view.EditJournalActivity
@@ -33,12 +34,17 @@ class JournalFragment: Fragment() {
         if (journalVM.isInJournal()) {
             bindingInJournal = FragmentJournalBinding.inflate(inflater, container, false)
 
-            journalVM.setTitle(bindingInJournal)
-            journalVM.setImage(bindingInJournal)
-
             journalVM.getPosts().observe(viewLifecycleOwner, Observer {
                 bindingInJournal.rvJournalPostlist.layoutManager = LinearLayoutManager(activity)
                 bindingInJournal.rvJournalPostlist.adapter = PostListAdapter(journalVM, requireActivity())
+            })
+
+            journalVM.getTitle().observe(viewLifecycleOwner, Observer {
+                bindingInJournal.tvJournalTitle.text = journalVM.getTitle().value
+            })
+
+            journalVM.getImage().observe(viewLifecycleOwner, Observer {
+                bindingInJournal.imvJournalImage.setImageBitmap(journalVM.getImage().value)
             })
 
             journalDrawerVM.getParticipants().observe(viewLifecycleOwner, Observer {
@@ -64,7 +70,7 @@ class JournalFragment: Fragment() {
         else {
             bindingNotInJournal = FragmentNotInJournalBinding.inflate(inflater, container, false)
 
-            val html = "Benvenuto in <b>MeetGroups!</b><br>Quest'app ti permette di condividere esperienze e ricordi delle tue vacanze con i tuoi amici.<br>Clicca qui sopra per aprire un nuovo diario e iniziare la tua avventura. Una volta terminata la vacanza i tuoi diari rimarrano salvati nel tuo profilo.<br>Inoltre nella sezione <b>Maps</b> puoi trovare persone che stanno usando l'app nelle tue vicinanze!<br>Detto questo... <b>Buona Vacanza!</b>"
+            val html = getString(R.string.startHoliday)
             bindingNotInJournal.textHome.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
             bindingNotInJournal.imageButtonJournal.setOnClickListener {
@@ -79,9 +85,7 @@ class JournalFragment: Fragment() {
     override fun onStart() {
         super.onStart()
         if(journalVM.isInJournal()) {
-            journalVM.loadJournalPosts()
-            journalVM.setTitle(bindingInJournal)
-            journalVM.setImage(bindingInJournal)
+            journalVM.loadJournal()
             journalDrawerVM.setLocalJournal()
             journalDrawerVM.postLocalParticipantsValue()
         }

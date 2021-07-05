@@ -42,13 +42,20 @@ class ProfileFragment : Fragment() {
             binding.journalView.adapter = JournalListAdapter(profileVMImpl, requireContext())
         })
 
-        binding.ProfileImageView.setImageBitmap(profileVMImpl.getUserImage())
+        profileVMImpl.getImage().observe(viewLifecycleOwner, Observer {
+            binding.ProfileImageView.setImageBitmap(profileVMImpl.getImage().value)
+        })
 
-        binding.bioTextView.text = if (profileVMImpl.getUserBio() != "")
-                                        profileVMImpl.getUserBio()
-                                   else binding.bioTextView.text
+        profileVMImpl.getBio().observe(viewLifecycleOwner, Observer {
+            binding.bioTextView.text = if (profileVMImpl.getBio().value != "")
+                profileVMImpl.getBio().value
+            else binding.bioTextView.text
+        })
 
-        binding.nameTextView.text = profileVMImpl.getUserNickname()
+
+        profileVMImpl.getNickname().observe(viewLifecycleOwner, Observer {
+            binding.nameTextView.text = profileVMImpl.getNickname().value
+        })
         
 
         return binding.root

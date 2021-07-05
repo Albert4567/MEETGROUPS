@@ -74,4 +74,5 @@
     <string name="wrong_fields">I campi non sono corretti</string>
     <string name="unknown">Unknown</string>
     <string name="insert_title_error">Insert title</string>
+    <string name="startHoliday"><![CDATA[Benvenuto in <b>MeetGroups!</b><br>Quest\'app ti permette di condividere esperienze e ricordi delle tue vacanze con i tuoi amici.<br>Clicca qui sopra per aprire un nuovo diario e iniziare la tua avventura. Una volta terminata la vacanza i tuoi diari rimarrano salvati nel tuo profilo.<br>Inoltre nella sezione <b>Maps</b> puoi trovare persone che stanno usando l\'app nelle tue vicinanze!<br>Detto questo... <b>Buona Vacanza!</b>]]></string>
 </resources>

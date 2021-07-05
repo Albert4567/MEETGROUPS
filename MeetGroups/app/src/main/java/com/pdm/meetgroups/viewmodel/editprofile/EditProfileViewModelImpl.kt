@@ -26,13 +26,11 @@ class EditProfileViewModelImpl : ViewModel(), EditProfileViewModel {
                 if (result)
                     Toast.makeText(
                         view.applicationContext, R.string.updated_password, Toast.LENGTH_SHORT
-                    )
-                    .show()
+                    ).show()
                 else
                     Toast.makeText(
                         view.applicationContext, R.string.error_message, Toast.LENGTH_SHORT
-                    )
-                    .show()
+                    ).show()
             }
         }
     }

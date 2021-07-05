@@ -13,9 +13,16 @@ import kotlinx.coroutines.launch
 class ProfileViewModelImpl : ViewModel(),ProfileViewModel {
     private val model = ModelImpl.modelRef
     private val journals: MutableLiveData<JournalList> = MutableLiveData()
+    private val bio: MutableLiveData<String> = MutableLiveData()
+    private val image: MutableLiveData<Bitmap> = MutableLiveData()
+    private val nickname: MutableLiveData<String> = MutableLiveData()
 
-    init {
+    override fun loadLocalUser() {
+        model.instantiateLocalUser()
         loadJournals()
+        loadUserBio()
+        loadUserImage()
+        loadUserNickname()
     }
 
     override fun getJournals(): LiveData<JournalList> {
@@ -24,23 +31,27 @@ class ProfileViewModelImpl : ViewModel(),ProfileViewModel {
 
     override fun getJournalBy(position: Int): Journal = journals.value!![position]
 
-    override fun getUserImage(): Bitmap? {
-        return model.getUser()?.getState()?.userImage
-    }
-
-    override fun getUserBio(): String? {
-        return model.getUser()?.getState()?.bio
-    }
-
-    override fun getUserNickname(): String {
-        return model.getUser()!!.getState().nickname
-    }
-
-    override fun loadLocalUser() {
-        model.instantiateLocalUser()
-    }
-
     private fun loadJournals() {
         journals.postValue(model.getUserClosedJournals())
     }
+
+    private fun loadUserImage() {
+        viewModelScope.launch(Dispatchers.IO) {
+            image.postValue(model.getUserImage(model.getUser()!!.getState().nickname))
+        }
+    }
+
+    override fun getImage() : LiveData<Bitmap> = image
+
+    private fun loadUserBio() {
+        bio.postValue(model.getUser()?.getState()?.bio)
+    }
+
+    override fun getBio() : LiveData<String> = bio
+
+    private fun loadUserNickname() {
+        nickname.postValue(model.getUser()?.getState()?.nickname)
+    }
+
+    override fun getNickname() : LiveData<String> = nickname
 }
