@@ -38,6 +38,12 @@
             android:layout_marginTop="20dp"
             android:hint="@string/description" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_post_creation_images"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+
         <EditText
             android:id="@+id/et_post_creation_tags"
             android:layout_width="match_parent"
@@ -74,12 +80,6 @@
                     android:text="@string/visibility_private" />
             </RadioGroup>
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_post_creation_images"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
 
         <Button
             android:id="@+id/btn_post_creation_upload_image"

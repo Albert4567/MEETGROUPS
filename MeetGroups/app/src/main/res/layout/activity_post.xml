@@ -11,15 +11,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tv_post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/btn_post_delete"
+            android:maxLength="20"
             android:text="PostTitle"
+            android:textAlignment="center"
             android:textSize="30sp"
-            android:textStyle="bold"
-            android:maxLength="20" />
+            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/btn_post_delete"
@@ -40,25 +42,29 @@
         android:id="@+id/tv_post_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/no_description"/>
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/custom_border"
+        android:hint="@string/no_description"
+        android:padding="10dp" />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="30dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_post_tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="20dp"/>
+        android:minHeight="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_post_images"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_post_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>
