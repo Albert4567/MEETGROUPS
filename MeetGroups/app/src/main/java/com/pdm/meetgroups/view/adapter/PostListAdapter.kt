@@ -38,11 +38,12 @@ class PostListAdapter(private val journalVM: ViewModelAdapter, private var conte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = journalVM.getPostBy(position)
         val sourceString = "<b>${post.creatorNickName}</b> ${post.description}"
+        val noDescriptionString = "<b>${post.creatorNickName}</b> No Description"
 
         if(post.images != null)
             holder.postIMV.setImageBitmap(post.images!!.first())
         holder.postNameTV.text = post.title
-        holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "No Description" else Html.fromHtml(sourceString)
+        holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) Html.fromHtml(noDescriptionString) else Html.fromHtml(sourceString)
 
         holder.postContainer.setOnClickListener {
             val intent = Intent(context, PostActivity::class.java)
