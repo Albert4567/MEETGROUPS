@@ -2,6 +2,7 @@ package com.pdm.meetgroups.view.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,12 @@ class PostListAdapter(private val journalVM: ViewModelAdapter, private var conte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = journalVM.getPostBy(position)
+        val sourceString = "<b>${post.creatorNickName}</b> ${post.description}"
 
         if(post.images != null)
             holder.postIMV.setImageBitmap(post.images!!.first())
         holder.postNameTV.text = post.title
-        holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "No Description" else post.description
+        holder.postDescriptionTV.text = if(post.description?.isEmpty()!!) "No Description" else Html.fromHtml(sourceString)
 
         holder.postContainer.setOnClickListener {
             val intent = Intent(context, PostActivity::class.java)

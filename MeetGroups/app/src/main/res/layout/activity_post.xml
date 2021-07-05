@@ -36,7 +36,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="20dp"/>
+        android:minHeight="20dp" />
 
     <TextView
         android:id="@+id/tv_post_description"
@@ -46,7 +46,8 @@
         android:layout_marginEnd="5dp"
         android:background="@drawable/custom_border"
         android:hint="@string/no_description"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:textSize="18sp" />
 
     <Space
         android:layout_width="match_parent"

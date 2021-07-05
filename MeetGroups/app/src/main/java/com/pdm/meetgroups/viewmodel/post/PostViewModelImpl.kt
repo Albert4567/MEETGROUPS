@@ -2,6 +2,7 @@ package com.pdm.meetgroups.viewmodel.post
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.text.Html
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
@@ -43,7 +44,9 @@ class PostViewModelImpl : ViewModel(), PostViewModel, ViewModelImageListAdapter 
     }
 
     override fun setDescription(binding: ActivityPostBinding) {
-        binding.tvPostDescription.text = post.description
+        val sourceString = "<b>${post.creatorNickName}</b> ${post.description}"
+
+        binding.tvPostDescription.text = Html.fromHtml(sourceString)
     }
 
     private fun userIsAdmin(): Boolean = model.getUser()?.isAdmin() ?: false
